@@ -1,0 +1,36 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - /tmp/dockerdir:/etc/mysql/conf.d/
+    ports:
+      - 3307:3307
+  back:
+    build: ./back
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
+    volumes:
+      - ./back:/proto2
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile_node
+    volumes:
+      - ./front:/usr/src/app
+    command: sh -c "cd front-app && npm start --host 0.0.0.0 --port 3000"
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+volumes:
+  mysql-data:
