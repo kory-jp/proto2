@@ -5,49 +5,33 @@ import { Box, Stack, Text } from '@chakra-ui/layout';
 import React, { memo, useState } from 'react'
 import axios from 'axios';
 
-export const Registration = memo((props)=> {
-  const [name, setName] = useState("")
+export const Login = memo((props)=> {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("")
 
   const handleSubmit = (event) => {
     axios
-      .post("http://localhost:3001/api/v1/user/signup", 
+      .post("http://localhost:3001/api/v1/user/login", 
         {
           user: {
-            name: name,
             email: email,
             password: password,
-            passwordConfirmation: passwordConfirmation
           }
         },
         {withCredentials: true}
       ).then(response => {
-        console.log("registration res", response)
-        console.log(response.data)
-        if (response.data.status === "created") {
-          props.handleSuccessfullAuthentication(response.data)
-        }
+        console.log("login res", response)
       }).catch(error => {
-        console.log("registration error", error)
+        console.log("login error", error)
       })
     event.preventDefault()
   }
 
   return(
     <Box>
-      <Text>新規登録</Text>
+      <Text>ログイン</Text>
       <FormControl>
         <Stack spacing="3">
-          <Input 
-            id="f1"
-            type="name"
-            name="name"
-            placeholder="名前"
-            value={name}
-            onChange={event => setName(event.target.value)}
-          />
           <Input 
             id="f2"
             type="email"
@@ -64,19 +48,11 @@ export const Registration = memo((props)=> {
             value={password}
             onChange={event => setPassword(event.target.value)}
           />
-          <Input 
-            id="f4"
-            type="password"
-            name="password_confirmation"
-            placeholder="確認用パスワード"
-            value={passwordConfirmation}
-            onChange={event => setPasswordConfirmation(event.target.value)}
-          /> 
-          <Button type="submit" onClick={handleSubmit}>登録</Button>
+          <Button type="submit" onClick={handleSubmit}>ログイン</Button>
         </Stack>
       </FormControl>
     </Box>
   )
 })
 
-export default Registration;
+export default Login;
