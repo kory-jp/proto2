@@ -8,10 +8,11 @@ export const LoggedInStatusProvider = (props) => {
     login: false
   }
   const [ loggedInStatus, setLoggedInStatus ] = useState(initialState);
-  console.log(loggedInStatus)
+  const [user, setUser] = useState({});
+  console.log(user);
 
   return(
-    <LoggedInStatusContext.Provider value={{ loggedInStatus, setLoggedInStatus}}>
+    <LoggedInStatusContext.Provider value={{ loggedInStatus, setLoggedInStatus, user, setUser}}>
       {children}
     </LoggedInStatusContext.Provider>
   )
