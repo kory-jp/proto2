@@ -4,10 +4,7 @@ export const LoggedInStatusContext = createContext({});
 
 export const LoggedInStatusProvider = (props) => {
   const {children} = props;
-  const initialState = {
-    login: false
-  }
-  const [ loggedInStatus, setLoggedInStatus ] = useState(initialState);
+  const [ loggedInStatus, setLoggedInStatus ] = useState(false);
   const [user, setUser] = useState({});
   console.log(user);
 

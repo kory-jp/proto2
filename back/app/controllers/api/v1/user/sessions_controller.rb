@@ -1,10 +1,13 @@
 class Api::V1::User::SessionsController < Api::V1::User::Base
+  before_action :current_user
+
   def login
     @user = User.find_by(email: session_params[:email])
     # binding.pry
 
     if @user && @user.authenticate(session_params[:password])
-      login!
+      session[:user_id] = @user.id
+      @current_user = User.find_by(id: session[:user_id])
       render json: {
         logged_in: true,
         user: {
@@ -25,8 +28,16 @@ class Api::V1::User::SessionsController < Api::V1::User::Base
   end
 
   def logged_in?
+    # binding.pry
     if @current_user
-      render json: {logged_in: true, user: current_user}
+      render json: {
+        logged_in: true, 
+        user: {
+          id: current_user.id,
+          name: current_user.name,
+          email: current_user.email,
+        }
+      }
     else
       render json: {logged_in: false, message: 'ユーザーが存在しません'}
     end

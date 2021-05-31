@@ -20,7 +20,10 @@ export const Login = memo((props)=> {
         },
         {withCredentials: true}
       ).then(response => {
-        console.log("login res", response)
+        if (response.data.logged_in ) {
+          console.log('ログイン')
+          props.handleSuccessfullAuthentication(response.data)
+        }
       }).catch(error => {
         console.log("login error", error)
       })
