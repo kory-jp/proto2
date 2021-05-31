@@ -5,7 +5,6 @@ class Api::V1::User::RegistrationsController < Api::V1::User::Base
 
     if @user.save
       login!
-      # render json: { status: :created, user: @user }
       render json: {
         status: :created,
         user: {
