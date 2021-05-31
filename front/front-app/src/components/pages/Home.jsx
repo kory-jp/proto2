@@ -9,7 +9,7 @@ import Registration from '../auth/Registration';
 export const Home = memo((props)=> {
 
   const history = useHistory();
-  const {loggedInStatus, setLoggedInStatus, setUser} = useContext(LoggedInStatusContext)
+  const { setLoggedInStatus, setUser} = useContext(LoggedInStatusContext)
 
   const handleSuccessfullAuthentication = (data) => {
     setLoggedInStatus(true)
@@ -18,11 +18,16 @@ export const Home = memo((props)=> {
     history.push("/dashboard");
   }
 
+  const {checkLoginStatus, user, loggedInStatus} = useLoggedInStatus();
+  useEffect(()=> {
+    checkLoginStatus()
+  })
+
 
   return(
     <Box>
-      <p>ホーム</p>
-      <h2>ログイン状態: {`${loggedInStatus.login}`}</h2>
+      <h2>ホーム</h2>
+      <p>ログイン状態: {`${loggedInStatus}`}</p>
       <Login handleSuccessfullAuthentication={handleSuccessfullAuthentication}/>     
       <Registration handleSuccessfullAuthentication={handleSuccessfullAuthentication}/>
     </Box>
