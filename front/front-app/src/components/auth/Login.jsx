@@ -19,6 +19,10 @@ export const Login = memo((props)=> {
           }
         },
         {withCredentials: true}
+        // { 
+        //   headers: 
+        //   {'X-Requested-With': 'XMLHttpRequest'}
+        // }
       ).then(response => {
         if (response.data.logged_in ) {
           console.log('ログイン')
