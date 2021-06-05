@@ -1,0 +1,26 @@
+import * as Actions from './actions'
+import initialState from '../store/initialState'
+
+export const UsersReducer = (state = initialState.users, action) => {
+  switch (action.type) {
+    case Actions.REGISTRATION:
+      console.log(action.payload)
+      return {
+        ...state,
+        ...action.payload,
+      }
+    case Actions.LOG_IN:
+      console.log(action.payload)
+      return {
+        ...state,
+        ...action.payload,
+      }
+    case Actions.LOG_OUT:
+      return {
+        ...state,
+        ...action.payload,
+      }
+    default:
+      return state
+  }
+}

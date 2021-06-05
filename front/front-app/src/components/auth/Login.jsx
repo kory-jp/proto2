@@ -4,10 +4,14 @@ import { Input } from '@chakra-ui/input';
 import { Box, Stack, Text } from '@chakra-ui/layout';
 import React, { memo, useState } from 'react'
 import axios from 'axios';
+import {push} from 'connected-react-router';
+import {useDispatch} from 'react-redux';
+import { logInAction } from '../../reducks/users/actions';
 
 export const Login = memo((props)=> {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     axios
