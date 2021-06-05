@@ -4,7 +4,16 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "axios": "^0.21.1",
+    "connected-react-router": "^6.9.1",
     "framer-motion": "^4",
-    "react-router-dom": "^5.2.0"
+    "history": "^4.10.1",
+    "react-redux": "^7.2.4",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.1.0",
+    "redux-actions": "^2.6.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
   }
 }

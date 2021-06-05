@@ -1,8 +1,13 @@
 import { Button } from '@chakra-ui/button';
-import { Box } from '@chakra-ui/layout';
+import { Box, Text } from '@chakra-ui/layout';
 import React, { memo, useContext, useEffect } from 'react'
+import {useSelector} from "react-redux";
+import { useDispatch } from "react-redux";
+
+import {logOut} from "../../reducks/users/operations"
 import useLoggedInStatus from '../../hooks/useLoggedInStatus';
 import useLogout from '../../hooks/useLogout';
+import {getUser} from '../../reducks/users/selectors'
 
 export const Dashboard = memo(()=> {
   const {checkLoginStatus, user, loggedInStatus} = useLoggedInStatus();
@@ -15,13 +20,34 @@ export const Dashboard = memo(()=> {
     changeLogout()
   }
 
+  const selector = useSelector((state) => state);
+  console.log(selector)
+  const reduxUser = getUser(selector);
+  console.log(reduxUser)
+
+  const dispatch = useDispatch();
 
   return(
     <Box>
-      <p>ダッシュボード</p>
-      <h2>ログイン状態: {`${loggedInStatus}`}</h2>
-      <p>ユーザー名:{`${user.name}`}</p>
-      <Button onClick={handleLogoutClick}>ログアウト</Button>
+      <Box mb="8">
+        <p>ダッシュボード</p>
+        <h2>ログイン状態: {`${loggedInStatus}`}</h2>
+        <p>ユーザーID:{user.id}</p>
+        <p>ユーザー名:{`${user.name}`}</p>
+        <Button onClick={handleLogoutClick}>ログアウト</Button>
+      </Box>
+      <Box>
+        <Text>ReduxLoginUserInfo</Text>
+        <h2>ログイン状態: {`${reduxUser.logged_in}`}</h2>
+        <p>ユーザーID:{reduxUser.id}</p>
+        <p>ユーザー名:{`${reduxUser.name}`}</p>
+      </Box>
+      <Button
+        type="submit"
+        onClick={()=> dispatch(logOut())}
+      >
+        ログアウト
+      </Button>
     </Box>
   )
 })
