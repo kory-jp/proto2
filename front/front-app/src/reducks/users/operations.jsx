@@ -114,3 +114,34 @@ export const logOut = () => {
     }
   }
 }
+
+// ログインをしている場合はユーザー情報を返し、未ログインの場合はログインページに飛ばす
+export const loggedInStatus = () => {
+  return async (dispatch) => {
+
+    console.log('実行')
+    await axios
+    .get("http://localhost:3001/api/v1/user/logged_in", {withCredentials: true})
+    .then(response => {
+      console.log("ログイン状況:", response)
+      if (response.data.logged_in) {
+        console.log(true)
+        const userData = response.data
+        console.log(userData)
+        dispatch(
+          logInAction({
+            logged_in: userData.logged_in,
+            id: userData.user.id,
+            name: userData.user.name, 
+            email: userData.user.email,
+            password: userData.user.password_digest
+          })
+        )
+      } else {
+        dispatch(push('/'))
+      }
+    }).catch(error => {
+      console.log("ログインエラー:", error)
+    })
+  }
+}

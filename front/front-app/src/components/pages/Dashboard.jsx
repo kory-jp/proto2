@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/button';
 import { Box, Text } from '@chakra-ui/layout';
-import React, { memo, useContext, useEffect } from 'react'
+import React, { memo, useContext, useEffect, useState } from 'react'
 import {useSelector} from "react-redux";
 import { useDispatch } from "react-redux";
 
@@ -24,6 +24,8 @@ export const Dashboard = memo(()=> {
   console.log(selector)
   const reduxUser = getUser(selector);
   console.log(reduxUser)
+
+
 
   const dispatch = useDispatch();
 
