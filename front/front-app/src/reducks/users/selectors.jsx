@@ -6,3 +6,8 @@ export const getUser = createSelector(
   [usersSelector],
   (state) => state
 )
+
+export const getLoggedIn = createSelector(
+  [usersSelector],
+  (state) => state.logged_in,
+)
