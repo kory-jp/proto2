@@ -1,44 +1,22 @@
-import { Box, Stack, Text } from '@chakra-ui/layout';
-import React, { memo, useContext, useEffect } from 'react'
-import { useHistory } from 'react-router-dom';
-import useLoggedInStatus from '../../hooks/useLoggedInStatus';
-import { LoggedInStatusContext } from '../../providers/LoggedInStatusProvider';
-import Login from '../auth/Login';
-import Registration from '../auth/Registration';
+import { Box, Stack } from '@chakra-ui/layout';
+import React, { memo } from 'react'
+import { useSelector } from 'react-redux';
+import { getUser } from '../../reducks/users/selectors';
 
-import {useDispatch, useSelector} from "react-redux";
 import ReduxLogin from '../auth/ReduxLogin';
 import ReduxRegistration from '../auth/ReduxRegistration';
 
-export const Home = memo((props)=> {
-  const dispatch = useDispatch()
-  const selector  = useSelector((state)=> state)
-  console.log(selector)
+export const Home = memo(()=> {
 
-  const history = useHistory();
-  const { setLoggedInStatus, setUser} = useContext(LoggedInStatusContext)
-
-  const handleSuccessfullAuthentication = (data) => {
-    setLoggedInStatus(true)
-    console.log(data.user)
-    setUser(data.user)
-    history.push("/dashboard");
-  }
-
-  const {checkLoginStatus, user, loggedInStatus} = useLoggedInStatus();
-  useEffect(()=> {
-    checkLoginStatus()
-  })
+  const selector = useSelector((state) => state);
+  const reduxUser = getUser(selector);
 
 
   return(
     <Box>
       <h2>ホーム</h2>
-      <p>ログイン状態: {`${loggedInStatus}`}</p>
+      <p>ログイン状態: {`${reduxUser.logged_in}`}</p>
       <Stack spacing="10">
-        <Login handleSuccessfullAuthentication={handleSuccessfullAuthentication}/>     
-        <Registration handleSuccessfullAuthentication={handleSuccessfullAuthentication}/>
-        <Text>Redux</Text>
         <ReduxLogin />
         <ReduxRegistration />
       </Stack>
