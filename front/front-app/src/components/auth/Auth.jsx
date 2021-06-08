@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loggedInStatus } from "../../reducks/users/operations";
 
 const Auth = ({children}) => {

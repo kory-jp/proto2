@@ -7,10 +7,10 @@ import {registration} from "../../reducks/users/operations"
 
 export const ReduxRegistration = () => {
   const dispatch = useDispatch();
-  const [userName, setUserName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [passwordConfirmation, setPasswordConfirmation] = useState();
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const inputUserName = useCallback((event)=> {
     setUserName(event.target.value)

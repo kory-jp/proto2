@@ -56,14 +56,14 @@ export const logIn = (email, password) => {
 
     if(!logged_in) {
         await axios
-        .post("http://localhost:3001/api/v1/user/login", 
+        .post('http://localhost:3001/api/v1/user/login', 
         {
           user: {
             email: email,
             password: password,
           }
         },
-        {withCredentials: true}
+        {withCredentials: true},
       ).then(response => {
         if (response.data.logged_in) {
           const userData = response.data
@@ -121,7 +121,10 @@ export const loggedInStatus = () => {
 
     console.log('実行')
     await axios
-    .get("http://localhost:3001/api/v1/user/logged_in", {withCredentials: true})
+    .get("http://localhost:3001/api/v1/user/logged_in", 
+    {withCredentials: true},
+    {headers: {'X-Requested-With': 'XMLHttpRequest'}}
+    )
     .then(response => {
       console.log("ログイン状況:", response)
       if (response.data.logged_in) {

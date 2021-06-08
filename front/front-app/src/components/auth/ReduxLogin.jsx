@@ -7,8 +7,8 @@ import {logIn} from "../../reducks/users/operations"
 
 export const ReduxLogin = () => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const inputEmail = useCallback((event)=> {
     setEmail(event.target.value)

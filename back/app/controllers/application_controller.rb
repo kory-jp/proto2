@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
   include ActionController::Helpers
   include ActionController::Cookies 
 
-  private 
+  # private 
   # def check_xhr_header
   #   return if request.xhr?
   #   render json: {error: 'forbidden'}, status: :forbidden
