@@ -3,11 +3,9 @@ import { useDispatch } from "react-redux";
 import { loggedInStatus } from "../../reducks/users/operations";
 
 const Auth = ({children}) => {
-  console.log('ログイン確認')
   const dispatch =  useDispatch();
 
   useEffect(()=> {
-    console.log('実行確認')
     dispatch(loggedInStatus())
   },[])
 
