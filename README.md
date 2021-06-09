@@ -37,7 +37,8 @@ docker-compose run front npm i @chakra-ui/react @emotion/react@^11 @emotion/styl
 docker-compose up
 ```
 
-###　サンプルデータ
+### サンプルデータ
+
 以下のアドレスとパスワードでログイン機能を試すことができます。
 
 ```

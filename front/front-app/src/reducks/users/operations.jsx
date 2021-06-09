@@ -30,7 +30,6 @@ export const registration = (userName, email, password, passwordConfirmation) =>
     console.log("registration res", response)
     if (response.data.status === "created") {
       const userData = response.data
-      console.log(userData)
 
       dispatch(
         registrationAction({
@@ -67,7 +66,6 @@ export const logIn = (email, password) => {
       ).then(response => {
         if (response.data.logged_in) {
           const userData = response.data
-          console.log(userData)
 
           dispatch(
             logInAction({
@@ -119,7 +117,6 @@ export const logOut = () => {
 export const loggedInStatus = () => {
   return async (dispatch) => {
 
-    console.log('実行')
     await axios
     .get("http://localhost:3001/api/v1/user/logged_in", 
     {withCredentials: true},
@@ -128,9 +125,7 @@ export const loggedInStatus = () => {
     .then(response => {
       console.log("ログイン状況:", response)
       if (response.data.logged_in) {
-        console.log(true)
         const userData = response.data
-        console.log(userData)
         dispatch(
           logInAction({
             logged_in: userData.logged_in,
