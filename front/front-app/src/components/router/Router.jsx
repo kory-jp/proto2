@@ -7,10 +7,10 @@ import Home from '../pages/Home'
 export const Router = () => {
   return(
     <Switch>
-      <Route exact path={"/"}>
-        <Home/>
-      </Route>
       <Auth>
+        <Route exact path={"/"}>
+          <Home/>
+        </Route>
         <Route exact path={"/dashboard"}>
           <Dashboard/>
         </Route>

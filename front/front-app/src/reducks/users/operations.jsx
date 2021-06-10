@@ -120,7 +120,6 @@ export const loggedInStatus = () => {
     await axios
     .get("http://localhost:3001/api/v1/user/logged_in", 
     {withCredentials: true},
-    {headers: {'X-Requested-With': 'XMLHttpRequest'}}
     )
     .then(response => {
       console.log("ログイン状況:", response)
@@ -137,6 +136,26 @@ export const loggedInStatus = () => {
         )
       } else {
         dispatch(push('/'))
+      }
+    }).catch(error => {
+      console.log("ログインエラー:", error)
+    })
+  }
+}
+
+// ログイン済みユーザーをdashboardへ遷移させる
+export const completedLoggedInStatus = () => {
+  return async (dispatch) => {
+
+    await axios
+    .get("http://localhost:3001/api/v1/user/logged_in", 
+    {withCredentials: true},
+    )
+    .then(response => {
+      console.log("ログイン状況:", response)
+      if (response.data.logged_in) {
+        console.log('実行')
+        dispatch(push('/dashboard'))
       }
     }).catch(error => {
       console.log("ログインエラー:", error)

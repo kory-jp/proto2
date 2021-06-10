@@ -1,8 +1,8 @@
 import { Box, Stack } from '@chakra-ui/layout';
 import React, { memo } from 'react'
 import { useSelector } from 'react-redux';
-import { getUser } from '../../reducks/users/selectors';
 
+import { getUser } from '../../reducks/users/selectors';
 import ReduxLogin from '../auth/ReduxLogin';
 import ReduxRegistration from '../auth/ReduxRegistration';
 
