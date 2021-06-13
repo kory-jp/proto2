@@ -1,6 +1,10 @@
 import axios from 'axios'
 import {push} from 'connected-react-router';
+import { useDispatch } from 'react-redux';
+import { notLoadingAction, nowLoadingAction } from '../loading/actions';
+import { setMessage } from '../message/actions';
 import { logInAction, registrationAction, logOutAction } from './actions';
+
 
 export const registration = (userName, email, password, passwordConfirmation) => {
  return async (dispatch) => {
@@ -14,6 +18,7 @@ export const registration = (userName, email, password, passwordConfirmation) =>
     alert("パスワードが一致していません") 
     return false
   };
+  dispatch(nowLoadingAction(true))
 
   axios
     .post("http://localhost:3001/api/v1/user/signup", 
@@ -44,14 +49,24 @@ export const registration = (userName, email, password, passwordConfirmation) =>
     }
   }).catch(error => {
     console.log("registration error", error)
+    alert("入力に誤りがあります。もう一度入力をお願いします。")
+  })
+  .finally(()=> {
+    dispatch(notLoadingAction(false))
   })
  }
 }
 
 export const logIn = (email, password) => {
   return async (dispatch, getState) => {
+    dispatch(nowLoadingAction(true))
     const state = getState();
     const logged_in = state.users.logged_in
+
+    if (email === "" || password === "" ) {
+      alert("必須項目が空欄です。")
+      return false;
+    };
 
     if(!logged_in) {
         await axios
@@ -76,11 +91,18 @@ export const logIn = (email, password) => {
               password: userData.user.password_digest
             })
           )
+          dispatch(setMessage({
+            title: "ログインしました。",
+            status: "success",
+          }))
           dispatch(push('/dashboard'))
         }
       })
       .catch(()=> {
         dispatch(console.log('error'))
+      })
+      .finally(()=> {
+        dispatch(notLoadingAction(false))
       })
     }
   }
@@ -154,7 +176,6 @@ export const completedLoggedInStatus = () => {
     .then(response => {
       console.log("ログイン状況:", response)
       if (response.data.logged_in) {
-        console.log('実行')
         dispatch(push('/dashboard'))
       }
     }).catch(error => {

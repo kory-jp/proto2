@@ -1,9 +1,11 @@
-import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
-import { Box, Stack, Text } from "@chakra-ui/layout";
+import { Box, Link, Stack, Text } from "@chakra-ui/layout";
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {push} from 'connected-react-router';
 import {registration} from "../../reducks/users/operations"
+import { PrimaryButton } from "../atoms/button/PrimaryButton";
+import { getLoadingState } from "../../reducks/loading/selectors";
 
 export const ReduxRegistration = () => {
   const dispatch = useDispatch();
@@ -28,10 +30,22 @@ export const ReduxRegistration = () => {
     setPasswordConfirmation(event.target.value)
   }, [setPasswordConfirmation])
 
+  const onClickLogin = () => {
+    dispatch(push('/'))
+  }
+
+  const selector =  useSelector((state) => state);
+  const loadingState = getLoadingState(selector);
+
   return(
-    <Box>
-      <Text>ReduxRegistration</Text>
-      <Stack spacing="3">
+    <Box bg="white" p="5" shadow="md" borderRadius="md">
+      <Text 
+      textAlign="center"
+      fontWeight="bold"
+      >
+        新規登録
+      </Text>
+      <Stack spacing="5">
         <Input 
           id="f1"
           type="name"
@@ -68,10 +82,17 @@ export const ReduxRegistration = () => {
           value={passwordConfirmation}
           onChange={inputPasswordConfirmation}
         /> 
-        <Button
+        <PrimaryButton
           type="submit"
           onClick={()=> dispatch(registration(userName, email, password, passwordConfirmation))}
-        >新規登録</Button>
+          loading = {loadingState}
+          disabled={userName === "" || email === ""|| password === "" || passwordConfirmation === ""}
+        >
+          新規登録
+        </PrimaryButton>
+        <Link onClick={onClickLogin} textAlign="center">
+          ログイン
+        </Link>
       </Stack>
     </Box>    
   )
