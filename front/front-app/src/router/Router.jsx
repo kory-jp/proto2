@@ -8,7 +8,7 @@ import RegistrationPage from '../components/pages/RegistrationPage'
 export const Router = () => {
   return(
     <Switch>
-      <Route  exact exact path={"/"}>
+      <Route  exact path={"/"}>
         <LoginPage />
       </Route>
       <Route path={"/registration"}>
