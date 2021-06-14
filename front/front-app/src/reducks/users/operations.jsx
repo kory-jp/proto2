@@ -92,10 +92,17 @@ export const logIn = (email, password) => {
               password: userData.user.password_digest
             })
           )
-          dispatch(setMessage({
-            title: "ログインしました。",
-            status: "success",
-          }))
+          // dispatch(setMessage({
+          //   title: "ログインしました。",
+          //   status: "success",
+          // }))
+          const toast = useToast();
+          toast({
+            title: 'ログインしました',
+            status: 'success',
+            duration: 2000,
+            isClosable: true,
+          })
           dispatch(push('/dashboard'))
         }
       })
