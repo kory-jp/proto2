@@ -1,14 +1,13 @@
 import { Input } from "@chakra-ui/input";
 import { Box, Link, Stack, Text } from "@chakra-ui/layout";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {push} from 'connected-react-router';
-import {useToast} from '@chakra-ui/react'
 
 import {logIn} from "../../reducks/users/operations"
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { getLoadingState } from "../../reducks/loading/selectors";
-import { getMessageSelector } from "../../reducks/message/selector";
+import useMessage from "../../hooks/useMessage";
 
 export const ReduxLogin = () => {
   const dispatch = useDispatch();
@@ -29,21 +28,7 @@ export const ReduxLogin = () => {
 
   const selector =  useSelector((state) => state);
   const loadingState = getLoadingState(selector);
-  const message = getMessageSelector(selector);
-  console.log(loadingState)
-  console.log(message)
-  const toast = useToast();
-
-  const onClickLogin = () => {
-    dispatch(logIn(email, password))
-    toast({
-      title: message.title,
-      status: message.status,
-      position: message.position,
-      duration: message.duration,
-      isClosable: message.isClosable
-    })
-  }
+  const {showMessage} = useMessage();
 
   return(
     <Box bg="white" p="5" shadow="md" borderRadius="md">
@@ -69,8 +54,7 @@ export const ReduxLogin = () => {
         />
         <PrimaryButton
           type="submit"
-          // onClick={()=> dispatch(logIn(email, password))}
-          onClick={onClickLogin}
+          onClick={()=> dispatch(logIn(email, password, showMessage))}
           loading={loadingState}
           disabled={email === "" || password ===""}
         >

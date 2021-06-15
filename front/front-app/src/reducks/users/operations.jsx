@@ -1,13 +1,10 @@
-import { useToast } from '@chakra-ui/toast';
 import axios from 'axios'
 import {push} from 'connected-react-router';
-import { useDispatch } from 'react-redux';
 import { notLoadingAction, nowLoadingAction } from '../loading/actions';
-import { setMessage } from '../message/actions';
 import { logInAction, registrationAction, logOutAction } from './actions';
 
 
-export const registration = (userName, email, password, passwordConfirmation) => {
+export const registration = (userName, email, password, passwordConfirmation, showMessage) => {
  return async (dispatch) => {
 
   if (userName === "" || email === "" || password === "" || passwordConfirmation === "") {
@@ -46,11 +43,15 @@ export const registration = (userName, email, password, passwordConfirmation) =>
           password: userData.user.password_digest,
         })
       )
+      console.log('1')
+      showMessage({title: '新規登録しました', status: 'success'})
       dispatch(push('/dashboard'))
+    } else {
+      console.log('2')
+      showMessage({title: '新規登録に失敗しました', status: 'error'})
     }
   }).catch(error => {
     console.log("registration error", error)
-    alert("入力に誤りがあります。もう一度入力をお願いします。")
   })
   .finally(()=> {
     dispatch(notLoadingAction(false))
@@ -58,7 +59,7 @@ export const registration = (userName, email, password, passwordConfirmation) =>
  }
 }
 
-export const logIn = (email, password) => {
+export const logIn = (email, password, showMessage) => {
   return async (dispatch, getState) => {
     dispatch(nowLoadingAction(true))
     const state = getState();
@@ -92,15 +93,15 @@ export const logIn = (email, password) => {
               password: userData.user.password_digest
             })
           )
-          dispatch(setMessage({
-            title: "ログインしました。",
-            status: "success",
-          }))
+          showMessage({title: "ログインしました", status: "success"})
           dispatch(push('/dashboard'))
         }
+        else{
+          showMessage({title: "ユーザーが見つかりません", status: "error"})
+        }
       })
-      .catch(()=> {
-        dispatch(console.log('error'))
+      .catch((response)=> {
+        console.log('ERROR');
       })
       .finally(()=> {
         dispatch(notLoadingAction(false))
@@ -109,7 +110,7 @@ export const logIn = (email, password) => {
   }
 }
 
-export const logOut = () => {
+export const logOut = (showMessage) => {
   return async (dispatch, getState) => {
     const state = getState();
     const logged_in = state.users.logged_in
@@ -127,6 +128,7 @@ export const logOut = () => {
             password: ""
           })
         )
+        showMessage({title: 'ログアウトしました', status: 'success'})
         dispatch(push('/'))
       })
       .catch(()=> {

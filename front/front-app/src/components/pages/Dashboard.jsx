@@ -3,6 +3,7 @@ import { Box, Text } from '@chakra-ui/layout';
 import React, { memo} from 'react'
 import {useSelector} from "react-redux";
 import { useDispatch } from "react-redux";
+import useMessage from '../../hooks/useMessage';
 
 import {logOut} from "../../reducks/users/operations"
 import {getUser} from '../../reducks/users/selectors'
@@ -14,9 +15,8 @@ export const Dashboard = memo(()=> {
   const reduxUser = getUser(selector);
   console.log(reduxUser)
 
-
-
   const dispatch = useDispatch();
+  const {showMessage} = useMessage();
 
   return(
     <Box>
@@ -28,7 +28,7 @@ export const Dashboard = memo(()=> {
       </Box>
       <Button
         type="submit"
-        onClick={()=> dispatch(logOut())}
+        onClick={()=> dispatch(logOut(showMessage))}
       >
         ログアウト
       </Button>
