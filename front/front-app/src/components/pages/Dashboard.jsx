@@ -7,6 +7,7 @@ import useMessage from '../../hooks/useMessage';
 
 import {logOut} from "../../reducks/users/operations"
 import {getUser} from '../../reducks/users/selectors'
+import PostNew from './posts/PostNew';
 
 export const Dashboard = memo(()=> {
 
@@ -32,6 +33,7 @@ export const Dashboard = memo(()=> {
       >
         ログアウト
       </Button>
+      <PostNew />
     </Box>
   )
 })

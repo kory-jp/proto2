@@ -7,6 +7,11 @@ export const getUser = createSelector(
   (state) => state
 )
 
+export const getUserId = createSelector(
+  [usersSelector],
+  (state) => state.id
+)
+
 export const getLoggedIn = createSelector(
   [usersSelector],
   (state) => state.logged_in,

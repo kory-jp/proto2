@@ -17,6 +17,16 @@ const initialState = {
     name: '',
     email: '',
     password: '',
+  },
+
+  posts: {
+    id: '',
+    user_id: '',
+    title: '',
+    content: '',
+    image: {
+      url: ''
+    },
   }
 }
 
