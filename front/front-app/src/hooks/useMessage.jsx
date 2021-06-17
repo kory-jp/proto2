@@ -13,7 +13,7 @@ export const useMessage = () => {
       isClosable: true,
     });
   },[toast])
-  return {showMessage};
+  return showMessage;
 }
 
 export default useMessage;

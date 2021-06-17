@@ -1,41 +1,29 @@
 export const REGISTRATION = 'REGISTRATION'
-export const registrationAction = (userState) => {
+export const registrationAction = (userStatus) => {
   return {
     type: "REGISTRATION",
     payload: {
-      logged_in: userState.logged_in,
-      id: userState.id,
-      name: userState.name,
-      email: userState.email,
-      password: userState.password
+      ...userStatus
     }
   }
 }
 
 export  const LOG_IN = "LOG_IN";
-export const logInAction = (userState) => {
+export const logInAction = (userStatus) => {
   return{
     type: "LOG_IN",
     payload: {
-      logged_in: userState.logged_in,
-      id: userState.id,
-      name: userState.name,
-      email: userState.email,
-      password: userState.password
+      ...userStatus
     }
   }
 };
 
 export const LOG_OUT = "LOG_OUT";
-export const logOutAction = (usersState) => {
+export const logOutAction = (usersStatus) => {
   return {
     type: "LOG_OUT",
     payload: {
-      logged_in: usersState.logged_in,
-      id: usersState.id,
-      name: usersState.name,
-      email: usersState.email,
-      password: usersState.password
+      ...usersStatus
     }
   }
 }

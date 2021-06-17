@@ -1,6 +1,6 @@
 const initialState = {
   loading: {
-    state: false
+    status: false
   },
 
   message: {

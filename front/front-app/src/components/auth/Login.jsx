@@ -28,7 +28,7 @@ export const ReduxLogin = () => {
 
   const selector =  useSelector((state) => state);
   const loadingState = getLoadingState(selector);
-  const {showMessage} = useMessage();
+  const showMessage = useMessage();
 
   return(
     <Box bg="white" p="5" shadow="md" borderRadius="md">

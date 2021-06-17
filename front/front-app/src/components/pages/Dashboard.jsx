@@ -11,12 +11,10 @@ import {getUser} from '../../reducks/users/selectors'
 export const Dashboard = memo(()=> {
 
   const selector = useSelector((state) => state);
-  console.log(selector)
   const reduxUser = getUser(selector);
-  console.log(reduxUser)
 
   const dispatch = useDispatch();
-  const {showMessage} = useMessage();
+  const showMessage = useMessage();
 
   return(
     <Box>

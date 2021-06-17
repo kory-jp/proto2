@@ -30,7 +30,6 @@ export const registration = (userName, email, password, passwordConfirmation, sh
       },
       {withCredentials: true}
   ).then(response => {
-    console.log("registration res", response)
     if (response.data.status === "created") {
       const userData = response.data
 
@@ -43,11 +42,9 @@ export const registration = (userName, email, password, passwordConfirmation, sh
           password: userData.user.password_digest,
         })
       )
-      console.log('1')
       showMessage({title: '新規登録しました', status: 'success'})
       dispatch(push('/dashboard'))
     } else {
-      console.log('2')
       showMessage({title: '新規登録に失敗しました', status: 'error'})
     }
   }).catch(error => {
@@ -147,7 +144,6 @@ export const loggedInStatus = () => {
     {withCredentials: true},
     )
     .then(response => {
-      console.log("ログイン状況:", response)
       if (response.data.logged_in) {
         const userData = response.data
         dispatch(
@@ -177,7 +173,6 @@ export const completedLoggedInStatus = () => {
     {withCredentials: true},
     )
     .then(response => {
-      console.log("ログイン状況:", response)
       if (response.data.logged_in) {
         dispatch(push('/dashboard'))
       }
