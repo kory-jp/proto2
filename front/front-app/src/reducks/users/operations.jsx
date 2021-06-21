@@ -1,8 +1,10 @@
 import axios from 'axios'
 import {push} from 'connected-react-router';
+import { notLoadingAction, nowLoadingAction } from '../loading/actions';
 import { logInAction, registrationAction, logOutAction } from './actions';
 
-export const registration = (userName, email, password, passwordConfirmation) => {
+
+export const registration = (userName, email, password, passwordConfirmation, showMessage) => {
  return async (dispatch) => {
 
   if (userName === "" || email === "" || password === "" || passwordConfirmation === "") {
@@ -14,6 +16,7 @@ export const registration = (userName, email, password, passwordConfirmation) =>
     alert("パスワードが一致していません") 
     return false
   };
+  dispatch(nowLoadingAction(true))
 
   axios
     .post("http://localhost:3001/api/v1/user/signup", 
@@ -27,7 +30,6 @@ export const registration = (userName, email, password, passwordConfirmation) =>
       },
       {withCredentials: true}
   ).then(response => {
-    console.log("registration res", response)
     if (response.data.status === "created") {
       const userData = response.data
 
@@ -40,18 +42,30 @@ export const registration = (userName, email, password, passwordConfirmation) =>
           password: userData.user.password_digest,
         })
       )
+      showMessage({title: '新規登録しました', status: 'success'})
       dispatch(push('/dashboard'))
+    } else {
+      showMessage({title: '新規登録に失敗しました', status: 'error'})
     }
   }).catch(error => {
     console.log("registration error", error)
   })
+  .finally(()=> {
+    dispatch(notLoadingAction(false))
+  })
  }
 }
 
-export const logIn = (email, password) => {
+export const logIn = (email, password, showMessage) => {
   return async (dispatch, getState) => {
+    dispatch(nowLoadingAction(true))
     const state = getState();
     const logged_in = state.users.logged_in
+
+    if (email === "" || password === "" ) {
+      alert("必須項目が空欄です。")
+      return false;
+    };
 
     if(!logged_in) {
         await axios
@@ -76,17 +90,24 @@ export const logIn = (email, password) => {
               password: userData.user.password_digest
             })
           )
+          showMessage({title: "ログインしました", status: "success"})
           dispatch(push('/dashboard'))
         }
+        else{
+          showMessage({title: "ユーザーが見つかりません", status: "error"})
+        }
       })
-      .catch(()=> {
-        dispatch(console.log('error'))
+      .catch((response)=> {
+        console.log('ERROR');
+      })
+      .finally(()=> {
+        dispatch(notLoadingAction(false))
       })
     }
   }
 }
 
-export const logOut = () => {
+export const logOut = (showMessage) => {
   return async (dispatch, getState) => {
     const state = getState();
     const logged_in = state.users.logged_in
@@ -104,6 +125,7 @@ export const logOut = () => {
             password: ""
           })
         )
+        showMessage({title: 'ログアウトしました', status: 'success'})
         dispatch(push('/'))
       })
       .catch(()=> {
@@ -122,7 +144,6 @@ export const loggedInStatus = () => {
     {withCredentials: true},
     )
     .then(response => {
-      console.log("ログイン状況:", response)
       if (response.data.logged_in) {
         const userData = response.data
         dispatch(
@@ -152,9 +173,7 @@ export const completedLoggedInStatus = () => {
     {withCredentials: true},
     )
     .then(response => {
-      console.log("ログイン状況:", response)
       if (response.data.logged_in) {
-        console.log('実行')
         dispatch(push('/dashboard'))
       }
     }).catch(error => {
