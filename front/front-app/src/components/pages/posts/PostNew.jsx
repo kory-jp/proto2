@@ -1,10 +1,8 @@
 import React, { memo, useCallback, useState } from 'react';
-import { Box, Link, Stack, Text } from "@chakra-ui/layout";
+import { Box, Stack } from "@chakra-ui/layout";
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   Textarea,
   Button,
@@ -17,12 +15,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getLoadingState } from '../../../reducks/loading/selectors';
 import { getUserId } from '../../../reducks/users/selectors';
 import {postNew} from '../../../reducks/posts/operations'
+import useMessage from '../../../hooks/useMessage';
 
 export const PostNew = memo(()=> {
   const dispatch = useDispatch();
   const [title, setTitle] =  useState('');
   const [content, setContent] =  useState('');
-  const [image, setImage] =  useState('');
+  const [image, setImage] =  useState();
   const [preview, setPreview] = useState('');
 
   const selector = useSelector((state) => state);
@@ -38,13 +37,14 @@ export const PostNew = memo(()=> {
   }, [setContent])
 
   const inputImage = useCallback((event)=> {
-    setImage(event.target.value)
+    const file = event.target.files[0]
+    setImage(file)
     PreviewImage(event)
   }, [setImage])
-
+  
   const PreviewImage = useCallback((e) => {
-    const file = e.target.files[0]
-    setPreview(window.URL.createObjectURL(file))
+    const imageFile = e.target.files[0]
+    setPreview(window.URL.createObjectURL(imageFile))
   },[])
 
   const createFormData = useCallback(()=> {
@@ -57,14 +57,13 @@ export const PostNew = memo(()=> {
 
     return formData
   })
-
   const formData = createFormData();
-  console.log(formData)
+
+  const showMessage = useMessage()
 
   return(
     <Box bg="white" p="4" shadow="md" borderRadius="md">
       <Stack>
-        <p>ユーザーID</p>
         <FormControl id="title">
           <FormLabel>タイトル</FormLabel>
           <Input 
@@ -94,8 +93,9 @@ export const PostNew = memo(()=> {
           </FormLabel>
           <Input
             type="file"
-            name="imaget"
+            name="image"
             accept="image/*, .jpg, .jpeg, .png"
+            multiple={true}
             onChange={inputImage}
             display="none"
           />
@@ -118,8 +118,7 @@ export const PostNew = memo(()=> {
         }
         <PrimaryButton
           type="submit"
-          // onClick={()=> dispatch(postNew(userId, title, content, image))}
-          onClick={()=> dispatch(postNew(formData))}
+          onClick={()=> dispatch(postNew(formData, showMessage))}
           loading = {loadingState}
           disabled = {title === "" || content === ""}
         >

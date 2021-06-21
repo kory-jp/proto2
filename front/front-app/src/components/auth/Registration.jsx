@@ -1,16 +1,19 @@
 import { Input } from "@chakra-ui/input";
 import { Box, Link, Stack, Text } from "@chakra-ui/layout";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {push} from 'connected-react-router';
 
-import {registration} from "../../reducks/users/operations"
+import {completedLoggedInStatus, registration} from "../../reducks/users/operations"
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { getLoadingState } from "../../reducks/loading/selectors";
 import useMessage from "../../hooks/useMessage";
 
 export const ReduxRegistration = () => {
   const dispatch = useDispatch();
+  useEffect(()=> {
+    dispatch(completedLoggedInStatus())
+  },[])
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

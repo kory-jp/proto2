@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {push} from 'connected-react-router';
-import { notLoadingAction, nowLoadingAction } from '../loading/actions';
+import { nowLoadingAction } from '../loading/actions';
 import { logInAction, registrationAction, logOutAction } from './actions';
 
 
@@ -43,7 +43,7 @@ export const registration = (userName, email, password, passwordConfirmation, sh
         })
       )
       showMessage({title: '新規登録しました', status: 'success'})
-      dispatch(push('/dashboard'))
+      dispatch(push('/posts'))
     } else {
       showMessage({title: '新規登録に失敗しました', status: 'error'})
     }
@@ -51,7 +51,7 @@ export const registration = (userName, email, password, passwordConfirmation, sh
     console.log("registration error", error)
   })
   .finally(()=> {
-    dispatch(notLoadingAction(false))
+    dispatch(nowLoadingAction(false))
   })
  }
 }
@@ -91,7 +91,7 @@ export const logIn = (email, password, showMessage) => {
             })
           )
           showMessage({title: "ログインしました", status: "success"})
-          dispatch(push('/dashboard'))
+          dispatch(push('/posts'))
         }
         else{
           showMessage({title: "ユーザーが見つかりません", status: "error"})
@@ -101,7 +101,7 @@ export const logIn = (email, password, showMessage) => {
         console.log('ERROR');
       })
       .finally(()=> {
-        dispatch(notLoadingAction(false))
+        dispatch(nowLoadingAction(false))
       })
     }
   }
@@ -164,7 +164,7 @@ export const loggedInStatus = () => {
   }
 }
 
-// ログイン済みユーザーをdashboardへ遷移させる
+// ログイン済みユーザーを一覧ページへ遷移させる
 export const completedLoggedInStatus = () => {
   return async (dispatch) => {
 
@@ -174,7 +174,7 @@ export const completedLoggedInStatus = () => {
     )
     .then(response => {
       if (response.data.logged_in) {
-        dispatch(push('/dashboard'))
+        dispatch(push('/posts'))
       }
     }).catch(error => {
       console.log("ログインエラー:", error)

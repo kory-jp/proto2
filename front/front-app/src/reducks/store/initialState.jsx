@@ -20,13 +20,7 @@ const initialState = {
   },
 
   posts: {
-    id: '',
-    user_id: '',
-    title: '',
-    content: '',
-    image: {
-      url: ''
-    },
+    list: [],
   }
 }
 
