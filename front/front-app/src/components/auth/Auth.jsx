@@ -7,7 +7,7 @@ const Auth = ({children}) => {
 
   useEffect(()=> {
     dispatch(loggedInStatus())
-  },[])
+  },[dispatch])
 
   return children
 }

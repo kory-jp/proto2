@@ -10,9 +10,9 @@ export const RegistrationPage = memo(()=> {
 
   useEffect(()=> {
     dispatch(completedLoggedInStatus())
-  },[])
+  },[dispatch])
   return(
-    <Flex align="center" justify="center" height="100vh">
+    <Flex align="center" justify="center" height="100vh" m="2">
       <Box w="lg">
         <Registration />
       </Box>

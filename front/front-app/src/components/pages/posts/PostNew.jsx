@@ -12,10 +12,11 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLoadingState } from '../../../reducks/loading/selectors';
 import { getUserId } from '../../../reducks/users/selectors';
-import {postNew} from '../../../reducks/posts/operations'
+import {newPost} from '../../../reducks/posts/operations'
 import useMessage from '../../../hooks/useMessage';
+import useLoadingState from '../../../hooks/useLoadingState';
+import { DefaultBox } from '../../../assets/style/chakraStyles'
 
 export const PostNew = memo(()=> {
   const dispatch = useDispatch();
@@ -26,7 +27,8 @@ export const PostNew = memo(()=> {
 
   const selector = useSelector((state) => state);
   const userId = getUserId(selector);
-  const loadingState = getLoadingState(selector);
+  const loadingState = useLoadingState()
+  const showMessage = useMessage()
 
   const inputTitle = useCallback((event)=> {
     setTitle(event.target.value)
@@ -36,17 +38,17 @@ export const PostNew = memo(()=> {
     setContent(event.target.value)
   }, [setContent])
 
-  const inputImage = useCallback((event)=> {
-    const file = event.target.files[0]
-    setImage(file)
-    PreviewImage(event)
-  }, [setImage])
-  
   const PreviewImage = useCallback((e) => {
     const imageFile = e.target.files[0]
     setPreview(window.URL.createObjectURL(imageFile))
   },[])
 
+  const inputImage = useCallback((event)=> {
+    const file = event.target.files[0]
+    setImage(file)
+    PreviewImage(event)
+  }, [setImage, PreviewImage])
+  
   const createFormData = useCallback(()=> {
     const formData = new FormData();
 
@@ -56,32 +58,33 @@ export const PostNew = memo(()=> {
     if (image) formData.append('post[image]', image)
 
     return formData
-  })
+  },[userId, title, content, image])
   const formData = createFormData();
 
-  const showMessage = useMessage()
 
   return(
-    <Box bg="white" p="4" shadow="md" borderRadius="md">
+    <DefaultBox>
       <Stack>
         <FormControl id="title">
-          <FormLabel>タイトル</FormLabel>
+          <FormLabel fontSize={{base: "sm", md: "lg"}}>タイトル</FormLabel>
           <Input 
             type="title"
             name="title"
             placeholder="タイトルを入力してください"
+            fontSize={{base: "sm", md: "lg"}}
             required={true}
             value={title}
             onChange={inputTitle}
           />
         </FormControl>
         <FormControl id="content">
-          <FormLabel>本文</FormLabel>
+          <FormLabel fontSize={{base: "sm", md: "lg"}}>本文</FormLabel>
           <Textarea
             type="content"
             name="content"
             rows="10"
             placeholder="本文を入力してください"
+            fontSize={{base: "sm", md: "lg"}}
             required={true}
             value={content}
             onChange={inputContent}
@@ -109,7 +112,7 @@ export const PostNew = memo(()=> {
               <CancelIcon />
             </Button>
             <Img
-              boxSize="md" 
+              boxSize={{base: "2xs", md: "md"}} 
               objectFit="cover"
               src={preview}
               alt="preview img"
@@ -118,14 +121,15 @@ export const PostNew = memo(()=> {
         }
         <PrimaryButton
           type="submit"
-          onClick={()=> dispatch(postNew(formData, showMessage))}
+          onClick={()=> dispatch(newPost(formData, showMessage))}
           loading = {loadingState}
-          disabled = {title === "" || content === ""}
+          disabled = {title==="" || content===""}
+          fontSize={{base: "sm", md: "lg"}}
         >
           投稿
         </PrimaryButton>
       </Stack>
-    </Box>
+    </DefaultBox>
   )
 })
 

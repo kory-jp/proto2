@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { push } from 'connected-react-router';
 import { nowLoadingAction } from '../loading/actions';
-import { getPostsAction, postNewAction, postShowAction, postUpdateAction } from './actions';
+import { getPostsAction, newPostAction, showPostAction, updatePostAction,  } from './actions';
 
 export const getPosts = () => {
   return async (dispatch) => {
@@ -20,7 +20,7 @@ export const getPosts = () => {
   }
 }
 
-export const postNew = (formData, showMessage) => {
+export const newPost = (formData, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true))
     axios
@@ -35,7 +35,7 @@ export const postNew = (formData, showMessage) => {
       ).then(response => {
         const post = response.data
         dispatch(
-          postNewAction({
+          newPostAction({
             id: post.id,
             user_id: post.user_id,
             title: post.title,
@@ -53,7 +53,7 @@ export const postNew = (formData, showMessage) => {
   }
 }
 
-export const postDetail = (postId) => {
+export const showPost = (postId) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true))
     axios
@@ -62,7 +62,7 @@ export const postDetail = (postId) => {
       ).then(response => {
         const post = response.data
         dispatch(
-          postShowAction({
+          showPostAction({
             id: post.id,
             user_id: post.user_id,
             name: post.name,
@@ -81,7 +81,7 @@ export const postDetail = (postId) => {
   }
 }
 
-export const postUpdate = (postId, formData, showMessage) => {
+export const updatePost = (postId, formData, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true))
     axios
@@ -96,7 +96,7 @@ export const postUpdate = (postId, formData, showMessage) => {
       ).then(response => {
         const post = response.data
         dispatch(
-          postUpdateAction({
+          updatePostAction({
             id: post.id,
             user_id: post.user_id,
             title: post.title,
@@ -114,7 +114,7 @@ export const postUpdate = (postId, formData, showMessage) => {
   }
 }
 
-export const postDelete = (postId, showMessage) => {
+export const deletePost = (postId, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true))
     axios
@@ -122,7 +122,7 @@ export const postDelete = (postId, showMessage) => {
         {withCredentials: true}
       ).then(response => {
         dispatch(
-          postUpdateAction({
+          updatePostAction({
             id: '',
             user_id: '',
             title: '',

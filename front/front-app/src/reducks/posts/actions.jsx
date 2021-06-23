@@ -6,40 +6,40 @@ export const getPostsAction = (posts) => {
   }
 }
 
-export const POSTNEW  = 'POSTNEW';
-export const postNewAction = (postStatus) => {
+export const NEWPOST  = 'NEWPOST';
+export const newPostAction = (postStatus) => {
   return {
-    type: 'POSTNEW',
+    type: 'NEWPOST',
     payload: {
       ...postStatus
     }
   }
 }
 
-export const POSTSHOW = 'POSTSHOW';
-export const postShowAction = (postStatus) => {
+export const SHOWPOST = 'SHOWPOST';
+export const showPostAction = (postStatus) => {
   return {
-    type: 'POSTSHOW',
+    type: 'SHOWPOST',
     payload: {
       ...postStatus
     }
   }
 }
 
-export const POSTUPDATE = 'POSTUPDATE';
-export const postUpdateAction = (postStatus) => {
+export const UPDATEPOST = 'UPDATEPOST';
+export const updatePostAction = (postStatus) => {
   return {
-    type: 'POSTUPDATE',
+    type: 'UPDATEPOST',
     payload: {
       ...postStatus
     }
   }
 }
 
-export const POSTUPDELETE = 'POSTUPDELETE';
-export const postDeleteAction = (postStatus) => {
+export const DELETEPOST = 'DELETEPOST';
+export const deletePostAction = (postStatus) => {
   return {
-    type: 'POSTUPDELETE',
+    type: 'DELETEPOST',
     payload: {
       ...postStatus
     }
