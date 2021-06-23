@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Auth from '../components/auth/Auth'
 import LoginPage from '../components/pages/LoginPage'
+import ProfileEdit from '../components/pages/mypage/ProfileEdit'
 import PostEdit from '../components/pages/posts/PostEdit'
 import PostIndex from '../components/pages/posts/PostIndex'
 import PostNew from '../components/pages/posts/PostNew'
@@ -20,6 +21,7 @@ export const Router = () => {
         <Route path={"/posts/new"} component={PostNew} />
         <Route path={"/posts/show/:id"} component={PostShow} />
         <Route path={"/posts/edit/:id"} component={PostEdit} />
+        <Route path={"/mypage/edit"} component={ProfileEdit} />
       </Auth>
     </Switch>
   )

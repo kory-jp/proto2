@@ -1,17 +1,21 @@
 class Api::V1::User::SessionsController < Api::V1::User::Base
-  before_action :current_user
+  # before_action :current_user
 
   def login
     @user = User.find_by(email: session_params[:email])
 
     if @user && @user.authenticate(session_params[:password])
       login!
+      current_user
       render json: {
         logged_in: true,
         user: {
          id: @user.id,
          name: @user.name,
+         nickname: @user.nickname,
          email: @user.email,
+         introduction: @user.introduction,
+         image: @user.image_data,
          password_digest: @user.password_digest
         }
       }
@@ -27,12 +31,16 @@ class Api::V1::User::SessionsController < Api::V1::User::Base
 
   def logged_in?
     if @current_user
+      current_user
       render json: {
         logged_in: true, 
         user: {
           id: current_user.id,
           name: current_user.name,
+          nickname: current_user.nickname,
           email: current_user.email,
+          introduction: current_user.introduction,
+          image: current_user.image_data,
         }
       }
     else

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         post '/login', to: 'sessions#login'
         delete '/logout', to: 'sessions#logout'
         get '/logged_in', to: 'sessions#logged_in?'
+        resources :accounts, only: [:show, :update]
         resources :posts do
           member do
             get :auth

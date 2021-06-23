@@ -6,6 +6,7 @@ import { getPosts } from '../../../reducks/posts/operations';
 import { getPostsSelect } from '../../../reducks/posts/selectors';
 import PostCard from '../../organisms/post/PostCard';
 import { getLoadingState } from '../../../reducks/loading/selectors';
+import SideBar from '../../organisms/layout/SideBar';
 
 export const PostIndex = memo(()=> {
   const dispatch =  useDispatch();
@@ -27,6 +28,7 @@ export const PostIndex = memo(()=> {
       ): (
         <>
         <Box>
+          <SideBar />
           {posts.length > 0 && (
             posts.map(post =>(
               <PostCard key={post.id} post={post}/>

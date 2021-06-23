@@ -18,7 +18,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import { getLoadingState } from '../../../reducks/loading/selectors';
 import { getUserId } from '../../../reducks/users/selectors';
-import { postDelete, postUpdate } from '../../../reducks/posts/operations';
+import { postDelete, postDetail, postUpdate } from '../../../reducks/posts/operations';
 import useMessage from '../../../hooks/useMessage';
 
 export const PostEdit = memo(()=> {

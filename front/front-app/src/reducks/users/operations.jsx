@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {push} from 'connected-react-router';
 import { nowLoadingAction } from '../loading/actions';
-import { logInAction, registrationAction, logOutAction } from './actions';
+import { logInAction, registrationAction, logOutAction, userUpdateAction } from './actions';
 
 
 export const registration = (userName, email, password, passwordConfirmation, showMessage) => {
@@ -80,13 +80,16 @@ export const logIn = (email, password, showMessage) => {
       ).then(response => {
         if (response.data.logged_in) {
           const userData = response.data
-
+          console.log(response)
           dispatch(
             logInAction({
               logged_in: userData.logged_in,
               id: userData.user.id,
               name: userData.user.name, 
+              nickname: userData.user.nickname,
               email: userData.user.email,
+              introduction: userData.user.introduction,
+              image: userData.user.image,
               password: userData.user.password_digest
             })
           )
@@ -151,7 +154,10 @@ export const loggedInStatus = () => {
             logged_in: userData.logged_in,
             id: userData.user.id,
             name: userData.user.name, 
+            nickname: userData.user.nickname,
             email: userData.user.email,
+            introduction: userData.user.introduction,
+            image: userData.user.image,
             password: userData.user.password_digest
           })
         )
@@ -179,5 +185,40 @@ export const completedLoggedInStatus = () => {
     }).catch(error => {
       console.log("ログインエラー:", error)
     })
+  }
+}
+
+// 個人情報訂正
+export const userUpdate = (userId, formData, showMessage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true))
+    axios
+      .patch(`http://localhost:3001/api/v1/user/accounts/${userId.id}`,
+        formData,
+        {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        },
+        {withCredentials: true}
+      ).then(response => {
+        console.log(response)
+        const user = response.data
+        dispatch(
+          userUpdateAction({
+            name: user.name,
+            nickname: user.nickname,
+            email: user.email,
+            introduction: user.introduction,
+            image: user.image
+          })
+        )
+        showMessage({title: '個人情報を修正しました', status: 'success'})
+        dispatch(push('/posts'))
+      }).catch(error => {
+        console.log("post res:", error)
+      }).finally(() => {
+        dispatch(nowLoadingAction(false))
+      })
   }
 }

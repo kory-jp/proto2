@@ -15,8 +15,11 @@ const initialState = {
     logged_in: false,
     id: '',
     name: '',
+    nickname: '',
     email: '',
     password: '',
+    introduction: '',
+    image: ''
   },
 
   posts: {
