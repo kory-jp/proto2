@@ -8,22 +8,22 @@ export const PostsReducer = (state = initialState.posts, action) => {
         ...state,
         list: [...action.payload]
       }
-    case Actions.POSTNEW:
+    case Actions.NEWPOST:
       return {
         ...state,
         ...action.payload,
       }
-    case Actions.POSTSHOW:
+    case Actions.SHOWPOST:
       return {
         ...state,
         ...action.payload
       }
-    case Actions.POSTUPDATE:
+    case Actions.UPDATEPOST:
       return {
         ...state,
         ...action.payload
       }
-    case Actions.POSTUPDELETE:
+    case Actions.DELETEPOST:
       return {
         ...state,
         ...action.payload

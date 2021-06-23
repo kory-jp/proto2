@@ -1,19 +1,20 @@
 import { Input } from "@chakra-ui/input";
-import { Box, Link, Stack, Text } from "@chakra-ui/layout";
+import {Link, Stack } from "@chakra-ui/layout";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {push} from 'connected-react-router';
 
 import {completedLoggedInStatus, logIn} from "../../reducks/users/operations"
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
-import { getLoadingState } from "../../reducks/loading/selectors";
 import useMessage from "../../hooks/useMessage";
+import useLoadingState from "../../hooks/useLoadingState";
+import { DefaultBox, DefaultText } from "../../assets/style/chakraStyles";
 
 export const ReduxLogin = () => {
   const dispatch = useDispatch();
   useEffect(()=> {
     dispatch(completedLoggedInStatus())
-  },[])
+  },[dispatch])
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -29,19 +30,20 @@ export const ReduxLogin = () => {
     dispatch(push('/registration'))
   }
 
-  const selector =  useSelector((state) => state);
-  const loadingState = getLoadingState(selector);
+  const loadingState = useLoadingState()
   const showMessage = useMessage();
 
   return(
-    <Box bg="white" p="5" shadow="md" borderRadius="md">
-      <Text as="h3" textAlign="center" fontWeight="bold" fontSize="lg">COVID-TAX</Text>
+    <DefaultBox>
+      {/* <Text as="h3" textAlign="center" fontWeight="bold" fontSize="lg">COVID-TAX</Text> */}
+      <DefaultText as="h3" textAlign="center" fontWeight="bold">COVID-TAX</DefaultText>
       <Stack spacing="5">
         <Input
           id="f4"
           type="email"
           name="email"
           placeholder="メールアドレス"
+          fontSize={{base: "sm", md: "lg"}}
           required={true}
           value={email}
           onChange={inputEmail}
@@ -51,6 +53,7 @@ export const ReduxLogin = () => {
           type="password"
           name="password"
           placeholder="パスワード"
+          fontSize={{base: "sm", md: "lg"}}
           required={true}
           value={password}
           onChange={inputPassword}
@@ -63,11 +66,15 @@ export const ReduxLogin = () => {
         >
           ログイン
         </PrimaryButton>
-        <Link onClick={onClickRegistration} textAlign="center">
+        <Link 
+          onClick={onClickRegistration} 
+          textAlign="center"
+          fontSize={{base: "sm", md: "lg"}}
+        >
           新規登録
         </Link>
       </Stack>
-    </Box>    
+    </DefaultBox>
   )
 }
 

@@ -1,10 +1,12 @@
 import React, { memo } from 'react'
-import { Flex, Text } from '@chakra-ui/layout'
+import { Flex } from '@chakra-ui/layout'
 import { Image, Link } from "@chakra-ui/react"
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserId } from '../../../reducks/users/selectors'
 import { push } from 'connected-react-router'
 import CreateIcon from '@material-ui/icons/Create';
+import defaultImage from '../../../assets/img/defaultImage.jpeg'
+import { DefaultFlex, DefaultText } from '../../../assets/style/chakraStyles'
 
 export const PostShowCard = memo((props)=> {
   const dispatch = useDispatch()
@@ -12,23 +14,40 @@ export const PostShowCard = memo((props)=> {
   const selector = useSelector((state) => state);
   const currentUser_id = getUserId(selector);
   return(
-    <Flex flexDirection="column" bg="white" borderRadius="md" shadow="md" p="2" w="full">
-      <Flex w="full">
+    <DefaultFlex
+    flexDirection="column"
+    w="full"
+    >
+      <Flex 
+        w="full" 
+        flexDirection={{base: "column", md: "initial"}}
+      >
         <Image 
-          src={image}
-          boxSize="md"
+          src={image? image : defaultImage}
+          alt="投稿画像"
+          boxSize={{base: "2xs", md: "md"}}
           objectFit="cover"
           shadow="md"
           borderRadius="md"
-          m="2"
+          m={{base: "auto", md: "2"}}
+          mb="2"
         />
-        <Flex flexDirection="column" pl="4" shadow="md" borderRadius="md" w="full" m="2">
-          <Text as="h2" fontWeight="bold" fontSize="lg">{title}</Text>
+        <DefaultFlex
+        flexDirection="column"
+        w="full"
+        m={{base: "auto", md: "2"}}
+        >
+          <DefaultText
+            as="h2"
+            fontWeight="bold"
+          >
+            {title}
+          </DefaultText>
           { 
             user_id === currentUser_id ? (
               <Link
                 onClick={()=> dispatch(push(`/posts/edit/${id}`))}
-                fontSize="md"
+                fontSize={{base: "sm", md: "lg"}}
               >
                 <CreateIcon fontSize="small"/>
                 編集
@@ -36,15 +55,15 @@ export const PostShowCard = memo((props)=> {
             ): null
           }
           <Flex justifyContent="space-between" pt="2">
-            <Text>{name}</Text>
-            <Text>{created_at}</Text>
+            <DefaultText>{name}</DefaultText>
+            <DefaultText>{created_at}</DefaultText>
           </Flex>
-        </Flex>
+        </DefaultFlex>
       </Flex>
-      <Flex shadow="md" borderRadius="md" p="2" mt="2">
-        <Text>{content}</Text>
-      </Flex>
-    </Flex>
+      <DefaultFlex mt="2">
+        <DefaultText>{content}</DefaultText>
+      </DefaultFlex>
+    </DefaultFlex>
   )
 })
 

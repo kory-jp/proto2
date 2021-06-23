@@ -7,6 +7,7 @@ export const PrimaryButton = memo((props) => {
     <Button
       bg="gray.400"
       color="white"
+      fontSize={{base: "sm", md: "lg"}}
       isLoading={loading}
       disabled={disabled || loading}
       onClick={onClick}
