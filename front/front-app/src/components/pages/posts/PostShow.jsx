@@ -1,22 +1,20 @@
-import React, { memo, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { Spinner } from "@chakra-ui/spinner";
 import { Center } from '@chakra-ui/layout';
 import useLoadingState from '../../../hooks/useLoadingState';
 import { showPost } from '../../../reducks/posts/operations';
-import { getPostSelect } from '../../../reducks/posts/selectors';
 import { PostShowCard} from '../../organisms/post/PostShowCard'
 
-export const PostShow = memo(()=> {
+export const PostShow = ()=> {
   const dispatch = useDispatch()
   const id = useParams();
   useEffect(()=> {
     dispatch(showPost(id))
   },[id, dispatch])
 
-  const selector = useSelector((state) => state);
-  const post = getPostSelect(selector);
+  const post = useSelector((state)=> state.posts)
   const loadingState = useLoadingState()
   return(
     <>
@@ -31,7 +29,7 @@ export const PostShow = memo(()=> {
       }
     </>
   )
-})
+}
 
 export default PostShow;
 

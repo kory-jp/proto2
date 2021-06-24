@@ -1,4 +1,3 @@
-import { memo } from "react"
 import {
   AlertDialog,
   AlertDialogBody,
@@ -8,7 +7,7 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react"
 
-const AertDialogTemplete = memo((props) => {
+const AertDialogTemplete = (props) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const onClose = () => setIsOpen(false)
   const cancelRef = React.useRef()
@@ -39,6 +38,6 @@ const AertDialogTemplete = memo((props) => {
       </AlertDialogOverlay>
     </AlertDialog>
   )
-})
+}
 
 export default AlertDialog;

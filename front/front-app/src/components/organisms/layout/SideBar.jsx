@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { useCallback } from 'react'
 import { Flex, Stack } from "@chakra-ui/layout";
 import { useDispatch } from 'react-redux';
 import {push} from 'connected-react-router';
@@ -10,7 +10,7 @@ import useMessage from '../../../hooks/useMessage';
 import SideBarButton from '../../atoms/button/SIdeBarButton';
 import { logOut } from '../../../reducks/users/operations';
 
-export const SideBar = memo(()=> {
+export const SideBar = ()=> {
   const dispatch =  useDispatch();
   const showMessage = useMessage();
 
@@ -38,6 +38,6 @@ export const SideBar = memo(()=> {
       </Stack>
      </Flex>
   )
-})
+}
 
 export default SideBar;

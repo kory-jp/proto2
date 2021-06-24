@@ -1,11 +1,11 @@
 import { Box, Flex } from '@chakra-ui/layout';
-import React, { memo, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { completedLoggedInStatus } from '../../reducks/users/operations';
 
 import Registration from '../auth/Registration';
 
-export const RegistrationPage = memo(()=> {
+export const RegistrationPage = ()=> {
   const dispatch =  useDispatch();
 
   useEffect(()=> {
@@ -18,6 +18,6 @@ export const RegistrationPage = memo(()=> {
       </Box>
     </Flex>
   )
-})
+}
 
 export default RegistrationPage;

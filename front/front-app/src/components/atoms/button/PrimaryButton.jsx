@@ -1,7 +1,6 @@
 import { Button } from "@chakra-ui/button";
-import { memo } from "react";
 
-export const PrimaryButton = memo((props) => {
+export const PrimaryButton = (props) => {
   const  {children, onClick, disabled = false, loading = false} = props;
   return(
     <Button
@@ -15,4 +14,4 @@ export const PrimaryButton = memo((props) => {
       {children}
     </Button>
   )
-})
+}

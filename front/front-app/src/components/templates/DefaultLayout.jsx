@@ -1,10 +1,9 @@
-import React, { memo } from 'react'
-import { Flex, Box } from "@chakra-ui/layout";
+import React from 'react'
+import { Box, Flex } from '@chakra-ui/layout';
 import Header from '../organisms/layout/Header';
 import SideBar from '../organisms/layout/SideBar';
 
-export const DefaultLayout = memo((props)=> {
-  console.log(props)
+export const DefaultLayout = (props)=> {
   const {children} = props;
   return(
     <>
@@ -22,6 +21,6 @@ export const DefaultLayout = memo((props)=> {
       </Flex>
     </>
   )
-})
+}
 
 export default DefaultLayout;

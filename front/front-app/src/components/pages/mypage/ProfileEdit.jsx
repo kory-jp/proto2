@@ -1,6 +1,6 @@
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Stack, Box } from "@chakra-ui/layout";
 import {
   FormControl,
@@ -11,19 +11,18 @@ import {
 } from "@chakra-ui/react"
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import CancelIcon from '@material-ui/icons/Cancel';
-import { getUserId } from '../../../reducks/users/selectors';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
-import { getLoadingState } from '../../../reducks/loading/selectors';
 import useMessage from '../../../hooks/useMessage';
 import { userUpdate } from '../../../reducks/users/operations';
 import { DefaultFlex, DefaultImage } from '../../../assets/style/chakraStyles';
+import useGetUserId from '../../../hooks/useGetUserId';
+import useLoadingState from '../../../hooks/useLoadingState';
 
-export const ProfileEdit = memo(()=> {
+export const ProfileEdit = ()=> {
   const dispatch = useDispatch()
   const showMessage = useMessage()
-  const selector = useSelector((state)=> state)
-  const userId = getUserId(selector)
-  const loadingState = getLoadingState(selector)
+  const userId = useGetUserId()
+  const loadingState = useLoadingState()
 
   const [name, setName] =  useState('');
   const [nickname, setNickname] =  useState('');
@@ -186,6 +185,6 @@ export const ProfileEdit = memo(()=> {
       </Stack>
     </DefaultFlex>
   )
-})
+}
 
 export default ProfileEdit;

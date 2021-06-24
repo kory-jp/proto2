@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
-import React, { memo, useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { Box, Stack, Center } from '@chakra-ui/layout'
 import {
@@ -16,14 +16,14 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import CancelIcon from '@material-ui/icons/Cancel';
 
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
-import { getUserId } from '../../../reducks/users/selectors';
 import { deletePost, updatePost } from '../../../reducks/posts/operations';
 import useMessage from '../../../hooks/useMessage';
 import useLoadingState from '../../../hooks/useLoadingState';
 import { nowLoadingAction } from '../../../reducks/loading/actions';
 import { DefaultBox, DefaultImage } from '../../../assets/style/chakraStyles'
+import useGetUserId from '../../../hooks/useGetUserId';
 
-export const PostEdit = memo(()=> {
+export const PostEdit = ()=> {
   const dispatch = useDispatch()
   const postId = useParams();
   const [title, setTitle] =  useState('');
@@ -89,8 +89,7 @@ export const PostEdit = memo(()=> {
     getPostStatus(postId)
   },[editAuth, getPostStatus, postId])
 
-  const selector = useSelector((state)=> state)
-  const userId = getUserId(selector);
+  const userId = useGetUserId()
   const loadingState = useLoadingState()
 
   const createFormData = useCallback(()=> {
@@ -171,15 +170,15 @@ export const PostEdit = memo(()=> {
               <PrimaryButton
                 type="submit"
                 onClick={()=> dispatch(updatePost(postId, formData, showMessage))}
-                loading = {loadingState}
-                disabled = {title === "" || content === ""}
+                loading={loadingState}
+                disabled={title === "" || content === ""}
                 fontSize={{base: "sm", md: "lg"}}
               >
                 編集
               </PrimaryButton>
               <PrimaryButton
                 type="submit"
-                loading = {loadingState}
+                loading={loadingState}
                 onClick={()=> dispatch(deletePost(postId, showMessage))}
                 fontSize={{base: "sm", md: "lg"}}
               >
@@ -191,6 +190,6 @@ export const PostEdit = memo(()=> {
       }
     </>
   )
-})
+}
 
 export default PostEdit;

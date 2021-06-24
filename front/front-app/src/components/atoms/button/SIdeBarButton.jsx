@@ -1,7 +1,7 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { Button } from '@chakra-ui/button';
 
-export const SideBarButton = memo((props)=> {
+export const SideBarButton = (props)=> {
   const {children, onClick, leftIcon} = props
   return(
     <Button 
@@ -15,6 +15,6 @@ export const SideBarButton = memo((props)=> {
      {children}
    </Button>
   )
-})
+}
 
 export default SideBarButton;

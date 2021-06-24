@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { Flex } from '@chakra-ui/layout'
 import { Image } from "@chakra-ui/react"
 import { useDispatch } from 'react-redux'
@@ -6,7 +6,7 @@ import { push } from 'connected-react-router';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
 import { DefaultFlex, DefaultText } from '../../../assets/style/chakraStyles';
 
-export const PostCard = memo((props)=> {
+export const PostCard = (props)=> {
   const dispatch = useDispatch()
   const {id, title, name, image, created_at} = props.post;
   return(
@@ -36,6 +36,6 @@ export const PostCard = memo((props)=> {
       </Flex>
     </DefaultFlex>
   )
-})
+}
 
 export default PostCard;
