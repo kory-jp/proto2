@@ -5,7 +5,6 @@ import { Spinner } from "@chakra-ui/spinner";
 import { getPosts } from '../../../reducks/posts/operations';
 import { getPostsSelect } from '../../../reducks/posts/selectors';
 import PostCard from '../../organisms/post/PostCard';
-import SideBar from '../../organisms/layout/SideBar';
 import useLoadingState from '../../../hooks/useLoadingState';
 
 export const PostIndex = memo(()=> {
@@ -26,9 +25,8 @@ export const PostIndex = memo(()=> {
         </Center>
       ): (
         <>
-          <SideBar />
           {posts.length > 0 && (
-            <Box m="2">
+            <Box mr="2" ml="2" mb="2">
               {
                 posts.map(post =>(
                   <PostCard key={post.id} post={post}/>

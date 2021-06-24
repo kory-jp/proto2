@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/layout";
-import { Text } from "@chakra-ui/react";
+import { Text, Image } from "@chakra-ui/react";
 
 export const DefaultBox = (props) => {
   return <Box
@@ -24,6 +24,16 @@ export const DefaultFlex = (props) => {
 export const DefaultText = (props) => {
   return <Text 
     fontSize={{base: "sm", md: "lg"}}
+    {...props}
+  />
+}
+
+export const DefaultImage = (props) => {
+  return <Image 
+    boxSize={{base: "2xs", md: "md"}}
+    objectFit="cover"
+    shadow="md"
+    borderRadius="md"
     {...props}
   />
 }

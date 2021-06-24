@@ -48,6 +48,7 @@ back/storage/*
 !back/storage/.keep
 back/.byebug_history
 back/public/uploads/post
+back/public/uploads/user
 
 # Ignore master key for decrypting credentials and more.
 back/config/master.key

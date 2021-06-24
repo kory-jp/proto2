@@ -16,12 +16,13 @@ export const Router = () => {
       <Route  exact path={"/"} component={LoginPage} />
       <Route path={"/registration"} component={RegistrationPage} />
       <Auth>
-        <DefaultLayout />
-        <Route exact path={"/posts"} component={PostIndex} /> 
-        <Route path={"/posts/new"} component={PostNew} />
-        <Route path={"/posts/show/:id"} component={PostShow} />
-        <Route path={"/posts/edit/:id"} component={PostEdit} />
-        <Route path={"/mypage/edit"} component={ProfileEdit} />
+        <DefaultLayout>
+          <Route exact path={"/posts"} component={PostIndex} /> 
+          <Route path={"/posts/new"} component={PostNew} />
+          <Route path={"/posts/show/:id"} component={PostShow} />
+          <Route path={"/posts/edit/:id"} component={PostEdit} />
+          <Route path={"/mypage/edit"} component={ProfileEdit} />
+        </DefaultLayout>
       </Auth>
     </Switch>
   )

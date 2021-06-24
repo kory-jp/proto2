@@ -20,6 +20,12 @@ export const MenuDrawer = (props) => {
     dispatch(push('/posts/new'))
     onClose()
   }
+
+  const toEditProfile = () => {
+    dispatch(push('/mypage/edit'))
+    onClose()
+  }
+  
   return(
     <Drawer placement="left" size="xs" onClose={onClose} isOpen={isOpen}>
     <DrawerOverlay>
@@ -38,6 +44,15 @@ export const MenuDrawer = (props) => {
             m="2"
           >
             新規投稿
+          </Button>
+          <Button
+            bg="white"
+            onClick={toEditProfile}
+            fontSize="sm"
+            w="100%"
+            m="2"
+          >
+            個人情報修正
           </Button>
           <Button
             bg="white"

@@ -53,7 +53,6 @@ class Api::V1::User::PostsController < Api::V1::User::Base
   end
 
   def update
-    binding.pry
     post = Post.find(params[:id])
     post.update(post_params)
     if post.save
@@ -64,7 +63,6 @@ class Api::V1::User::PostsController < Api::V1::User::Base
   end
 
   def destroy
-    binding.pry
     post = Post.find(params[:id])
     post.destroy
   end

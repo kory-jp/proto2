@@ -1,14 +1,13 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { Flex, Stack, Box } from "@chakra-ui/layout";
+import { Stack, Box } from "@chakra-ui/layout";
 import {
   FormControl,
   FormLabel,
   Input,
   Textarea,
   Button,
-  Img,
 } from "@chakra-ui/react"
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -17,6 +16,7 @@ import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import { getLoadingState } from '../../../reducks/loading/selectors';
 import useMessage from '../../../hooks/useMessage';
 import { userUpdate } from '../../../reducks/users/operations';
+import { DefaultFlex, DefaultImage } from '../../../assets/style/chakraStyles';
 
 export const ProfileEdit = memo(()=> {
   const dispatch = useDispatch()
@@ -97,47 +97,51 @@ export const ProfileEdit = memo(()=> {
 
 
   return(
-    <Flex flexDirection="column" bg="white" borderRadius="md" shadow="md" p="2">
+    <DefaultFlex flexDirection="column">
       <Stack>
       <FormControl id="name">
-        <FormLabel>お名前</FormLabel>
+        <FormLabel fontSize={{base: "sm", md: "lg"}}>お名前</FormLabel>
         <Input 
           type="text"
           name="name"
           placeholder="お名前を入力してください"
+          fontSize={{base: "sm", md: "lg"}}
           required={true}
           value={name}
           onChange={inputName}
         />
       </FormControl>
       <FormControl id="nickname">
-        <FormLabel>ニックネーム</FormLabel>
+        <FormLabel fontSize={{base: "sm", md: "lg"}}>ニックネーム</FormLabel>
         <Textarea
           type="text"
           name="nickname"
           placeholder="ニックネームを入力してください"
+          fontSize={{base: "sm", md: "lg"}}
           rows="1"
           value={nickname}
           onChange={inputNickname}
         />
       </FormControl>
       <FormControl id="email">
-        <FormLabel>メールアドレス</FormLabel>
+        <FormLabel fontSize={{base: "sm", md: "lg"}}>メールアドレス</FormLabel>
         <Textarea
           type="email"
           name="email"
           rows="1"
           placeholder="メールアドレスを入力してください"
+          fontSize={{base: "sm", md: "lg"}}
           value={email}
           onChange={inputEmail}
         />
       </FormControl>
       <FormControl id="introduction">
-        <FormLabel>自己紹介文</FormLabel>
+        <FormLabel fontSize={{base: "sm", md: "lg"}}>自己紹介文</FormLabel>
         <Textarea
           type="text"
           name="introduction"
           placeholder="自己紹介文を入力してください"
+          fontSize={{base: "sm", md: "lg"}}
           rows="5"
           value={introduction}
           onChange={inputIntroduction}
@@ -164,9 +168,7 @@ export const ProfileEdit = memo(()=> {
           >
             <CancelIcon />
           </Button>
-          <Img
-            boxSize="md" 
-            objectFit="cover"
+          <DefaultImage 
             src={preview}
             alt="preview img"
           />
@@ -177,11 +179,12 @@ export const ProfileEdit = memo(()=> {
           onClick={()=> dispatch(userUpdate(userId, formData, showMessage))}
           loading = {loadingState}
           disabled = {name === "" || email === ""}
+          fontSize={{base: "sm", md: "lg"}}
         >
           編集
         </PrimaryButton>
       </Stack>
-    </Flex>
+    </DefaultFlex>
   )
 })
 

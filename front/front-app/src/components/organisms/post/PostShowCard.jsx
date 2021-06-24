@@ -1,12 +1,12 @@
 import React, { memo } from 'react'
 import { Flex } from '@chakra-ui/layout'
-import { Image, Link } from "@chakra-ui/react"
+import { Link } from "@chakra-ui/react"
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserId } from '../../../reducks/users/selectors'
 import { push } from 'connected-react-router'
 import CreateIcon from '@material-ui/icons/Create';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
-import { DefaultFlex, DefaultText } from '../../../assets/style/chakraStyles'
+import { DefaultFlex, DefaultText, DefaultImage } from '../../../assets/style/chakraStyles'
 
 export const PostShowCard = memo((props)=> {
   const dispatch = useDispatch()
@@ -20,15 +20,11 @@ export const PostShowCard = memo((props)=> {
     >
       <Flex 
         w="full" 
-        flexDirection={{base: "column", md: "initial"}}
+        flexDirection={{base: "column", xl: "initial"}}
       >
-        <Image 
+        <DefaultImage
           src={image? image : defaultImage}
-          alt="投稿画像"
-          boxSize={{base: "2xs", md: "md"}}
-          objectFit="cover"
-          shadow="md"
-          borderRadius="md"
+          alt="投稿画像" 
           m={{base: "auto", md: "2"}}
           mb="2"
         />

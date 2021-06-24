@@ -6,7 +6,6 @@ import {
   Input,
   Textarea,
   Button,
-  Img,
 } from "@chakra-ui/react"
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -16,7 +15,7 @@ import { getUserId } from '../../../reducks/users/selectors';
 import {newPost} from '../../../reducks/posts/operations'
 import useMessage from '../../../hooks/useMessage';
 import useLoadingState from '../../../hooks/useLoadingState';
-import { DefaultBox } from '../../../assets/style/chakraStyles'
+import { DefaultBox, DefaultImage } from '../../../assets/style/chakraStyles'
 
 export const PostNew = memo(()=> {
   const dispatch = useDispatch();
@@ -111,9 +110,7 @@ export const PostNew = memo(()=> {
             >
               <CancelIcon />
             </Button>
-            <Img
-              boxSize={{base: "2xs", md: "md"}} 
-              objectFit="cover"
+            <DefaultImage 
               src={preview}
               alt="preview img"
             />
