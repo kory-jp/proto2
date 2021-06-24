@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { Flex, Text } from '@chakra-ui/layout'
 import { useDispatch } from 'react-redux'
 import {push} from 'connected-react-router';
@@ -11,7 +11,7 @@ import { logOut } from '../../../reducks/users/operations';
 import useMessage from '../../../hooks/useMessage';
 import {MenuDrawer} from '../../molecules/MenuDrawer';
 
-export const Header = memo(()=> {
+export const Header = ()=> {
   const dispatch =  useDispatch();
   const showMessage = useMessage();
   const {isOpen, onOpen, onClose} = useDisclosure()
@@ -54,6 +54,6 @@ export const Header = memo(()=> {
       <MenuDrawer onClose={onClose} isOpen={isOpen}/>
     </>
   )
-})
+}
 
 export default Header;

@@ -95,7 +95,7 @@ export const ReduxRegistration = () => {
         <PrimaryButton
           type="submit"
           onClick={()=> dispatch(registration(userName, email, password, passwordConfirmation, showMessage))}
-          loading = {loadingState}
+          loading={loadingState}
           disabled={userName === "" || email === ""|| password === "" || passwordConfirmation === ""}
         >
           新規登録

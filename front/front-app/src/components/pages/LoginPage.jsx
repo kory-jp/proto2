@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { completedLoggedInStatus } from '../../reducks/users/operations';
 import Login from '../auth/Login';
 
-export const LoginPage = memo(()=> {
+export const LoginPage = ()=> {
   const dispatch =  useDispatch();
 
   useEffect(()=> {
@@ -17,6 +17,6 @@ export const LoginPage = memo(()=> {
       </Box>
     </Flex>
   )
-})
+}
 
 export default LoginPage;

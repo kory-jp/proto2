@@ -1,18 +1,17 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { Flex } from '@chakra-ui/layout'
 import { Image, Link } from "@chakra-ui/react"
-import { useDispatch, useSelector } from 'react-redux'
-import { getUserId } from '../../../reducks/users/selectors'
+import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import CreateIcon from '@material-ui/icons/Create';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
 import { DefaultFlex, DefaultText } from '../../../assets/style/chakraStyles'
+import useGetUserId from '../../../hooks/useGetUserId'
 
-export const PostShowCard = memo((props)=> {
+export const PostShowCard = (props)=> {
   const dispatch = useDispatch()
   const {id, user_id, name, title, image, content, created_at} = props.post;
-  const selector = useSelector((state) => state);
-  const currentUser_id = getUserId(selector);
+  const userId = useGetUserId()
   return(
     <DefaultFlex
     flexDirection="column"
@@ -44,7 +43,7 @@ export const PostShowCard = memo((props)=> {
             {title}
           </DefaultText>
           { 
-            user_id === currentUser_id ? (
+            user_id === userId ? (
               <Link
                 onClick={()=> dispatch(push(`/posts/edit/${id}`))}
                 fontSize={{base: "sm", md: "lg"}}
@@ -65,6 +64,6 @@ export const PostShowCard = memo((props)=> {
       </DefaultFlex>
     </DefaultFlex>
   )
-})
+}
 
 export default PostShowCard;

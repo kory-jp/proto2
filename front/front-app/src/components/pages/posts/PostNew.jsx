@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box, Stack } from "@chakra-ui/layout";
 import {
   FormControl,
@@ -11,22 +11,21 @@ import {
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserId } from '../../../reducks/users/selectors';
+import { useDispatch } from 'react-redux';
 import {newPost} from '../../../reducks/posts/operations'
 import useMessage from '../../../hooks/useMessage';
 import useLoadingState from '../../../hooks/useLoadingState';
 import { DefaultBox } from '../../../assets/style/chakraStyles'
+import useGetUserId from '../../../hooks/useGetUserId';
 
-export const PostNew = memo(()=> {
+export const PostNew = ()=> {
   const dispatch = useDispatch();
   const [title, setTitle] =  useState('');
   const [content, setContent] =  useState('');
   const [image, setImage] =  useState();
   const [preview, setPreview] = useState('');
 
-  const selector = useSelector((state) => state);
-  const userId = getUserId(selector);
+  const userId = useGetUserId()
   const loadingState = useLoadingState()
   const showMessage = useMessage()
 
@@ -122,8 +121,8 @@ export const PostNew = memo(()=> {
         <PrimaryButton
           type="submit"
           onClick={()=> dispatch(newPost(formData, showMessage))}
-          loading = {loadingState}
-          disabled = {title==="" || content===""}
+          loading={loadingState}
+          disabled={title==="" || content===""}
           fontSize={{base: "sm", md: "lg"}}
         >
           投稿
@@ -131,6 +130,6 @@ export const PostNew = memo(()=> {
       </Stack>
     </DefaultBox>
   )
-})
+}
 
 export default PostNew;

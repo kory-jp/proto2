@@ -8,7 +8,6 @@ import thunk from 'redux-thunk';
 
 import {UsersReducer } from '../users/reducers';
 import { LoadingReducer } from '../loading/reducers';
-import { MessageReducer } from '../message/reducers';
 import { PostsReducer } from '../posts/reducers';
 
 export default function createState(history) {
@@ -16,7 +15,6 @@ export default function createState(history) {
     combineReducers({
       router: connectRouter(history),
       loading: LoadingReducer,
-      message: MessageReducer,
       users: UsersReducer,
       posts: PostsReducer,
     }),

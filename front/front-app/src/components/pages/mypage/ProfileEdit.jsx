@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Stack, Box } from "@chakra-ui/layout";
@@ -18,7 +18,7 @@ import { getLoadingState } from '../../../reducks/loading/selectors';
 import useMessage from '../../../hooks/useMessage';
 import { userUpdate } from '../../../reducks/users/operations';
 
-export const ProfileEdit = memo(()=> {
+export const ProfileEdit = ()=> {
   const dispatch = useDispatch()
   const showMessage = useMessage()
   const selector = useSelector((state)=> state)
@@ -183,6 +183,6 @@ export const ProfileEdit = memo(()=> {
       </Stack>
     </Flex>
   )
-})
+}
 
 export default ProfileEdit;
