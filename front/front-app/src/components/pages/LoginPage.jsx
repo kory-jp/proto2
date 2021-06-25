@@ -1,5 +1,5 @@
 import { Box, Flex } from '@chakra-ui/layout';
-import React, { memo, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { completedLoggedInStatus } from '../../reducks/users/operations';
 import Login from '../auth/Login';

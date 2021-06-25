@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { push } from 'connected-react-router';
 import { nowLoadingAction } from '../loading/actions';
-import { getPostsAction, newPostAction, showPostAction, updatePostAction,  } from './actions';
+import { deletePostAction, getPostsAction, newPostAction, showPostAction, updatePostAction,  } from './actions';
 
 export const getPosts = () => {
   return async (dispatch) => {
@@ -66,6 +66,7 @@ export const showPost = (postId) => {
             id: post.id,
             user_id: post.user_id,
             name: post.name,
+            userIcon: post.user_icon.url,
             title: post.title,
             content: post.content,
             image: post.image.url,
@@ -122,7 +123,7 @@ export const deletePost = (postId, showMessage) => {
         {withCredentials: true}
       ).then(response => {
         dispatch(
-          updatePostAction({
+          deletePostAction({
             id: '',
             user_id: '',
             title: '',

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { Flex, Stack } from "@chakra-ui/layout";
 import { useDispatch } from 'react-redux';
 import {push} from 'connected-react-router';
@@ -9,10 +9,12 @@ import PersonIcon from '@material-ui/icons/Person';
 import useMessage from '../../../hooks/useMessage';
 import SideBarButton from '../../atoms/button/SIdeBarButton';
 import { logOut } from '../../../reducks/users/operations';
+import useGetUserId from '../../../hooks/useGetUserId';
 
 export const SideBar = ()=> {
   const dispatch =  useDispatch();
   const showMessage = useMessage();
+  const userId = useGetUserId()
 
   return(
     <Flex flexDirection="column" bg="white" shadow="md" borderRadius="md" p="2">
@@ -24,7 +26,7 @@ export const SideBar = ()=> {
           新規投稿
         </SideBarButton>
         <SideBarButton
-          onClick={()=> dispatch(push('/mypage/edit'))}
+          onClick={()=> dispatch(push(`/mypage/edit/${userId}`))}
           leftIcon={<PersonIcon />}
         >
           個人情報修正

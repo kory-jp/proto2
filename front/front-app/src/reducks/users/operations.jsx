@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {push} from 'connected-react-router';
 import { nowLoadingAction } from '../loading/actions';
-import { logInAction, registrationAction, logOutAction, userUpdateAction } from './actions';
+import { logInAction, registrationAction, logOutAction, getUserProfileAction, userUpdateAction } from './actions';
 
 
 export const registration = (userName, email, password, passwordConfirmation, showMessage) => {
@@ -188,8 +188,37 @@ export const completedLoggedInStatus = () => {
   }
 }
 
+// export const getUserProfile = (userId) => {
+//   return async (dispatch) => {
+//     axios
+//     .get(`http://localhost:3001/api/v1/user/accounts/${userId.id}/edit`,
+//     {withCredentials: true} 
+//       ).then(response => {
+//         const data = response.data.user
+//         const auth = response.data.auth
+//         if (auth) {
+//           dispatch(
+//             getUserProfileAction({
+//               id: data.id,
+//               name: data.name, 
+//               nickname: data.nickname,
+//               email: data.email,
+//               introduction: data.introduction,
+//               image: data.image,
+//               password: data.password_digest
+//             })
+//           )
+//         } else {
+//           dispatch(push('/posts'))
+//         }
+//       }).catch(error => {
+//         console.log("error:", error)
+//       })
+//   }
+// }
+
 // 個人情報訂正
-export const userUpdate = (userId, formData, showMessage) => {
+export const updateUser = (userId, formData, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true))
     axios

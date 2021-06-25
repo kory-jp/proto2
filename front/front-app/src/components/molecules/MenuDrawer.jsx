@@ -11,18 +11,20 @@ import { Button } from '@chakra-ui/button';
 import useMessage from '../../hooks/useMessage';
 import {push} from 'connected-react-router';
 import { logOut } from '../../reducks/users/operations';
+import useGetUserId from '../../hooks/useGetUserId';
 
 export const MenuDrawer = (props) => {
   const {onClose, isOpen} = props;
   const dispatch =  useDispatch();
   const showMessage = useMessage();
+  const userId = useGetUserId()
   const toNewPost = () => {
     dispatch(push('/posts/new'))
     onClose()
   }
 
   const toEditProfile = () => {
-    dispatch(push('/mypage/edit'))
+    dispatch(push(`/mypage/edit/${userId}`))
     onClose()
   }
   

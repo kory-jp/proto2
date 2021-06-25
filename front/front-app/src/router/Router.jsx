@@ -8,6 +8,7 @@ import PostIndex from '../components/pages/posts/PostIndex'
 import PostNew from '../components/pages/posts/PostNew'
 import PostShow from '../components/pages/posts/PostShow'
 import RegistrationPage from '../components/pages/RegistrationPage'
+import UsersInfo from '../components/pages/users/UsersInfo'
 import DefaultLayout from '../components/templates/DefaultLayout'
 
 export const Router = () => {
@@ -21,7 +22,8 @@ export const Router = () => {
           <Route path={"/posts/new"} component={PostNew} />
           <Route path={"/posts/show/:id"} component={PostShow} />
           <Route path={"/posts/edit/:id"} component={PostEdit} />
-          <Route path={"/mypage/edit"} component={ProfileEdit} />
+          <Route path={"/mypage/edit/:id"} component={ProfileEdit} />
+          <Route path={"/users/:id"} component={UsersInfo} />
         </DefaultLayout>
       </Auth>
     </Switch>

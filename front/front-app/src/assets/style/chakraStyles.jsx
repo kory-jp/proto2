@@ -37,3 +37,13 @@ export const DefaultImage = (props) => {
     {...props}
   />
 }
+
+export const DefaultUserIconImage = (props) => {
+  return <Image 
+    boxSize={{base: "40px", md: "60px"}}
+    objectFit="cover"
+    shadow="md"
+    borderRadius="full"
+    {...props}
+  />
+}

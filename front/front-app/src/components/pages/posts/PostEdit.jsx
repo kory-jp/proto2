@@ -30,6 +30,8 @@ export const PostEdit = ()=> {
   const [content, setContent] =  useState('');
   const [image, setImage] =  useState();
   const [preview, setPreview] = useState('');
+  const userId = useGetUserId()
+  const loadingState = useLoadingState()
 
   const inputTitle = useCallback((event)=> {
     setTitle(event.target.value)
@@ -88,9 +90,6 @@ export const PostEdit = ()=> {
     editAuth(postId)
     getPostStatus(postId)
   },[editAuth, getPostStatus, postId])
-
-  const userId = useGetUserId()
-  const loadingState = useLoadingState()
 
   const createFormData = useCallback(()=> {
     const formData = new FormData();

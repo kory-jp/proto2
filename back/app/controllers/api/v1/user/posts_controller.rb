@@ -31,6 +31,8 @@ class Api::V1::User::PostsController < Api::V1::User::Base
     user = User.find_by(id: post.user_id)
     user_name = user.name
     postObj["name"] = user_name
+    user_icon = user.image_data
+    postObj["user_icon"] = user_icon
     render json: postObj
   end
 

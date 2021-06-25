@@ -28,6 +28,16 @@ export const logOutAction = (usersStatus) => {
   }
 }
 
+// export const GET_USER_PROFILE = "GET_USER_PROFILE"
+// export const getUserProfileAction = (userStatus) => {
+//   return {
+//     type: "GET_USER_PROFILE",
+//     payload: {
+//       ...userStatus
+//     }
+//   }
+// }
+
 export const USER_UPDATE = "USER_UPDATE";
 export const userUpdateAction = (usersStatus) => {
   return {

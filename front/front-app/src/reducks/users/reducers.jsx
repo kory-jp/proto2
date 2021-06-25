@@ -18,6 +18,11 @@ export const UsersReducer = (state = initialState.users, action) => {
         ...state,
         ...action.payload,
       }
+    // case Actions.GET_USER_PROFILE:
+    //   return {
+    //     ...state,
+    //     ...action.payload,
+    //   }
     case Actions.USER_UPDATE:
       return {
         ...state,
