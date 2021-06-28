@@ -7,7 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { useDisclosure } from "@chakra-ui/react"
 import { Link } from '@chakra-ui/react';
 
-import { logOut } from '../../../reducks/users/operations';
+import { logOut } from '../../../reducks/currentUser/operations';
 import useMessage from '../../../hooks/useMessage';
 import {MenuDrawer} from '../../molecules/MenuDrawer';
 

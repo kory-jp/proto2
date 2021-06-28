@@ -3,8 +3,8 @@ const initialState = {
     status: false
   },
   
-  users: {
-    logged_in: false,
+  currentUser: {
+    // logged_in: false,
     id: '',
     name: '',
     nickname: '',
@@ -12,6 +12,10 @@ const initialState = {
     password: '',
     introduction: '',
     image: ''
+  },
+
+  users: {
+    list: [],
   },
 
   posts: {

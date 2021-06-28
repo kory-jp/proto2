@@ -1,7 +1,8 @@
 class Api::V1::User::PostsController < Api::V1::User::Base
   
   def index
-    posts = Post.all.order(created_at: "DESC")
+    posts = Post.page(params[:page] ||=1).per(10).order(created_at: "DESC")
+    page_length = Post.page(1).per(10).total_pages
     postsArray = []
     posts.each do |post|
       postObj = {}
@@ -12,11 +13,19 @@ class Api::V1::User::PostsController < Api::V1::User::Base
       postObj["image"] = post.image
       postObj["created_at"] = post.created_at.strftime('%Y/%m/%d')
       user = User.find_by(id: post.user_id)
+      user_id = user.id
+      postObj["userId"] = user_id
       user_name = user.name
       postObj["name"] = user_name
+      user_nickname = user.nickname
+      postObj["nickname"] = user_nickname
       postsArray.push(postObj)
     end
-    render json: postsArray
+    data = {
+      'posts': postsArray,
+      'page_length': page_length
+    }
+    render json: data
   end
 
   def show
@@ -31,6 +40,8 @@ class Api::V1::User::PostsController < Api::V1::User::Base
     user = User.find_by(id: post.user_id)
     user_name = user.name
     postObj["name"] = user_name
+    user_nickname = user.nickname
+    postObj["nickname"] = user_nickname
     user_icon = user.image_data
     postObj["user_icon"] = user_icon
     render json: postObj

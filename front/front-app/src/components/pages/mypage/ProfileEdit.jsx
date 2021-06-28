@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Stack, Box } from "@chakra-ui/layout";
 import {
   FormControl,
@@ -18,9 +18,8 @@ import { Center } from '@chakra-ui/layout';
 
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import useMessage from '../../../hooks/useMessage';
-import { getUserProfile, updateUser } from '../../../reducks/users/operations';
+import { updateCurrentUser } from '../../../reducks/currentUser/operations';
 import { DefaultFlex, DefaultImage } from '../../../assets/style/chakraStyles';
-import useGetUserId from '../../../hooks/useGetUserId';
 import useLoadingState from '../../../hooks/useLoadingState';
 import { nowLoadingAction } from '../../../reducks/loading/actions';
 
@@ -30,23 +29,10 @@ export const ProfileEdit = ()=> {
   const userId = useParams()
   const loadingState = useLoadingState()
 
-  // useEffect(()=> {
-  //   getUserProfile(userId)
-  // },[userId])
-
-  // const user = useSelector((state)=> state.users)
-
-  // const [name, setName] =  useState(user.name);
-  // const [nickname, setNickname] =  useState(user.nickname);
-  // const [email, setEmail] =  useState(user.email);
-  // const [introduction, setIntroduction] =  useState(user.introduction);
-  // const [image, setImage] =  useState();
-  // const [preview, setPreview] = useState(user.image_data);
-
   const [name, setName] =  useState('');
-  const [nickname, setNickname] =  useState('');
+  const [nickname, setNickname] =  useState(" ");
   const [email, setEmail] =  useState('');
-  const [introduction, setIntroduction] =  useState('');
+  const [introduction, setIntroduction] =  useState(" ");
   const [image, setImage] =  useState();
   const [preview, setPreview] = useState();
 
@@ -56,15 +42,13 @@ export const ProfileEdit = ()=> {
     .get(`http://localhost:3001/api/v1/user/accounts/${userId.id}/edit`,
     {withCredentials: true} 
       ).then(response => {
-        console.log(response)
-        const data = response.data.user
-        const auth = response.data.auth
-        if (auth) {
-          setName(data.name)
-          setNickname(data.nickname)
-          setEmail(data.email)
-          setIntroduction(data.introduction)
-          setPreview(data.image_data.url)
+        const {name, nickname, email, image_data} = response.data
+        if (response) {
+          setName(name)
+          setNickname(nickname === null? "" : nickname)
+          setEmail(email)
+          setIntroduction(introduction === null? "" : introduction)
+          setPreview(image_data.url)
         } else {
           dispatch(push('/posts'))
         }
@@ -176,7 +160,7 @@ export const ProfileEdit = ()=> {
                   placeholder="自己紹介文を入力してください"
                   fontSize={{base: "sm", md: "lg"}}
                   rows="5"
-                  value={introduction}
+                  value={introduction }
                   onChange={inputIntroduction}
                 />
               </FormControl>
@@ -209,7 +193,7 @@ export const ProfileEdit = ()=> {
               }
                 <PrimaryButton
                   type="submit"
-                  onClick={()=> dispatch(updateUser(userId, formData, showMessage))}
+                  onClick={()=> dispatch(updateCurrentUser(userId, formData, showMessage))}
                   loading = {loadingState}
                   disabled = {name === "" || email === ""}
                   fontSize={{base: "sm", md: "lg"}}

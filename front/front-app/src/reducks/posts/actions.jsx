@@ -6,6 +6,22 @@ export const getPostsAction = (posts) => {
   }
 }
 
+export const GET_CURRENTUSER_POSTS = 'GET_CURRENTUSER_POSTS'
+export const getCurrentUserPostsAction = (posts) => {
+  return {
+    type: 'GET_CURRENTUSER_POSTS',
+    payload: posts
+  }
+}
+
+export const GET_USERS_POSTS = 'GET_USERS_POSTS'
+export const getUsersPostsAction = (posts) => {
+  return {
+    type: 'GET_USERS_POSTS',
+    payload: posts
+  }
+}
+
 export const NEWPOST  = 'NEWPOST';
 export const newPostAction = (postStatus) => {
   return {

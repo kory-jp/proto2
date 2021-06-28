@@ -6,25 +6,32 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Divider,
 } from "@chakra-ui/react"
 import { Button } from '@chakra-ui/button';
 import useMessage from '../../hooks/useMessage';
 import {push} from 'connected-react-router';
-import { logOut } from '../../reducks/users/operations';
-import useGetUserId from '../../hooks/useGetUserId';
+import { logOut } from '../../reducks/currentUser/operations';
+import useGetCurrentUserId from '../../hooks/useGetCurrentUserId';
 
 export const MenuDrawer = (props) => {
   const {onClose, isOpen} = props;
   const dispatch =  useDispatch();
   const showMessage = useMessage();
-  const userId = useGetUserId()
+  const currentUserId = useGetCurrentUserId()
+
   const toNewPost = () => {
     dispatch(push('/posts/new'))
     onClose()
   }
 
+  const toMyPosts = () => {
+    dispatch(push(`/mypage/${currentUserId}/posts`))
+    onClose()
+  }
+
   const toEditProfile = () => {
-    dispatch(push(`/mypage/edit/${userId}`))
+    dispatch(push(`/mypage/${currentUserId}/edit`))
     onClose()
   }
   
@@ -47,6 +54,18 @@ export const MenuDrawer = (props) => {
           >
             新規投稿
           </Button>
+          <Button
+            bg="white"
+            onClick={toMyPosts}
+            fontSize="sm"
+            w="100%"
+            m="2"
+          >
+            投稿記事
+          </Button>
+          <Divider 
+          mb="4"
+          />
           <Button
             bg="white"
             onClick={toEditProfile}

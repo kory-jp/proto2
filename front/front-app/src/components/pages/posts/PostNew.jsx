@@ -15,7 +15,7 @@ import {newPost} from '../../../reducks/posts/operations'
 import useMessage from '../../../hooks/useMessage';
 import useLoadingState from '../../../hooks/useLoadingState';
 import { DefaultBox, DefaultImage } from '../../../assets/style/chakraStyles'
-import useGetUserId from '../../../hooks/useGetUserId';
+import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
 
 export const PostNew = ()=> {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export const PostNew = ()=> {
   const [image, setImage] =  useState();
   const [preview, setPreview] = useState('');
 
-  const userId = useGetUserId()
+  const currentUserId = useGetCurrentUserId()
   const loadingState = useLoadingState()
   const showMessage = useMessage()
 
@@ -50,13 +50,13 @@ export const PostNew = ()=> {
   const createFormData = useCallback(()=> {
     const formData = new FormData();
 
-    formData.append('post[user_id]', userId)
+    formData.append('post[user_id]', currentUserId)
     formData.append('post[title]', title)
     formData.append('post[content]', content)
     if (image) formData.append('post[image]', image)
 
     return formData
-  },[userId, title, content, image])
+  },[currentUserId, title, content, image])
   const formData = createFormData();
 
 

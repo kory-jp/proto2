@@ -7,12 +7,12 @@ import CreateIcon from '@material-ui/icons/Create';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
 import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
 import { DefaultFlex, DefaultText, DefaultImage, DefaultUserIconImage } from '../../../assets/style/chakraStyles'
-import useGetUserId from '../../../hooks/useGetUserId'
+import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId'
 
 export const PostShowCard = (props)=> {
   const dispatch = useDispatch()
-  const {id, user_id, name, userIcon, title, image, content, created_at} = props.post;
-  const userId = useGetUserId()
+  const {id, user_id, name, nickname, userIcon, title, image, content, created_at} = props.post;
+  const currentUserId = useGetCurrentUserId()
   return(
     <DefaultFlex
     flexDirection="column"
@@ -40,7 +40,7 @@ export const PostShowCard = (props)=> {
             {title}
           </DefaultText>
           { 
-            user_id === userId ? (
+            user_id === currentUserId ? (
               <Link
                 onClick={()=> dispatch(push(`/posts/edit/${id}`))}
                 fontSize={{base: "sm", md: "lg"}}
@@ -63,7 +63,7 @@ export const PostShowCard = (props)=> {
                 onClick={()=> dispatch(push(`/users/${user_id}`))}
                 cursor="pointer"
               >
-                {name}
+                {nickname? nickname: name}
               </DefaultText>
             </Flex>
             <DefaultText>{created_at}</DefaultText>

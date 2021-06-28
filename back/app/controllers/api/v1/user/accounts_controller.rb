@@ -5,23 +5,46 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
     render json: user
   end
 
+  def myposts
+    user = current_user
+    posts = user.posts.where(user_id: current_user.id).page(params[:page] ||=1).per(10).order(created_at: "DESC")
+    page_length = posts.page(1).per(10).total_pages
+    postsArray = []
+    posts.each do |post|
+      postObj = {}
+      postObj["id"] = post.id
+      postObj["user_id"] = post.user_id
+      postObj["title"] = post.title
+      postObj["content"] = post.content
+      postObj["image"] = post.image
+      postObj["created_at"] = post.created_at.strftime('%Y/%m/%d')
+      postsArray.push(postObj)
+    end
+    data = {
+      'posts': postsArray,
+      'page_length': page_length
+    }
+    render json: data
+  end
+
   def edit
     user = User.find(params[:id])
     if user.id == current_user.id
-      render json: {
-        auth: true,
-        user: {
-          id: user.id,
-          name: user.name,
-          nickname: user.nickname,
-          email: user.email,
-          introduction: user.introduction,
-          image_data: user.image_data,
-          password_digest: user.password_digest
-        }
-      }
-    else
-      render json: {auth: false}
+    #   render json: {
+    #     auth: true,
+    #     user: {
+    #       id: user.id,
+    #       name: user.name,
+    #       nickname: user.nickname,
+    #       email: user.email,
+    #       introduction: user.introduction,
+    #       image_data: user.image_data,
+    #       password_digest: user.password_digest
+    #     }
+    #   }
+    # else
+    #   render json: {auth: false}
+    render json: user
     end
   end
 

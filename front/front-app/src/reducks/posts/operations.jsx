@@ -1,17 +1,64 @@
 import axios from 'axios'
 import { push } from 'connected-react-router';
 import { nowLoadingAction } from '../loading/actions';
-import { deletePostAction, getPostsAction, newPostAction, showPostAction, updatePostAction,  } from './actions';
+import { 
+  deletePostAction, 
+  getCurrentUserPostsAction, 
+  getPostsAction, 
+  getUsersPostsAction, 
+  newPostAction, 
+  showPostAction, 
+  updatePostAction,  
+} from './actions';
 
-export const getPosts = () => {
+export const getPosts = (setSumPage, queryPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true))
     axios
-      .get("http://localhost:3001/api/v1/user/posts",
+      .get(`http://localhost:3001/api/v1/user/posts/?page=${queryPage}`,
       {withCredentials: true}
       ).then(response => {
-        const posts = response.data
+        const posts = response.data.posts
+        setSumPage(response.data.page_length)
         dispatch(getPostsAction(posts));
+      }).catch(error => {
+        console.log('error res:', error)
+      }).finally(()=> {
+        dispatch(nowLoadingAction(false))
+      })
+  }
+}
+
+export const getCurrentUserPosts = (currentUserId, queryPage, setSumPage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true))
+    axios
+      .get(`http://localhost:3001/api/v1/user/accounts/${currentUserId.id}/myposts/?page=${queryPage}`,
+      {withCredentials: true}
+      ).then(response => {
+        const posts = response.data.posts
+        const page_length = response.data.page_length
+        setSumPage(page_length)
+        dispatch(getCurrentUserPostsAction(posts));
+      }).catch(error => {
+        console.log('error res:', error)
+      }).finally(()=> {
+        dispatch(nowLoadingAction(false))
+      })
+  }
+}
+
+export const getUsersPosts = (userId, setSumPage, queryPage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true))
+    axios
+      .get(`http://localhost:3001/api/v1/user/users/${userId.id}/posts/?page=${queryPage}`,
+      {withCredentials: true}
+      ).then(response => {
+        const posts = response.data.posts
+        const page_length = response.data.page_length
+        setSumPage(page_length)
+        dispatch(getUsersPostsAction(posts));
       }).catch(error => {
         console.log('error res:', error)
       }).finally(()=> {
@@ -66,6 +113,7 @@ export const showPost = (postId) => {
             id: post.id,
             user_id: post.user_id,
             name: post.name,
+            nickname: post.nickname,
             userIcon: post.user_icon.url,
             title: post.title,
             content: post.content,

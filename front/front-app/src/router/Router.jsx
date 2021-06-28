@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Auth from '../components/auth/Auth'
 import LoginPage from '../components/pages/LoginPage'
+import MyPosts from '../components/pages/mypage/MyPosts'
 import ProfileEdit from '../components/pages/mypage/ProfileEdit'
 import PostEdit from '../components/pages/posts/PostEdit'
 import PostIndex from '../components/pages/posts/PostIndex'
@@ -22,7 +23,8 @@ export const Router = () => {
           <Route path={"/posts/new"} component={PostNew} />
           <Route path={"/posts/show/:id"} component={PostShow} />
           <Route path={"/posts/edit/:id"} component={PostEdit} />
-          <Route path={"/mypage/edit/:id"} component={ProfileEdit} />
+          <Route path={"/mypage/:id/edit"} component={ProfileEdit} />
+          <Route path={"/mypage/:id/posts"} component={MyPosts} />
           <Route path={"/users/:id"} component={UsersInfo} />
         </DefaultLayout>
       </Auth>

@@ -1,253 +1,29 @@
-import axios from 'axios'
-import {push} from 'connected-react-router';
-import { nowLoadingAction } from '../loading/actions';
-import { logInAction, registrationAction, logOutAction, getUserProfileAction, userUpdateAction } from './actions';
+import axios from "axios"
+import { nowLoadingAction } from "../loading/actions"
+import { showUsersAction } from "./actions"
 
-
-export const registration = (userName, email, password, passwordConfirmation, showMessage) => {
- return async (dispatch) => {
-
-  if (userName === "" || email === "" || password === "" || passwordConfirmation === "") {
-    alert("必須項目が未入力です")
-    return false;
-  };
-
-  if (password !== passwordConfirmation) {
-    alert("パスワードが一致していません") 
-    return false
-  };
-  dispatch(nowLoadingAction(true))
-
-  axios
-    .post("http://localhost:3001/api/v1/user/signup", 
-      {
-        user: {
-          name: userName,
-          email: email,
-          password: password,
-          passwordConfirmation: passwordConfirmation
-        }
-      },
-      {withCredentials: true}
-  ).then(response => {
-    if (response.data.status === "created") {
-      const userData = response.data
-
-      dispatch(
-        registrationAction({
-          logged_in: true,
-          id: userData.user.id,
-          name: userData.user.name, 
-          email: userData.user.email,
-          password: userData.user.password_digest,
-        })
-      )
-      showMessage({title: '新規登録しました', status: 'success'})
-      dispatch(push('/posts'))
-    } else {
-      showMessage({title: '新規登録に失敗しました', status: 'error'})
-    }
-  }).catch(error => {
-    console.log("registration error", error)
-  })
-  .finally(()=> {
-    dispatch(nowLoadingAction(false))
-  })
- }
-}
-
-export const logIn = (email, password, showMessage) => {
-  return async (dispatch, getState) => {
-    dispatch(nowLoadingAction(true))
-    const state = getState();
-    const logged_in = state.users.logged_in
-
-    if (email === "" || password === "" ) {
-      alert("必須項目が空欄です。")
-      return false;
-    };
-
-    if(!logged_in) {
-        await axios
-        .post('http://localhost:3001/api/v1/user/login', 
-        {
-          user: {
-            email: email,
-            password: password,
-          }
-        },
-        {withCredentials: true},
-      ).then(response => {
-        if (response.data.logged_in) {
-          const userData = response.data
-          console.log(response)
-          dispatch(
-            logInAction({
-              logged_in: userData.logged_in,
-              id: userData.user.id,
-              name: userData.user.name, 
-              nickname: userData.user.nickname,
-              email: userData.user.email,
-              introduction: userData.user.introduction,
-              image: userData.user.image,
-              password: userData.user.password_digest
-            })
-          )
-          showMessage({title: "ログインしました", status: "success"})
-          dispatch(push('/posts'))
-        }
-        else{
-          showMessage({title: "ユーザーが見つかりません", status: "error"})
-        }
-      })
-      .catch((response)=> {
-        console.log('ERROR');
-      })
-      .finally(()=> {
-        dispatch(nowLoadingAction(false))
-      })
-    }
-  }
-}
-
-export const logOut = (showMessage) => {
-  return async (dispatch, getState) => {
-    const state = getState();
-    const logged_in = state.users.logged_in
-
-    if(logged_in) {
-      await axios
-      .delete("http://localhost:3001/api/v1/user/logout", { withCredentials: true}
-      ).then(response => {
-        dispatch(
-          logOutAction({
-            logged_in: false,
-            id: "",
-            name: "", 
-            email: "",
-            password: ""
-          })
-        )
-        showMessage({title: 'ログアウトしました', status: 'success'})
-        dispatch(push('/'))
-      })
-      .catch(()=> {
-        dispatch(console.log('error'))
-      })
-    }
-  }
-}
-
-// ログインをしている場合はユーザー情報を返し、未ログインの場合はログインページに飛ばす
-export const loggedInStatus = () => {
-  return async (dispatch) => {
-
-    await axios
-    .get("http://localhost:3001/api/v1/user/logged_in", 
-    {withCredentials: true},
-    )
-    .then(response => {
-      if (response.data.logged_in) {
-        const userData = response.data
-        dispatch(
-          logInAction({
-            logged_in: userData.logged_in,
-            id: userData.user.id,
-            name: userData.user.name, 
-            nickname: userData.user.nickname,
-            email: userData.user.email,
-            introduction: userData.user.introduction,
-            image: userData.user.image,
-            password: userData.user.password_digest
-          })
-        )
-      } else {
-        dispatch(push('/'))
-      }
-    }).catch(error => {
-      console.log("ログインエラー:", error)
-    })
-  }
-}
-
-// ログイン済みユーザーを一覧ページへ遷移させる
-export const completedLoggedInStatus = () => {
-  return async (dispatch) => {
-
-    await axios
-    .get("http://localhost:3001/api/v1/user/logged_in", 
-    {withCredentials: true},
-    )
-    .then(response => {
-      if (response.data.logged_in) {
-        dispatch(push('/posts'))
-      }
-    }).catch(error => {
-      console.log("ログインエラー:", error)
-    })
-  }
-}
-
-// export const getUserProfile = (userId) => {
-//   return async (dispatch) => {
-//     axios
-//     .get(`http://localhost:3001/api/v1/user/accounts/${userId.id}/edit`,
-//     {withCredentials: true} 
-//       ).then(response => {
-//         const data = response.data.user
-//         const auth = response.data.auth
-//         if (auth) {
-//           dispatch(
-//             getUserProfileAction({
-//               id: data.id,
-//               name: data.name, 
-//               nickname: data.nickname,
-//               email: data.email,
-//               introduction: data.introduction,
-//               image: data.image,
-//               password: data.password_digest
-//             })
-//           )
-//         } else {
-//           dispatch(push('/posts'))
-//         }
-//       }).catch(error => {
-//         console.log("error:", error)
-//       })
-//   }
-// }
-
-// 個人情報訂正
-export const updateUser = (userId, formData, showMessage) => {
+export const showUsers = (userId) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true))
     axios
-      .patch(`http://localhost:3001/api/v1/user/accounts/${userId.id}`,
-        formData,
-        {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        },
-        {withCredentials: true}
+      .get(`http://localhost:3001/api/v1/user/users/${userId.id}`,
+      {withCredentials: true} 
       ).then(response => {
-        console.log(response)
         const user = response.data
         dispatch(
-          userUpdateAction({
+          showUsersAction({
+            id: user.id,
             name: user.name,
             nickname: user.nickname,
-            email: user.email,
             introduction: user.introduction,
-            image: user.image
+            userIcon: user.image_data.url
           })
         )
-        showMessage({title: '個人情報を修正しました', status: 'success'})
-        dispatch(push('/posts'))
       }).catch(error => {
-        console.log("post res:", error)
-      }).finally(() => {
+        console.log("error:", error)
+      }).finally(()=> {
         dispatch(nowLoadingAction(false))
       })
+
   }
 }

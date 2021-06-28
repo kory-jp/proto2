@@ -1,4 +1,4 @@
-5.times do |n|
+11.times do |n|
   User.all.each do |user|
     Post.create!(
       user_id: user.id,

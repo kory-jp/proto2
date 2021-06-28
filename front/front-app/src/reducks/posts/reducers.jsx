@@ -8,6 +8,16 @@ export const PostsReducer = (state = initialState.posts, action) => {
         ...state,
         list: [...action.payload]
       }
+      case Actions.GET_CURRENTUSER_POSTS:
+        return{
+          ...state,
+          list: [...action.payload]
+        }
+      case Actions.GET_USERS_POSTS:
+        return{
+          ...state,
+          list: [...action.payload]
+        }
     case Actions.NEWPOST:
       return {
         ...state,
