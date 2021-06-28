@@ -30,10 +30,8 @@ export const registration = (userName, email, password, passwordConfirmation, sh
       },
       {withCredentials: true}
   ).then(response => {
-    console.log(response)
     if (response.data) {
       const userData = response.data
-      console.log(userData)
       dispatch(
         registrationAction({
           id: userData.id,

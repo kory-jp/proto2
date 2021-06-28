@@ -42,7 +42,7 @@ export const ProfileEdit = ()=> {
     .get(`http://localhost:3001/api/v1/user/accounts/${userId.id}/edit`,
     {withCredentials: true} 
       ).then(response => {
-        const {name, nickname, email, image_data} = response.data
+        const {name, nickname, email, introduction, image_data} = response.data
         if (response) {
           setName(name)
           setNickname(nickname === null? "" : nickname)
@@ -160,7 +160,7 @@ export const ProfileEdit = ()=> {
                   placeholder="自己紹介文を入力してください"
                   fontSize={{base: "sm", md: "lg"}}
                   rows="5"
-                  value={introduction }
+                  value={introduction}
                   onChange={inputIntroduction}
                 />
               </FormControl>
