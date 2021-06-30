@@ -22,7 +22,7 @@ export const UsersInfo = () => {
     dispatch(getUsersPosts(userId, setSumPage, queryPage))
   },[dispatch, userId, setSumPage, queryPage])
   
-  const user =  useSelector((state)=> state.users)
+  const users =  useSelector((state)=> state.users)
   const posts =  useSelector((state)=> state.posts)
   
   return(
@@ -34,7 +34,7 @@ export const UsersInfo = () => {
     ): (
       <Box>
         <Box mb="5">
-          <UsersShowCard user={user}/>
+          <UsersShowCard users={users}/>
         </Box>
         <UsersPosts posts={posts} userId={userId} sumPage={sumPage}/>
       </Box>

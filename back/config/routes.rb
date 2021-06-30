@@ -11,6 +11,9 @@ Rails.application.routes.draw do
           member do
             get :myposts
           end
+          collection do
+            patch :update
+          end
         end
         resources :users, only: [:show] do
           member do
@@ -20,6 +23,11 @@ Rails.application.routes.draw do
         resources :posts do
           member do
             get :auth
+          end
+        end
+        resources :comments do
+          member do
+            get :comments_index
           end
         end
       end

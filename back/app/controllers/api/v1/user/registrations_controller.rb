@@ -1,4 +1,5 @@
 class Api::V1::User::RegistrationsController < Api::V1::User::Base
+  skip_before_action :authenticate_user
 
   def signup
     @user = User.new(registrations_params)

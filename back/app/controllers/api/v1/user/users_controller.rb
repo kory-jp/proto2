@@ -24,6 +24,5 @@ class Api::V1::User::UsersController < Api::V1::User::Base
       'page_length': page_length
     }
     render json: data
-    # binding.pry
   end
 end

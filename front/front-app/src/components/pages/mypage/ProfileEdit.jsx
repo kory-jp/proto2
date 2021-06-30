@@ -43,7 +43,7 @@ export const ProfileEdit = ()=> {
     {withCredentials: true} 
       ).then(response => {
         const {name, nickname, email, introduction, image_data} = response.data
-        if (response) {
+        if (response.data) {
           setName(name)
           setNickname(nickname === null? "" : nickname)
           setEmail(email)

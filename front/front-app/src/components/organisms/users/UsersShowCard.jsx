@@ -4,7 +4,7 @@ import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
 import { DefaultFlex, DefaultText, DefaultUserIconImage } from '../../../assets/style/chakraStyles'
 
 export const UsersShowCard = (props) => {
-  const {name, nickname, introduction, userIcon } = props.user;
+  const {name, nickname, introduction, userIcon } = props.users;
   return(
     <DefaultFlex
     flexDirection="column"
