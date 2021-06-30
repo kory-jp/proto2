@@ -45,6 +45,7 @@ class Api::V1::User::PostsController < Api::V1::User::Base
     user_icon = user.image_data
     postObj["user_icon"] = user_icon
     render json: postObj
+
   end
 
   def create

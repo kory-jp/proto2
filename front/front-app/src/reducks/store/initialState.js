@@ -4,7 +4,6 @@ const initialState = {
   },
   
   currentUser: {
-    // logged_in: false,
     id: '',
     name: '',
     nickname: '',
@@ -19,6 +18,10 @@ const initialState = {
   },
 
   posts: {
+    list: [],
+  },
+
+  comments: {
     list: [],
   }
 }

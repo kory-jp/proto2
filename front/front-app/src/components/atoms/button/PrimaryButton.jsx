@@ -15,3 +15,5 @@ export const PrimaryButton = (props) => {
     </Button>
   )
 }
+
+export default PrimaryButton;

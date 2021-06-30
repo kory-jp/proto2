@@ -6,13 +6,18 @@ import { Center } from '@chakra-ui/layout';
 import useLoadingState from '../../../hooks/useLoadingState';
 import { showPost } from '../../../reducks/posts/operations';
 import { PostShowCard} from '../../organisms/post/PostShowCard'
+import CommentArea from '../../organisms/comment/CommentArea';
+import { getComments } from '../../../reducks/comments/operations';
+import usePagination from '../../../hooks/usePagination';
 
 export const PostShow = ()=> {
   const dispatch = useDispatch()
-  const id = useParams();
+  const postId = useParams();
+  const {sumPage, setSumPage, queryPage} = usePagination()
   useEffect(()=> {
-    dispatch(showPost(id))
-  },[id, dispatch])
+    dispatch(showPost(postId))
+    dispatch(getComments(postId, setSumPage, queryPage))
+  },[postId, dispatch, queryPage, setSumPage])
 
   const post = useSelector((state)=> state.posts)
   const loadingState = useLoadingState()
@@ -24,7 +29,10 @@ export const PostShow = ()=> {
             <Spinner/>
           </Center>
         ): (
-          <PostShowCard post={post}/>
+          <>
+            <PostShowCard post={post}/>
+            <CommentArea postId={postId} sumPage={sumPage}/>
+          </>
         )
       }
     </>
