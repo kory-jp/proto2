@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {push} from 'connected-react-router';
 
-import {completedLoggedInStatus, logIn} from "../../reducks/users/operations"
+import {completedLoggedInStatus, logIn} from "../../reducks/currentUser/operations"
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import useMessage from "../../hooks/useMessage";
 import useLoadingState from "../../hooks/useLoadingState";

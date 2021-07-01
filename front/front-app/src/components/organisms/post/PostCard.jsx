@@ -5,10 +5,17 @@ import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
 import { DefaultFlex, DefaultText } from '../../../assets/style/chakraStyles';
+import useReturnTop from '../../../hooks/useReturnTop';
 
 export const PostCard = (props)=> {
   const dispatch = useDispatch()
-  const {id, title, name, image, created_at} = props.post;
+  const returnTop = useReturnTop()
+  const {id, userId, title, name, nickname, image, created_at} = props.post;
+  const toUserInfoPage = () => {
+    dispatch(push(`users/${userId}`))
+    returnTop()
+  }
+
   return(
     <DefaultFlex w="100%" mb="2">
       <Image
@@ -21,7 +28,7 @@ export const PostCard = (props)=> {
         onClick={()=> dispatch(push('/posts/show/' + id))}
         cursor="pointer"
       />
-      <Flex flexDirection="column" justifyContent="space-between" w="100%" p="2">
+      <DefaultFlex flexDirection="column" justifyContent="space-between" w="100%" p="2" ml="2">
         <DefaultText
           fontWeight="bold"
           onClick={()=> dispatch(push('/posts/show/' + id))}
@@ -30,10 +37,15 @@ export const PostCard = (props)=> {
           {title}
         </DefaultText>
         <Flex justifyContent="space-between">
-          <DefaultText>{name}</DefaultText>
+          <DefaultText
+            onClick={toUserInfoPage}
+            cursor="pointer"
+          >
+            {nickname? nickname : name}
+          </DefaultText>
           <DefaultText>{created_at}</DefaultText>
         </Flex>
-      </Flex>
+      </DefaultFlex>
     </DefaultFlex>
   )
 }

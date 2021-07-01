@@ -1,7 +1,7 @@
 import { Box, Flex } from '@chakra-ui/layout';
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
-import { completedLoggedInStatus } from '../../reducks/users/operations';
+import { completedLoggedInStatus } from '../../reducks/currentUser/operations';
 
 import Registration from '../auth/Registration';
 

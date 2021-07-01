@@ -27,3 +27,13 @@ export const logOutAction = (usersStatus) => {
     }
   }
 }
+
+export const UPDATE_CURRENTUSER = "UPDATE_CURRENTUSER";
+export const updateCurrentUserAction = (usersStatus) => {
+  return {
+    type: "UPDATE_USER",
+    payload: {
+      ...usersStatus
+    }
+  }
+}

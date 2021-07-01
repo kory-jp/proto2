@@ -7,9 +7,27 @@ Rails.application.routes.draw do
         post '/login', to: 'sessions#login'
         delete '/logout', to: 'sessions#logout'
         get '/logged_in', to: 'sessions#logged_in?'
+        resources :accounts, only: [:show, :edit, :update] do
+          member do
+            get :myposts
+          end
+          collection do
+            patch :update
+          end
+        end
+        resources :users, only: [:show] do
+          member do
+            get :posts
+          end
+        end
         resources :posts do
           member do
             get :auth
+          end
+        end
+        resources :comments do
+          member do
+            get :comments_index
           end
         end
       end

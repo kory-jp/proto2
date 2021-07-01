@@ -6,7 +6,7 @@ export const SideBarButton = (props)=> {
   return(
     <Button 
       shadow="md" 
-      colorScheme="blue" 
+      colorScheme="gray.300"
       variant="outline"
       onClick={onClick}
       leftIcon={leftIcon}

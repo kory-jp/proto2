@@ -2,11 +2,14 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Auth from '../components/auth/Auth'
 import LoginPage from '../components/pages/LoginPage'
+import MyPosts from '../components/pages/mypage/MyPosts'
+import ProfileEdit from '../components/pages/mypage/ProfileEdit'
 import PostEdit from '../components/pages/posts/PostEdit'
 import PostIndex from '../components/pages/posts/PostIndex'
 import PostNew from '../components/pages/posts/PostNew'
 import PostShow from '../components/pages/posts/PostShow'
 import RegistrationPage from '../components/pages/RegistrationPage'
+import UsersInfo from '../components/pages/users/UsersInfo'
 import DefaultLayout from '../components/templates/DefaultLayout'
 
 export const Router = () => {
@@ -15,11 +18,15 @@ export const Router = () => {
       <Route  exact path={"/"} component={LoginPage} />
       <Route path={"/registration"} component={RegistrationPage} />
       <Auth>
-        <DefaultLayout />
-        <Route exact path={"/posts"} component={PostIndex} /> 
-        <Route path={"/posts/new"} component={PostNew} />
-        <Route path={"/posts/show/:id"} component={PostShow} />
-        <Route path={"/posts/edit/:id"} component={PostEdit} />
+        <DefaultLayout>
+          <Route exact path={"/posts"} component={PostIndex} /> 
+          <Route path={"/posts/new"} component={PostNew} />
+          <Route path={"/posts/show/:id"} component={PostShow} />
+          <Route path={"/posts/edit/:id"} component={PostEdit} />
+          <Route path={"/mypage/:id/edit"} component={ProfileEdit} />
+          <Route path={"/mypage/:id/posts"} component={MyPosts} />
+          <Route path={"/users/:id"} component={UsersInfo} />
+        </DefaultLayout>
       </Auth>
     </Switch>
   )

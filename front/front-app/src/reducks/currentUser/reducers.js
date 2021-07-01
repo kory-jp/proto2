@@ -1,7 +1,7 @@
 import * as Actions from './actions'
 import initialState from '../store/initialState'
 
-export const UsersReducer = (state = initialState.users, action) => {
+export const CurrentUserReducer = (state = initialState.currentUser, action) => {
   switch (action.type) {
     case Actions.REGISTRATION:
       return {
@@ -14,6 +14,11 @@ export const UsersReducer = (state = initialState.users, action) => {
         ...action.payload,
       }
     case Actions.LOG_OUT:
+      return {
+        ...state,
+        ...action.payload,
+      }
+    case Actions.UPDATE_CURRENTUSER:
       return {
         ...state,
         ...action.payload,

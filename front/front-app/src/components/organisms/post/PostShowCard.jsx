@@ -1,17 +1,18 @@
 import React from 'react'
 import { Flex } from '@chakra-ui/layout'
-import { Image, Link } from "@chakra-ui/react"
+import { Link } from "@chakra-ui/react"
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import CreateIcon from '@material-ui/icons/Create';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
-import { DefaultFlex, DefaultText } from '../../../assets/style/chakraStyles'
-import useGetUserId from '../../../hooks/useGetUserId'
+import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
+import { DefaultFlex, DefaultText, DefaultImage, DefaultUserIconImage } from '../../../assets/style/chakraStyles'
+import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId'
 
 export const PostShowCard = (props)=> {
   const dispatch = useDispatch()
-  const {id, user_id, name, title, image, content, created_at} = props.post;
-  const userId = useGetUserId()
+  const {id, user_id, name, nickname, userIcon, title, image, content, created_at} = props.post;
+  const currentUserId = useGetCurrentUserId()
   return(
     <DefaultFlex
     flexDirection="column"
@@ -19,15 +20,11 @@ export const PostShowCard = (props)=> {
     >
       <Flex 
         w="full" 
-        flexDirection={{base: "column", md: "initial"}}
+        flexDirection={{base: "column", xl: "initial"}}
       >
-        <Image 
+        <DefaultImage
           src={image? image : defaultImage}
-          alt="投稿画像"
-          boxSize={{base: "2xs", md: "md"}}
-          objectFit="cover"
-          shadow="md"
-          borderRadius="md"
+          alt="投稿画像" 
           m={{base: "auto", md: "2"}}
           mb="2"
         />
@@ -43,7 +40,7 @@ export const PostShowCard = (props)=> {
             {title}
           </DefaultText>
           { 
-            user_id === userId ? (
+            user_id === currentUserId ? (
               <Link
                 onClick={()=> dispatch(push(`/posts/edit/${id}`))}
                 fontSize={{base: "sm", md: "lg"}}
@@ -53,8 +50,22 @@ export const PostShowCard = (props)=> {
               </Link>
             ): null
           }
-          <Flex justifyContent="space-between" pt="2">
-            <DefaultText>{name}</DefaultText>
+          <Flex justifyContent="space-between" pt="2" alignItems="flex-end">
+            <Flex alignItems="flex-end">
+              <DefaultUserIconImage
+              src={userIcon? userIcon : defaultUserIcon}
+              alt="userIcon"
+              mr="3"
+              onClick={()=> dispatch(push(`/users/${user_id}`))}
+              cursor="pointer"
+              />
+              <DefaultText
+                onClick={()=> dispatch(push(`/users/${user_id}`))}
+                cursor="pointer"
+              >
+                {nickname? nickname: name}
+              </DefaultText>
+            </Flex>
             <DefaultText>{created_at}</DefaultText>
           </Flex>
         </DefaultFlex>

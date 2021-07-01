@@ -10,7 +10,6 @@ import {
   Input,
   Textarea,
   Button,
-  Img,
 } from "@chakra-ui/react"
 import { Spinner } from "@chakra-ui/spinner";
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
@@ -21,8 +20,8 @@ import { deletePost, updatePost } from '../../../reducks/posts/operations';
 import useMessage from '../../../hooks/useMessage';
 import useLoadingState from '../../../hooks/useLoadingState';
 import { nowLoadingAction } from '../../../reducks/loading/actions';
-import { DefaultBox } from '../../../assets/style/chakraStyles'
-import useGetUserId from '../../../hooks/useGetUserId';
+import { DefaultBox, DefaultImage } from '../../../assets/style/chakraStyles'
+import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
 
 export const PostEdit = ()=> {
   const dispatch = useDispatch()
@@ -31,6 +30,8 @@ export const PostEdit = ()=> {
   const [content, setContent] =  useState('');
   const [image, setImage] =  useState();
   const [preview, setPreview] = useState('');
+  const currentUserId = useGetCurrentUserId()
+  const loadingState = useLoadingState()
 
   const inputTitle = useCallback((event)=> {
     setTitle(event.target.value)
@@ -90,19 +91,16 @@ export const PostEdit = ()=> {
     getPostStatus(postId)
   },[editAuth, getPostStatus, postId])
 
-  const userId = useGetUserId()
-  const loadingState = useLoadingState()
-
   const createFormData = useCallback(()=> {
     const formData = new FormData();
 
-    formData.append('post[user_id]', userId)
+    formData.append('post[user_id]', currentUserId)
     formData.append('post[title]', title)
     formData.append('post[content]', content)
     if (image) formData.append('post[image]', image)
 
     return formData
-  },[userId, title, content, image])
+  },[currentUserId, title, content, image])
   const formData = createFormData();
   const showMessage = useMessage()
 
@@ -162,9 +160,7 @@ export const PostEdit = ()=> {
                   >
                     <CancelIcon />
                   </Button>
-                  <Img
-                    boxSize={{base: "2xs", md: "md"}}
-                    objectFit="cover"
+                  <DefaultImage 
                     src={preview}
                     alt="preview img"
                   />
