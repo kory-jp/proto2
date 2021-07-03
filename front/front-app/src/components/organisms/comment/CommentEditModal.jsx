@@ -11,29 +11,37 @@ import {
 import { FormControl, FormLabel } from "@material-ui/core";
 import useLoadingState from "../../../hooks/useLoadingState";
 import PrimaryButton from "../../atoms/button/PrimaryButton"
-import useGetCurrentUserId from "../../../hooks/useGetCurrentUserId";
+import DeleteButton from "../../atoms/button/DeleteButton"
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useMessage from "../../../hooks/useMessage";
-import { newComment } from "../../../reducks/comments/operations";
+import { deleteComment, updateComment } from "../../../reducks/comments/operations";
+import useReturnTop from "../../../hooks/useReturnTop";
 
-export const CommentInputModal = (props) => {
-  const {isOpen, onClose, postId } = props;
-  const currentUserId = useGetCurrentUserId()
-  const [comment, setComment] = useState("")
+export const CommentEditModal = (props) => {
+  const {isOpen, onClose, commentData} = props;
+  const [comment, setComment] = useState(commentData.comment)
+  const postId = useSelector((state)=> state.posts.id)
   const dispatch  = useDispatch()
   const loadingState = useLoadingState()
   const showMessage  = useMessage()
-  
+  const returnTop = useReturnTop()
+
   const inputComment = useCallback((e)=> {
     setComment(e.target.value)
   },[setComment])
 
-  const onClickNewComments = useCallback(() => {
-    dispatch(newComment(showMessage, postId, currentUserId, comment))
+  const onClickUpdateComment = useCallback(() => {
+    dispatch(updateComment(commentData, comment, showMessage, returnTop))
+    // setComment("")
+    // onClose()
+  },[dispatch, commentData, comment, showMessage, returnTop])
+
+  const onClickDeleteComment = useCallback(()=> {
+    dispatch(deleteComment(commentData, postId, showMessage))
     setComment("")
     onClose()
-  },[setComment, comment, currentUserId, dispatch, onClose, postId, showMessage])
+  },[commentData, dispatch, onClose, postId, showMessage])
 
   return(
     <Modal 
@@ -44,9 +52,9 @@ export const CommentInputModal = (props) => {
     size="2xl"
     >
       <ModalOverlay>
-        <ModalContent pb="5">
+        <ModalContent pb="6">
           <ModalHeader>
-            "新規コメント投稿"
+            コメント編集
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody mx={4}>
@@ -62,12 +70,18 @@ export const CommentInputModal = (props) => {
                 />
               </FormControl>
               <PrimaryButton
-                onClick={onClickNewComments}
+                onClick={onClickUpdateComment}
                 loading={loadingState}
                 disabled={comment===""}
               >
                 コメント送信
               </PrimaryButton>
+              <br />
+              <DeleteButton
+                onClick={onClickDeleteComment}
+              >
+                削除
+              </DeleteButton>
             </Stack>
           </ModalBody>
         </ModalContent>
@@ -76,4 +90,4 @@ export const CommentInputModal = (props) => {
   )
 }
 
-export default CommentInputModal;
+export default CommentEditModal;

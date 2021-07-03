@@ -77,6 +77,31 @@ export const getUsersPosts = (userId, setSumPage, queryPage) => {
   };
 };
 
+export const SearchTagGetPosts = (tagId, setSumPage, queryPage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
+    axios
+      .get(
+        `http://localhost:3001/api/v1/user/tags/${tagId.id}/search/?page=${queryPage}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        const posts = response.data.posts;
+        const page_length = response.data.page_length;
+        setSumPage(page_length);
+        dispatch(getUsersPostsAction(posts));
+      })
+      .catch((error) => {
+        console.log("error res:", error);
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
+      });
+  };
+};
+
 export const newPost = (formData, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
@@ -138,6 +163,7 @@ export const showPost = (postId) => {
             content: post.content,
             image: post.image.url,
             created_at: post.created_at,
+            tags: post.tags,
           })
         );
       })

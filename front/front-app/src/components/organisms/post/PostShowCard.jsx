@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Flex } from '@chakra-ui/layout'
 import { Link } from "@chakra-ui/react"
 import { useDispatch } from 'react-redux'
@@ -6,13 +6,25 @@ import { push } from 'connected-react-router'
 import CreateIcon from '@material-ui/icons/Create';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
 import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
-import { DefaultFlex, DefaultText, DefaultImage, DefaultUserIconImage } from '../../../assets/style/chakraStyles'
+import { DefaultFlex, 
+         DefaultText, 
+         DefaultTitleText, 
+         DefaultImage, 
+         DefaultUserIconImage 
+        } from '../../../assets/style/chakraStyles'
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId'
+import PrimaryTag from '../../atoms/tag/PrimaryTag'
+import useReturnTop from '../../../hooks/useReturnTop'
 
 export const PostShowCard = (props)=> {
   const dispatch = useDispatch()
-  const {id, user_id, name, nickname, userIcon, title, image, content, created_at} = props.post;
+  const returnTop = useReturnTop()
+  const {id, user_id, name, nickname, userIcon, title, tags, image, content, created_at} = props.post;
   const currentUserId = useGetCurrentUserId()
+  const toTagIndex = useCallback((tag)=> {
+    dispatch(push(`/posts/tag/${tag.id}`))
+    returnTop()
+  },[dispatch, returnTop])
   return(
     <DefaultFlex
     flexDirection="column"
@@ -33,12 +45,12 @@ export const PostShowCard = (props)=> {
         w="full"
         m={{base: "auto", md: "2"}}
         >
-          <DefaultText
+          <DefaultTitleText
             as="h2"
             fontWeight="bold"
           >
             {title}
-          </DefaultText>
+          </DefaultTitleText>
           { 
             user_id === currentUserId ? (
               <Link
@@ -50,6 +62,20 @@ export const PostShowCard = (props)=> {
               </Link>
             ): null
           }
+          <Flex mt="2" mb="2">
+          {
+            tags? tags.length > 0 && (
+              tags.map(tag => (
+                <PrimaryTag
+                  key={tag.id}
+                  onClick={()=> toTagIndex(tag)}
+                >
+                  {tag.name}
+                </PrimaryTag>
+              ))
+            ): null
+          }
+          </Flex>
           <Flex justifyContent="space-between" pt="2" alignItems="flex-end">
             <Flex alignItems="flex-end">
               <DefaultUserIconImage

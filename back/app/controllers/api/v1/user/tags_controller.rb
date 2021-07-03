@@ -1,12 +1,17 @@
-class Api::V1::User::UsersController < Api::V1::User::Base
-  def show
-    user = User.find(params[:id])
-    render json: user
+class Api::V1::User::TagsController < Api::V1::User::Base
+  def index
+  tags = Tag.all
+  render json: tags
   end
 
-  def posts
-    user = User.find(params[:id])
-    posts = user.posts.where(user_id: user.id).page(params[:page] ||=1).per(10).order(created_at: "DESC")
+  def show
+    tag = Tag.find(params[:id])
+    render json: tag
+  end
+
+  def search
+    tag = Tag.find(params[:id])
+    posts = tag.posts.page(params[:page] ||=1).per(10).order(created_at: "DESC")
     page_length = posts.page(1).per(10).total_pages
     postsArray = []
     posts.each do |post|
@@ -26,6 +31,13 @@ class Api::V1::User::UsersController < Api::V1::User::Base
         tagArray.push(tagObj)
       end
       postObj["tags"] = tagArray
+      user = User.find_by(id: post.user_id)
+      user_id = user.id
+      postObj["userId"] = user_id
+      user_name = user.name
+      postObj["name"] = user_name
+      user_nickname = user.nickname
+      postObj["nickname"] = user_nickname
       postsArray.push(postObj)
     end
     data = {
@@ -34,4 +46,5 @@ class Api::V1::User::UsersController < Api::V1::User::Base
     }
     render json: data
   end
+
 end

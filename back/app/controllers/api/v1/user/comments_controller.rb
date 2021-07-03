@@ -1,4 +1,4 @@
-class Api::V1::User::CommentsController < ApplicationController
+class Api::V1::User::CommentsController < Api::V1::User::Base
   def comments_index
     post = Post.find(params[:id])
     comments = post.comments.page(params[:page] ||=1).per(10)
@@ -31,9 +31,19 @@ class Api::V1::User::CommentsController < ApplicationController
     end
   end
 
+  def update
+    comment = Comment.find(params[:id])
+    if comment.user_id == current_user.id
+      comment.update(comment_params)
+      if comment.save
+        render json: comment
+      end
+    end
+  end
+
   def destroy
     comment = Comment.find(params[:id])
-    comment.delete
+    comment.destroy
   end
 
   private

@@ -1,20 +1,27 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Flex } from '@chakra-ui/layout'
 import { Image } from "@chakra-ui/react"
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
-import { DefaultFlex, DefaultText } from '../../../assets/style/chakraStyles';
+import { DefaultFlex, DefaultText, DefaultTitleText } from '../../../assets/style/chakraStyles';
 import useReturnTop from '../../../hooks/useReturnTop';
+import PrimaryTag from '../../atoms/tag/PrimaryTag'
 
 export const PostCard = (props)=> {
   const dispatch = useDispatch()
   const returnTop = useReturnTop()
-  const {id, userId, title, name, nickname, image, created_at} = props.post;
+  const {id, userId, title, tags, name, nickname, image, created_at} = props.post;
+
   const toUserInfoPage = () => {
     dispatch(push(`users/${userId}`))
     returnTop()
   }
+
+  const toTagIndex = useCallback((tag)=> {
+    dispatch(push(`/posts/tag/${tag.id}`))
+    returnTop()
+  },[dispatch, returnTop])
 
   return(
     <DefaultFlex w="100%" mb="2">
@@ -29,13 +36,30 @@ export const PostCard = (props)=> {
         cursor="pointer"
       />
       <DefaultFlex flexDirection="column" justifyContent="space-between" w="100%" p="2" ml="2">
-        <DefaultText
-          fontWeight="bold"
-          onClick={()=> dispatch(push('/posts/show/' + id))}
-          cursor="pointer"
-        >
-          {title}
-        </DefaultText>
+        <Flex flexDirection="column">
+          <DefaultTitleText
+            fontWeight="bold"
+            onClick={()=> dispatch(push('/posts/show/' + id))}
+            cursor="pointer"
+            mb="4px"
+          > 
+            {title}
+          </DefaultTitleText>
+          <Flex>
+            {
+              tags? tags.length > 0 && (
+                tags.map(tag => (
+                  <PrimaryTag
+                    key={tag.id}
+                    onClick={() => toTagIndex(tag)}
+                  >
+                    {tag.name}
+                  </PrimaryTag>
+                ))
+              ): null
+            }
+        </Flex>
+        </Flex>
         <Flex justifyContent="space-between">
           <DefaultText
             onClick={toUserInfoPage}

@@ -10,13 +10,13 @@ import DefaultPagination from "../../molecules/DefaultPagination";
 
 export const CommentsShow = (props) => {
   const sumPage = props.sumPage
+  const dispatch = useDispatch()
   const loadingState = useLoadingState()
-  const dispatch =  useDispatch();
   const {queryPage} = usePagination()
   const returnTop  = useReturnTop()
-
-  const comments = useSelector((state)=> state.comments.list)
+  
   const postId = useSelector((state)=> state.posts.id)
+  const comments = useSelector((state)=> state.comments.list)
 
   const changeCurrentPage = (e, page) =>{
     dispatch(push(`/posts/show/${postId}?page=${page}`))
@@ -34,7 +34,7 @@ export const CommentsShow = (props) => {
           <Box mr="2" ml="2" mb="2">
             {
               comments.map(comment =>(
-                <CommentShowCard key={comment.id} commentData={comment}/>
+                <CommentShowCard key={comment.id} commentData={comment} />
               ))
             }
           </Box>
@@ -44,7 +44,7 @@ export const CommentsShow = (props) => {
           onChange={changeCurrentPage}
           page={queryPage}
         />
-    </>
+      </>
     )}
   </>
   )

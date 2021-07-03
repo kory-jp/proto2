@@ -1,0 +1,69 @@
+import React, { useEffect } from 'react'
+import { Box, Center } from '@chakra-ui/layout';
+import { useDispatch, useSelector } from 'react-redux';
+import { Spinner } from "@chakra-ui/spinner";
+import {push} from 'connected-react-router';
+
+import { SearchTagGetPosts } from '../../../reducks/posts/operations';
+import PostCard from '../../organisms/post/PostCard';
+import useLoadingState from '../../../hooks/useLoadingState';
+import usePagination from '../../../hooks/usePagination';
+import DefaultPagination from '../../molecules/DefaultPagination';
+import useReturnTop from '../../../hooks/useReturnTop';
+import { useParams } from 'react-router';
+import { DefaultBox, DefaultTitleText } from '../../../assets/style/chakraStyles';
+import { getTag } from '../../../reducks/tags/operations';
+import { Divider } from '@chakra-ui/react';
+
+export const PostIndex = ()=> {
+  const tagId = useParams()
+  const dispatch =  useDispatch();
+  const {sumPage, setSumPage, queryPage} = usePagination()
+  const loadingState = useLoadingState()
+  
+  useEffect(()=> {
+    dispatch(SearchTagGetPosts(tagId, setSumPage, queryPage))
+    dispatch(getTag(tagId))
+  },[tagId, queryPage, setSumPage, dispatch])
+  const posts = useSelector((state)=> state.posts.list)
+  const tag = useSelector((state)=> state.tags)
+  
+  const returnTop = useReturnTop()
+  
+  const changeCurrentPage = (e, page) =>{
+    dispatch(push(`/posts?page=${page}`))
+    returnTop()
+  }
+  return(
+    <>
+      { loadingState? (
+        <Center  h="100vh" w={{base: "50vh", md: "100vh"}}>
+          <Spinner/>
+        </Center>
+      ): (
+        <>
+          <DefaultBox mb="5">
+            <DefaultTitleText>「{tag.name}」記事一覧</DefaultTitleText>
+            <Divider colorScheme="blackAlpha" />
+          </DefaultBox>
+          {posts.length > 0 && (
+            <Box mr="2" ml="2" mb="2">
+              {
+                posts.map(post =>(
+                  <PostCard key={post.id} post={post}/>
+                ))
+              }
+            </Box>
+          )}
+          <DefaultPagination 
+            count={sumPage}
+            onChange={changeCurrentPage}
+            page={queryPage}
+          />
+      </>
+      )}
+    </>
+  )
+}
+
+export default PostIndex;

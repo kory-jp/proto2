@@ -6,6 +6,7 @@ import MyPosts from '../components/pages/mypage/MyPosts'
 import ProfileEdit from '../components/pages/mypage/ProfileEdit'
 import PostEdit from '../components/pages/posts/PostEdit'
 import PostIndex from '../components/pages/posts/PostIndex'
+import PostTagSearchIndex from '../components/pages/posts/PostTagSearchIndex'
 import PostNew from '../components/pages/posts/PostNew'
 import PostShow from '../components/pages/posts/PostShow'
 import RegistrationPage from '../components/pages/RegistrationPage'
@@ -20,6 +21,7 @@ export const Router = () => {
       <Auth>
         <DefaultLayout>
           <Route exact path={"/posts"} component={PostIndex} /> 
+          <Route exact path={"/posts/tag/:id"} component={PostTagSearchIndex} /> 
           <Route path={"/posts/new"} component={PostNew} />
           <Route path={"/posts/show/:id"} component={PostShow} />
           <Route path={"/posts/edit/:id"} component={PostEdit} />

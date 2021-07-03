@@ -1,16 +1,16 @@
 const initialState = {
   loading: {
-    status: false
+    status: false,
   },
-  
+
   currentUser: {
-    id: '',
-    name: '',
-    nickname: '',
-    email: '',
-    password: '',
-    introduction: '',
-    image: ''
+    id: "",
+    name: "",
+    nickname: "",
+    email: "",
+    password: "",
+    introduction: "",
+    image: "",
   },
 
   users: {
@@ -23,7 +23,11 @@ const initialState = {
 
   comments: {
     list: [],
-  }
-}
+  },
+
+  tags: {
+    list: [],
+  },
+};
 
 export default initialState;
