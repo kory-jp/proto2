@@ -7,8 +7,9 @@ export const GoodButton = (props) => {
     <Button
       onClick={onClick} 
       colorScheme={favorite? "blue" : "gray" }
-      fontSize="15px"
-      w="85px"
+      fontSize={{base: "10px", md: "15px"}}
+      w={{base: "60px", md: "85px"}}
+      h={{base: "30px", md: "45px"}}
       outline="none"
       disabled={loadingState}
       mb="2"

@@ -2,15 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Flex, Text } from '@chakra-ui/layout'
 import { useDispatch, useSelector } from 'react-redux'
 import {push} from 'connected-react-router';
-import { Button } from '@chakra-ui/button';
 import MenuIcon from '@material-ui/icons/Menu';
-import { useDisclosure, Select, Input } from "@chakra-ui/react"
+import { useDisclosure, Select } from "@chakra-ui/react"
 import { Link } from '@chakra-ui/react';
-import {FormControl} from "@chakra-ui/react"
-import SearchIcon from '@material-ui/icons/Search';
 
 import {MenuDrawer} from '../../molecules/MenuDrawer';
 import { getTags } from '../../../reducks/tags/operations';
+import SearchInputForm from '../../molecules/SearchInputForm';
 
 export const Header = ()=> {
   const dispatch =  useDispatch();
@@ -41,12 +39,25 @@ export const Header = ()=> {
     dispatch(push(`/searchResult?model=${model}&keyword=${keyword}`))
     setModel("post")
     setKeyword("")
-  },[dispatch, keyword, model])
+    onClose()
+  },[dispatch, keyword, model, onClose])
 
   return(
     <>
-      <Flex bg="gray.400" h="110px" mb="4" p="4" w="full">
-        <Flex mt="auto" mb="auto" justifyContent="space-between" w="full" mr={{base: "none", lg: "5%"}}>
+      <Flex 
+        bg="gray.400" 
+        h={{base: "70px", md: "100px"}} 
+        mb="4" 
+        p="4" 
+        w="full"
+      >
+        <Flex 
+          mt="auto" 
+          mb="auto" 
+          justifyContent="space-between" 
+          w="full" 
+          mr={{base: "none", lg: "5%"}}
+        >
           <Text
             as="h1"
             fontSize={{base: "sm", md: "xl"}}
@@ -58,33 +69,14 @@ export const Header = ()=> {
             トップページへ
           </Text>
           <Flex display={{base: "none", md: "flex"}} w="50%" >
-            <FormControl id="search" display="flex">
-              <Input
-                value={keyword}
-                onChange={onChangeKeyword}
-                placeholder="キーワード入力"
-                textAlign="center"
-                bg="white"
-                mr="2"
-              />
-              <Select
-                value={model}
-                onChange={onChangeModel} 
-                bg="white" 
-                w="auto" 
-                minW="130px"
-                mr="2"
-              >
-                <option value="post">記事</option>
-                <option value="user">ユーザー</option>
-              </Select>
-              <Button
-                onClick={toSearchResult}
-                disabled={keyword===""}
-              >
-                <SearchIcon />
-              </Button>
-            </FormControl>
+            <SearchInputForm 
+              keyword={keyword}
+              model={model}
+              onChangeKeyword={onChangeKeyword}
+              onChangeModel={onChangeModel}
+              toSearchResult={toSearchResult}
+            />
+            
           </Flex>
           <Flex display={{base: "none", md: "flex"}} >
             <Select placeholder="Tag Search" mr="2" bg="white" onChange={onChangeTagSearch}>
@@ -102,7 +94,15 @@ export const Header = ()=> {
           </Flex>
         </Flex>
       </Flex>
-      <MenuDrawer onClose={onClose} isOpen={isOpen}/>
+      <MenuDrawer 
+        onClose={onClose} 
+        isOpen={isOpen}
+        keyword={keyword}
+        model={model}
+        onChangeKeyword={onChangeKeyword}
+        onChangeModel={onChangeModel}
+        toSearchResult={toSearchResult}
+      />
     </>
   )
 }

@@ -31,7 +31,7 @@ export const DefaultLayout = (props)=> {
         <Box 
           w={{base: "90%", md: "70%"}} 
           m={{base: "auto", md: "2"}}
-          pt={{base: "16", lg: "28"}}
+          pt={{base: "8", md: "16",  lg: "28"}}
           > 
         {children}
         </Box>

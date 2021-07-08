@@ -109,7 +109,6 @@ export const getUsersFavoritePosts = (userId, queryPage, setSumPage) => {
         { withCredentials: true }
       )
       .then((response) => {
-        console.log(response);
         const posts = response.data.posts;
         const page_length = response.data.page_length;
         setSumPage(page_length);

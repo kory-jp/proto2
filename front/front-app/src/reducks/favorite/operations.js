@@ -29,30 +29,6 @@ export const confirmFavorited = (postId) => {
   };
 };
 
-// export const createFavorite = (postId) => {
-//   console.log("2");
-//   console.log(postId);
-//   return async (dispatch) => {
-//     axios
-//       .post(`http://localhost:3001/api/v1/user/posts/${postId.id}/favorites`, {
-//         withCredentials: true,
-//       })
-//       .then((response) => {
-//         console.log(response);
-//         console.log("3");
-//         const status = response.data;
-//         dispatch(
-//           confirmFavoritedAction({
-//             status: status,
-//           })
-//         );
-//       })
-//       .catch((error) => {
-//         console.log("error res:", error);
-//       });
-//   };
-// };
-
 export const createFavorite = (postId, currentUserId) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
@@ -71,8 +47,6 @@ export const createFavorite = (postId, currentUserId) => {
         }
       )
       .then((response) => {
-        console.log(response);
-        console.log("3");
         const status = response.data;
         dispatch(
           createFavoriteAction({
@@ -90,7 +64,6 @@ export const createFavorite = (postId, currentUserId) => {
 };
 
 export const destroyFavorite = (postId) => {
-  console.log(postId);
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
     axios
