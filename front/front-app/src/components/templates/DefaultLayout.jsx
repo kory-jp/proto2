@@ -7,14 +7,31 @@ export const DefaultLayout = (props)=> {
   const {children} = props;
   return(
     <>
+      <Box 
+        position="fixed" 
+        top="0" 
+        w="full"
+      >
       <Header/>
-      <Flex m={{base: "2", lg: "9"}}>
-        <Box w="25%" m="2" display={{base: "none", md: "block"}}>
-        <SideBar/>
+      </Box>
+      <Flex 
+        m={{base: "2", lg: "9"}}
+        mt="20"
+      >
+        <Box 
+          w="25%" 
+          m="2" 
+          display={{base: "none", md: "block"}}
+          pt={{base: "16", lg: "28"}}
+        >
+          <Box position="sticky" top="40">
+            <SideBar/>
+          </Box>
         </Box>
         <Box 
           w={{base: "90%", md: "70%"}} 
           m={{base: "auto", md: "2"}}
+          pt={{base: "16", lg: "28"}}
           > 
         {children}
         </Box>

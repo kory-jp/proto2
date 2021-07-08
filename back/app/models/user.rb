@@ -18,8 +18,11 @@ class User < ApplicationRecord
   has_secure_password
   
   has_many :posts, dependent: :delete_all
+  has_many :favorites, dependent: :delete_all
+  has_many :favorite_posts, through: :favorites, source: :post
 
   validates :name, presence: true
+  validates :nickname, presence: true
   validates :email, presence: true
   validates :email, uniqueness: true
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i

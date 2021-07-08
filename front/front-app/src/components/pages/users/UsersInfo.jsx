@@ -1,45 +1,55 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import { Center } from '@chakra-ui/layout';
-import { Spinner } from "@chakra-ui/spinner";
-import useLoadingState from "../../../hooks/useLoadingState";
-import { showUsers } from "../../../reducks/users/operations";
+import { Switch, Route } from 'react-router-dom'
 import UsersShowCard from "../../organisms/users/UsersShowCard";
 import UsersPosts from "./UsersPosts";
 import { Box } from "@chakra-ui/react";
-import { getUsersPosts } from "../../../reducks/posts/operations";
-import usePagination from "../../../hooks/usePagination";
+import { DefaultFlex, UsersPageButton } from '../../../assets/style/chakraStyles'
+import UsersFavoritePosts from "./UsersFavoritePosts";
+import { push } from "connected-react-router";
+import useReturnTop from "../../../hooks/useReturnTop";
 
 export const UsersInfo = () => {
   const userId = useParams();
   const dispatch = useDispatch()
-  const loadingState = useLoadingState()
-  const {queryPage, sumPage, setSumPage} = usePagination()
+  const returnTop = useReturnTop()
 
-  useEffect(()=> {
-    dispatch(showUsers(userId))
-    dispatch(getUsersPosts(userId, setSumPage, queryPage))
-  },[dispatch, userId, setSumPage, queryPage])
-  
-  const users =  useSelector((state)=> state.users)
-  const posts =  useSelector((state)=> state.posts)
+  const toUsersPost = useCallback(()=> {
+    dispatch(push(`/users/${userId.id}`))
+    returnTop();
+  },[dispatch, returnTop, userId.id])
+
+  const toFavoritePosts = useCallback(()=> {
+    dispatch(push(`/users/${userId.id}/favoritePosts`))
+    returnTop();
+  },[dispatch, returnTop, userId.id])
   
   return(
-    <>
-    { loadingState? (
-      <Center  h="100vh" w={{base: "50vh", md: "100vh"}}>
-        <Spinner/>
-      </Center>
-    ): (
-      <Box>
-        <Box mb="5">
-          <UsersShowCard users={users}/>
-        </Box>
-        <UsersPosts posts={posts} userId={userId} sumPage={sumPage}/>
+    <Box>
+      <Box mb="5">
+        <UsersShowCard/>
       </Box>
-    )}
-  </>
+      <DefaultFlex
+        mb="4"
+        justifyContent="space-around"
+      >
+          <UsersPageButton
+            onClick={toUsersPost}
+          >
+            投稿記事
+          </UsersPageButton>
+          <UsersPageButton
+            onClick={toFavoritePosts}
+          >
+            お気に入り
+          </UsersPageButton>
+      </DefaultFlex>
+      <Switch>
+        <Route exact path={"/users/:id"} component={UsersPosts}/>
+        <Route exact path={"/users/:id/favoritePosts"} component={UsersFavoritePosts}/>
+      </Switch>
+    </Box>
   )
 }
 

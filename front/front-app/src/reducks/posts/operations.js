@@ -77,7 +77,79 @@ export const getUsersPosts = (userId, setSumPage, queryPage) => {
   };
 };
 
+export const getCurretUserFavoritePosts = (userId, queryPage, setSumPage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
+    axios
+      .get(
+        `http://localhost:3001/api/v1/user/accounts/${userId.id}/favorite_posts/?page=${queryPage}`,
+        { withCredentials: true }
+      )
+      .then((response) => {
+        const posts = response.data.posts;
+        const page_length = response.data.page_length;
+        setSumPage(page_length);
+        dispatch(getUsersPostsAction(posts));
+      })
+      .catch((error) => {
+        console.log("error res:", error);
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
+      });
+  };
+};
+
+export const getUsersFavoritePosts = (userId, queryPage, setSumPage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
+    axios
+      .get(
+        `http://localhost:3001/api/v1/user/users/${userId.id}/favorite_posts/?page=${queryPage}`,
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log(response);
+        const posts = response.data.posts;
+        const page_length = response.data.page_length;
+        setSumPage(page_length);
+        dispatch(getUsersPostsAction(posts));
+      })
+      .catch((error) => {
+        console.log("error res:", error);
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
+      });
+  };
+};
+
 export const SearchTagGetPosts = (tagId, setSumPage, queryPage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
+    axios
+      .get(
+        `http://localhost:3001/api/v1/user/tags/${tagId.id}/search/?page=${queryPage}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        const posts = response.data.posts;
+        const page_length = response.data.page_length;
+        setSumPage(page_length);
+        dispatch(getUsersPostsAction(posts));
+      })
+      .catch((error) => {
+        console.log("error res:", error);
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
+      });
+  };
+};
+
+export const SearchKeywordGetPosts = (tagId, setSumPage, queryPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
     axios

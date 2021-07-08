@@ -16,6 +16,7 @@ export const ReduxRegistration = () => {
     dispatch(completedLoggedInStatus())
   },[dispatch])
   const [userName, setUserName] = useState('');
+  const [userNickname, setUserNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -23,6 +24,10 @@ export const ReduxRegistration = () => {
   const inputUserName = useCallback((event)=> {
     setUserName(event.target.value)
   }, [setUserName])
+
+  const inputUserNickname = useCallback((event)=> {
+    setUserNickname(event.target.value)
+  }, [setUserNickname])
 
   const inputEmail = useCallback((event)=> {
     setEmail(event.target.value)
@@ -62,6 +67,16 @@ export const ReduxRegistration = () => {
           value={userName}
           onChange={inputUserName}
         />
+        <Input 
+          id="f1"
+          type="nickname"
+          name="nickname"
+          placeholder="ニックネーム"
+          fontSize={{base: "sm", md: "lg"}}
+          required={true}
+          value={userNickname}
+          onChange={inputUserNickname}
+        />
         <Input
           id="f4"
           type="email"
@@ -94,9 +109,9 @@ export const ReduxRegistration = () => {
         /> 
         <PrimaryButton
           type="submit"
-          onClick={()=> dispatch(registration(userName, email, password, passwordConfirmation, showMessage))}
+          onClick={()=> dispatch(registration(userName, userNickname, email, password, passwordConfirmation, showMessage))}
           loading={loadingState}
-          disabled={userName === "" || email === ""|| password === "" || passwordConfirmation === ""}
+          disabled={userName === "" || userNickname === "" || email === ""|| password === "" || passwordConfirmation === ""}
         >
           新規登録
         </PrimaryButton>

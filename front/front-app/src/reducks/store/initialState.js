@@ -28,6 +28,10 @@ const initialState = {
   tags: {
     list: [],
   },
+
+  favorite: {
+    status: false,
+  },
 };
 
 export default initialState;

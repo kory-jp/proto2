@@ -10,6 +10,7 @@ import {
 
 export const registration = (
   userName,
+  userNickname,
   email,
   password,
   passwordConfirmation,
@@ -18,6 +19,7 @@ export const registration = (
   return async (dispatch) => {
     if (
       userName === "" ||
+      userNickname === "" ||
       email === "" ||
       password === "" ||
       passwordConfirmation === ""
@@ -38,6 +40,7 @@ export const registration = (
         {
           user: {
             name: userName,
+            nickname: userNickname,
             email: email,
             password: password,
             passwordConfirmation: passwordConfirmation,

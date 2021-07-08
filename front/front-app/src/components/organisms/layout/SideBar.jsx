@@ -7,6 +7,7 @@ import BorderColorIcon from '@material-ui/icons/BorderColor';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import FolderIcon from '@material-ui/icons/Folder';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 import useMessage from '../../../hooks/useMessage';
 import SideBarButton from '../../atoms/button/SIdeBarButton';
@@ -20,7 +21,7 @@ export const SideBar = ()=> {
 
   return(
     <Flex flexDirection="column" bg="white" shadow="md" borderRadius="md" p="2">
-      <Stack>
+      <Stack mt="5" spacing="5">
         <SideBarButton
           onClick={()=> dispatch(push('/posts/new'))}
           leftIcon={<BorderColorIcon />}
@@ -33,17 +34,25 @@ export const SideBar = ()=> {
         >
           投稿記事
         </SideBarButton>
-        <Divider color="gray.500" mt="3" mb="3" />
+        <SideBarButton
+          onClick={()=> dispatch(push(`/mypage/${currentUserId}/favoritePosts`))}
+          leftIcon={<ThumbUpIcon />}
+        >
+          お気に入り記事
+        </SideBarButton>
+      </Stack>
+      <Divider color="gray.500" mt="3" mb="4" />
+      <Stack mb="7" spacing="5">
         <SideBarButton
           onClick={()=> dispatch(push(`/mypage/${currentUserId}/edit`))}
           leftIcon={<PersonIcon />}
-        >
+          >
           個人情報修正
         </SideBarButton>
         <SideBarButton
           onClick={()=> dispatch(logOut(showMessage))}
           leftIcon={<ExitToAppIcon />}
-        >
+          >
           ログアウト
         </SideBarButton>
       </Stack>

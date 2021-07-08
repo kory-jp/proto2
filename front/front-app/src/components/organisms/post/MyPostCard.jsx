@@ -5,7 +5,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
-import { DefaultFlex, DefaultText } from '../../../assets/style/chakraStyles';
+import { DefaultFlex, DefaultText, DefaultTitleText } from '../../../assets/style/chakraStyles';
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
 import PrimaryTag from '../../atoms/tag/PrimaryTag';
 import useReturnTop from '../../../hooks/useReturnTop';
@@ -16,10 +16,20 @@ export const MyPostCard = (props)=> {
   const currentUserId = useGetCurrentUserId()
   const {id, user_id, tags, title, image, created_at} = props.post;
 
+  const toPostShow = useCallback(()=> {
+    dispatch(push('/posts/show/' + id))
+    returnTop()
+  },[dispatch, returnTop, id])
+
   const toTagIndex = useCallback((tag)=> {
     dispatch(push(`/posts/tag/${tag.id}`))
     returnTop()
   },[dispatch, returnTop])
+
+  const toPostEdit = useCallback(()=> {
+    dispatch(push('/posts/edit/' + id))
+    returnTop()
+  },[dispatch, returnTop, id])
 
   return(
     <DefaultFlex w="100%" mb="2">
@@ -30,17 +40,17 @@ export const MyPostCard = (props)=> {
         objectFit="cover"
         borderRadius="md"
         minW="15%"
-        onClick={()=> dispatch(push('/posts/show/' + id))}
+        onClick={toPostShow}
         cursor="pointer"
       />
       <DefaultFlex flexDirection="column" justifyContent="space-between" w="100%" p="2" ml="2">
-        <DefaultText
+        <DefaultTitleText
           fontWeight="bold"
-          onClick={()=> dispatch(push('/posts/show/' + id))}
+          onClick={toPostShow}
           cursor="pointer"
         >
           {title}
-        </DefaultText>
+        </DefaultTitleText>
         <Flex>
             {
               tags? tags.length > 0 && (
@@ -59,7 +69,7 @@ export const MyPostCard = (props)=> {
           { 
             user_id === currentUserId ? (
               <Link
-                onClick={()=> dispatch(push(`/posts/edit/${id}`))}
+                onClick={toPostEdit}
                 fontSize={{base: "sm", md: "lg"}}
               >
                 <CreateIcon fontSize="small"/>

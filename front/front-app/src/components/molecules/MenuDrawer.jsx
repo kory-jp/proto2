@@ -30,6 +30,11 @@ export const MenuDrawer = (props) => {
     onClose()
   }
 
+  const toFavoritePosts = () => {
+    dispatch(push(`/mypage/${currentUserId}/favoritePosts`))
+    onClose()
+  }
+
   const toEditProfile = () => {
     dispatch(push(`/mypage/${currentUserId}/edit`))
     onClose()
@@ -62,6 +67,15 @@ export const MenuDrawer = (props) => {
             m="2"
           >
             投稿記事
+          </Button>
+          <Button
+            bg="white"
+            onClick={toFavoritePosts}
+            fontSize="sm"
+            w="100%"
+            m="2"
+          >
+            お気に入り
           </Button>
           <Divider 
           mb="4"

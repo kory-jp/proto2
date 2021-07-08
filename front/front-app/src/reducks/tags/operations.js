@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getTagAction, getTagsAction } from "./actions";
 
+// オプションの選択肢取得
 export const getTags = () => {
   return async (dispatch) => {
     axios

@@ -11,12 +11,17 @@ import PrimaryTag from '../../atoms/tag/PrimaryTag'
 export const PostCard = (props)=> {
   const dispatch = useDispatch()
   const returnTop = useReturnTop()
-  const {id, userId, title, tags, name, nickname, image, created_at} = props.post;
+  const {id, userId, title, tags, nickname, image, created_at} = props.post;
 
-  const toUserInfoPage = () => {
+  const toPostShow = useCallback(()=> {
+    dispatch(push('/posts/show/' + id))
+    returnTop()
+  },[dispatch, returnTop, id])
+
+  const toUserInfoPage = useCallback(() => {
     dispatch(push(`users/${userId}`))
     returnTop()
-  }
+  },[dispatch, returnTop, userId])
 
   const toTagIndex = useCallback((tag)=> {
     dispatch(push(`/posts/tag/${tag.id}`))
@@ -32,14 +37,14 @@ export const PostCard = (props)=> {
         objectFit="cover"
         borderRadius="md"
         minW="15%"
-        onClick={()=> dispatch(push('/posts/show/' + id))}
+        onClick={toPostShow}
         cursor="pointer"
       />
       <DefaultFlex flexDirection="column" justifyContent="space-between" w="100%" p="2" ml="2">
         <Flex flexDirection="column">
           <DefaultTitleText
             fontWeight="bold"
-            onClick={()=> dispatch(push('/posts/show/' + id))}
+            onClick={toPostShow}
             cursor="pointer"
             mb="4px"
           > 
@@ -62,10 +67,10 @@ export const PostCard = (props)=> {
         </Flex>
         <Flex justifyContent="space-between">
           <DefaultText
-            onClick={toUserInfoPage}
+            onClick={ toUserInfoPage}
             cursor="pointer"
           >
-            {nickname? nickname : name}
+            {nickname}
           </DefaultText>
           <DefaultText>{created_at}</DefaultText>
         </Flex>
