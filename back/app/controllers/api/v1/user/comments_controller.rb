@@ -47,7 +47,6 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
   end
 
   def destroy
-    binding.pry
     comment = Comment.find(params[:id])
     comment.destroy
   end

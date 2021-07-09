@@ -12,7 +12,7 @@ import { FormControl, FormLabel } from "@material-ui/core";
 import useLoadingState from "../../../hooks/useLoadingState";
 import PrimaryButton from "../../atoms/button/PrimaryButton"
 import DeleteButton from "../../atoms/button/DeleteButton"
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useMessage from "../../../hooks/useMessage";
 import { deleteComment, updateComment } from "../../../reducks/comments/operations";
@@ -31,8 +31,10 @@ export const CommentEditModal = (props) => {
     })
     return defaultValue
   },[commentData, selectorComments])
-  console.log(defaultValues)
-  const [comment, setComment] = useState(defaultValues[0].comment)
+  const [comment, setComment] = useState("")
+  useEffect(()=> {
+    setComment(defaultValues[0].comment)
+  },[defaultValues])
 
   const dispatch  = useDispatch()
   const loadingState = useLoadingState()
