@@ -16,6 +16,14 @@ export const newCommentAction = (commentStatus) => {
   };
 };
 
+export const EDIT_COMMENT = "EDIT_COMMENT";
+export const editCommentAction = (commentStatus) => {
+  return {
+    type: EDIT_COMMENT,
+    payload: commentStatus,
+  };
+};
+
 export const UPDATE_COMMENT = "UPDATE_COMMENT";
 export const updateCommentAction = (commentStatus) => {
   return {

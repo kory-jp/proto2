@@ -13,6 +13,11 @@ export const CommentsReducer = (state = initialState.comments, action) => {
         ...state,
         ...action.payload,
       };
+    case Actions.EDIT_COMMENT:
+      return {
+        ...state,
+        ...action.payload,
+      };
     case Actions.UPDATE_COMMENT:
       return {
         ...state,

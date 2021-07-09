@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { Box, Stack, Center } from '@chakra-ui/layout'
@@ -103,12 +103,15 @@ export const PostEdit = ()=> {
     getPostStatus(postId)
   },[dispatch, editAuth, getPostStatus, postId])
 
-  // selectの初期選択値を取得
-  const defaultValue = options.filter(function(option){  
-    for(let i in tags) {
-      return option.value === tags[i].id
-    }
-  })
+  const defaultValues = useMemo(()=> {
+    const defaultValue =  options.filter(function(option){
+      for(let i in tags) {
+        return option.value === tags[i].id
+      }
+    })
+    return defaultValue
+  },[options, tags])
+
 
   const createFormData = useCallback(()=> {
     const formData = new FormData();
@@ -154,7 +157,7 @@ export const PostEdit = ()=> {
                 <SelectComponent 
                   onChange={selectTags}
                   options={options}
-                  defaultValue={defaultValue}
+                  defaultValue={defaultValues}
                 />
               </FormControl>
               <FormControl id="content">

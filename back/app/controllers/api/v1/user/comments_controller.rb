@@ -31,6 +31,11 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
     end
   end
 
+  def edit
+    comment = Comment.find(params[:id])
+    render json: comment
+  end
+
   def update
     comment = Comment.find(params[:id])
     if comment.user_id == current_user.id
@@ -42,6 +47,7 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
   end
 
   def destroy
+    binding.pry
     comment = Comment.find(params[:id])
     comment.destroy
   end
