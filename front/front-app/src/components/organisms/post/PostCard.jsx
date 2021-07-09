@@ -45,20 +45,22 @@ export const PostCard = (props)=> {
           > 
             {title}
           </DefaultTitleText>
-          <Flex>
-            {
-              tags? tags.length > 0 && (
-                tags.map(tag => (
-                  <PrimaryTag
-                    key={tag.id}
-                    onClick={() => toTagIndex(tag)}
-                  >
-                    {tag.name}
-                  </PrimaryTag>
-                ))
-              ): null
-            }
-        </Flex>
+          {
+            tags.length > 0 && (
+              <Flex>
+                {
+                  tags.map(tag => (
+                    <PrimaryTag
+                      key={tag.id}
+                      onClick={() => toTagIndex(tag)}
+                    >
+                      {tag.name}
+                    </PrimaryTag>
+                  ))
+                }
+              </Flex>
+            )
+          }
         </Flex>
         <Flex justifyContent="space-between">
           <DefaultText

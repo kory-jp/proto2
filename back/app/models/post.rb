@@ -21,9 +21,9 @@
 class Post < ApplicationRecord
   mount_uploader :image, ImageUploader
 
-  has_many :comments, dependent: :delete_all
-  has_many :post_tag_relations, dependent: :delete_all
-  has_many :tags, through: :post_tag_relations
+  has_many :comments, foreign_key: :post_id, dependent: :destroy
+  has_many :post_tag_relations, foreign_key: :post_id, dependent: :destroy
+  has_many :tags, through: :post_tag_relations, foreign_key: :post_id, dependent: :destroy
   belongs_to :user
 
 

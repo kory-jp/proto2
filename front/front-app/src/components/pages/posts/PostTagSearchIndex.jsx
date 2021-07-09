@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Spinner } from "@chakra-ui/spinner";
 import {push} from 'connected-react-router';
 
-import { SearchTagGetPosts } from '../../../reducks/posts/operations';
+import { searchTagGetPosts } from '../../../reducks/posts/operations';
 import PostCard from '../../organisms/post/PostCard';
 import useLoadingState from '../../../hooks/useLoadingState';
 import usePagination from '../../../hooks/usePagination';
@@ -22,7 +22,7 @@ export const PostIndex = ()=> {
   const loadingState = useLoadingState()
   
   useEffect(()=> {
-    dispatch(SearchTagGetPosts(tagId, setSumPage, queryPage))
+    dispatch(searchTagGetPosts(tagId, setSumPage, queryPage))
     dispatch(getTag(tagId))
   },[tagId, queryPage, setSumPage, dispatch])
   const posts = useSelector((state)=> state.posts.list)

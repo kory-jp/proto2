@@ -77,7 +77,7 @@ export const getUsersPosts = (userId, setSumPage, queryPage) => {
   };
 };
 
-export const SearchTagGetPosts = (tagId, setSumPage, queryPage) => {
+export const searchTagGetPosts = (tagId, setSumPage, queryPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
     axios

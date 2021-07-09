@@ -62,20 +62,22 @@ export const PostShowCard = (props)=> {
               </Link>
             ): null
           }
-          <Flex mt="2" mb="2">
           {
             tags? tags.length > 0 && (
-              tags.map(tag => (
-                <PrimaryTag
-                  key={tag.id}
-                  onClick={()=> toTagIndex(tag)}
-                >
-                  {tag.name}
-                </PrimaryTag>
-              ))
+              <Flex mt="2" mb="2">
+                {
+                  tags.map(tag => (
+                    <PrimaryTag
+                      key={tag.id}
+                      onClick={()=> toTagIndex(tag)}
+                    >
+                      {tag.name}
+                    </PrimaryTag>
+                  ))
+                }
+              </Flex>
             ): null
           }
-          </Flex>
           <Flex justifyContent="space-between" pt="2" alignItems="flex-end">
             <Flex alignItems="flex-end">
               <DefaultUserIconImage

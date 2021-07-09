@@ -17,7 +17,7 @@ class User < ApplicationRecord
   mount_uploader :image_data, ImageUploader
   has_secure_password
   
-  has_many :posts, dependent: :delete_all
+  has_many :posts, foreign_key: :user_id, dependent: :destroy
 
   validates :name, presence: true
   validates :email, presence: true

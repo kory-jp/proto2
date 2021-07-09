@@ -116,7 +116,7 @@ export const PostEdit = ()=> {
     formData.append('post[user_id]', currentUserId)
     formData.append('post[title]', title)
     for(let i in tags) {
-      let tagId = tags[i].value? tags[i].value : tags[i].id
+      let tagId = tags[i].value ? tags[i].value : tags[i].id
       formData.append('post[tag_ids][]', tagId)
     }
     formData.append('post[content]', content)
