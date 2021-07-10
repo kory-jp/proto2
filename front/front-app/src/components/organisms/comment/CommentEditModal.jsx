@@ -85,7 +85,7 @@ export const CommentEditModal = (props) => {
               </FormControl>
               <PrimaryButton
                 onClick={onClickUpdateComment}
-                loading={loadingState}
+                isLoading={loadingState}
                 disabled={comment===""}
               >
                 コメント送信

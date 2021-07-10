@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { Box, Stack, Center } from '@chakra-ui/layout'
@@ -98,20 +98,20 @@ export const PostEdit = ()=> {
       })
   },[dispatch])
 
+  let defaultValueArr = useRef([])
+  const defaultValue = useMemo(() => {
+    defaultValueArr.current = []
+    for(let i in tags) {
+       defaultValueArr.current.push(options[ tags[i]? tags[i].id -1 : null ])
+    } 
+    return defaultValueArr.current
+  },[options, tags])
+
+
   useEffect(()=> {
     editAuth(postId)
     getPostStatus(postId)
-  },[dispatch, editAuth, getPostStatus, postId])
-
-  const defaultValues = useMemo(()=> {
-    const defaultValue =  options.filter(function(option){
-      for(let i in tags) {
-        return option.value === tags[i].id
-      }
-    })
-    return defaultValue
-  },[options, tags])
-
+  },[dispatch, editAuth, getPostStatus, postId ])
 
   const createFormData = useCallback(()=> {
     const formData = new FormData();
@@ -155,9 +155,10 @@ export const PostEdit = ()=> {
               <FormControl id="tag">
                 <FormLabel fontSize={{base: "sm", md: "lg"}}>タグ</FormLabel>
                 <SelectComponent 
+                  // key={defaultValue}
                   onChange={selectTags}
                   options={options}
-                  defaultValue={defaultValues}
+                  defaultValue={defaultValue}
                 />
               </FormControl>
               <FormControl id="content">
@@ -203,7 +204,7 @@ export const PostEdit = ()=> {
               <PrimaryButton
                 type="submit"
                 onClick={()=> dispatch(updatePost(postId, formData, showMessage))}
-                loading={loadingState}
+                isLoading={loadingState}
                 disabled={title === "" || content === ""}
                 fontSize={{base: "sm", md: "lg"}}
               >
@@ -211,7 +212,7 @@ export const PostEdit = ()=> {
               </PrimaryButton>
               <DeleteButton
                 type="submit"
-                loading={loadingState}
+                isLoading={loadingState}
                 onClick={()=> dispatch(deletePost(postId, showMessage))}
               >
                 削除

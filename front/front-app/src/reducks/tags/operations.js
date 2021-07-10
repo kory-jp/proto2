@@ -1,8 +1,10 @@
 import axios from "axios";
+import { nowLoadingAction } from "../loading/actions";
 import { getTagAction, getTagsAction } from "./actions";
 
 export const getTags = () => {
   return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
     axios
       .get("http://localhost:3001/api/v1/user/tags", {
         withCredentials: true,
@@ -13,12 +15,16 @@ export const getTags = () => {
       })
       .catch((error) => {
         console.log("error res:", error);
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
       });
   };
 };
 
 export const getTag = (tagId) => {
   return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
     axios
       .get(`http://localhost:3001/api/v1/user/tags/${tagId.id}`, {
         withCredentials: true,
@@ -29,6 +35,9 @@ export const getTag = (tagId) => {
       })
       .catch((error) => {
         console.log("error res:", error);
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
       });
   };
 };

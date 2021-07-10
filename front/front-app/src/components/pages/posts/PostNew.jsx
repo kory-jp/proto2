@@ -141,7 +141,7 @@ export const PostNew = ()=> {
         <PrimaryButton
           type="submit"
           onClick={()=> dispatch(newPost(formData, showMessage))}
-          loading={loadingState}
+          isLoading={loadingState}
           disabled={title==="" || content===""}
           fontSize={{base: "sm", md: "lg"}}
         >
