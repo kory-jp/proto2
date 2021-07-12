@@ -1,7 +1,7 @@
 import Select from 'react-select'
 
 export const SelectComponent = (props) => {
-  const { onChange, defaultValue, options} = props
+  const { onChange, options, value} = props
 
   return(
     <Select 
@@ -10,7 +10,7 @@ export const SelectComponent = (props) => {
       name="tag"
       options={options}
       onChange={onChange}
-      defaultValue={defaultValue}
+      value={value}
     />
   )
 }

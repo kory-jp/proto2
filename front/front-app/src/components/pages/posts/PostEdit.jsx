@@ -30,7 +30,7 @@ export const PostEdit = ()=> {
   const dispatch = useDispatch()
   const postId = useParams();
   const [title, setTitle] =  useState('');
-  const [tags, setTags] =  useState({});
+  const [tags, setTags] =  useState([]);
   const [content, setContent] =  useState('');
   const [image, setImage] =  useState();
   const [preview, setPreview] = useState('');
@@ -103,20 +103,13 @@ export const PostEdit = ()=> {
     getPostStatus(postId)
   },[dispatch, editAuth, getPostStatus, postId])
 
-  // selectの初期選択値を取得
-  const defaultValue = options.filter(function(option){  
-    for(let i in tags) {
-      return option.value === tags[i].id
-    }
-  })
-
   const createFormData = useCallback(()=> {
     const formData = new FormData();
 
     formData.append('post[user_id]', currentUserId)
     formData.append('post[title]', title)
     for(let i in tags) {
-      let tagId = tags[i].value? tags[i].value : tags[i].id
+      let tagId = tags[i].id
       formData.append('post[tag_ids][]', tagId)
     }
     formData.append('post[content]', content)
@@ -154,7 +147,7 @@ export const PostEdit = ()=> {
                 <SelectComponent 
                   onChange={selectTags}
                   options={options}
-                  defaultValue={defaultValue}
+                  value={tags}
                 />
               </FormControl>
               <FormControl id="content">
@@ -200,7 +193,7 @@ export const PostEdit = ()=> {
               <PrimaryButton
                 type="submit"
                 onClick={()=> dispatch(updatePost(postId, formData, showMessage))}
-                loading={loadingState}
+                isLoading={loadingState}
                 disabled={title === "" || content === ""}
                 fontSize={{base: "sm", md: "lg"}}
               >
@@ -208,7 +201,7 @@ export const PostEdit = ()=> {
               </PrimaryButton>
               <DeleteButton
                 type="submit"
-                loading={loadingState}
+                isLoading={loadingState}
                 onClick={()=> dispatch(deletePost(postId, showMessage))}
               >
                 削除

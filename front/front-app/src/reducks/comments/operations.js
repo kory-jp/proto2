@@ -3,6 +3,7 @@ import { push } from "connected-react-router";
 import { nowLoadingAction } from "../loading/actions";
 import {
   deleteCommentAction,
+  editCommentAction,
   getCommentsAction,
   newCommentAction,
   updateCommentAction,
@@ -60,6 +61,27 @@ export const newComment = (showMessage, postId, currentUserId, comment) => {
       })
       .catch(() => {
         dispatch(console.log("error"));
+      });
+  };
+};
+
+export const editComments = (commentId) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
+    axios
+      .get(`http://localhost:3001/api/v1/user/comments/${commentId}/edit`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        const comments = response.data.comments;
+        dispatch(editCommentAction(comments));
+      })
+      .catch((error) => {
+        console.log("error res:", error);
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
       });
   };
 };

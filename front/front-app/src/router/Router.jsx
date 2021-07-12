@@ -23,7 +23,7 @@ export const Router = () => {
       <Auth>
         <DefaultLayout>
           <Route exact path={"/posts"} component={PostIndex} /> 
-          <Route exact path={"/posts/tag/:id"} component={PostTagSearchIndex} /> 
+          <Route exact path={"/posts/tag"} component={PostTagSearchIndex} /> 
           <Route path={"/posts/new"} component={PostNew} />
           <Route path={"/posts/show/:id"} component={PostShow} />
           <Route path={"/posts/edit/:id"} component={PostEdit} />

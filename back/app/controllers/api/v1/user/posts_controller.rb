@@ -17,7 +17,8 @@ class Api::V1::User::PostsController < Api::V1::User::Base
       tags.each do |tag|
         tagObj = {}
         tagObj["id"] = tag.id
-        tagObj["name"] = tag.name
+        tagObj["value"] = tag.value
+        tagObj["label"] = tag.label
         tagArray.push(tagObj)
       end
       postObj["tags"] = tagArray
@@ -51,7 +52,8 @@ class Api::V1::User::PostsController < Api::V1::User::Base
     tags.each do |tag|
       tagObj = {}
       tagObj["id"] = tag.id
-      tagObj["name"] = tag.name
+      tagObj["value"] = tag.value
+      tagObj["label"] = tag.label
       tagArray.push(tagObj)
     end
     postObj["tags"] = tagArray
@@ -68,7 +70,7 @@ class Api::V1::User::PostsController < Api::V1::User::Base
 
   def create
     post = Post.new(post_params)
-    if post.save
+    if post.save!
       render json: {status: 200, post: post}
     end
   end

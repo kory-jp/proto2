@@ -1,9 +1,11 @@
 import axios from "axios";
-import { getTagAction, getTagsAction } from "./actions";
+import { nowLoadingAction } from "../loading/actions";
+import { getTagsAction } from "./actions";
 
 // オプションの選択肢取得
 export const getTags = () => {
   return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
     axios
       .get("http://localhost:3001/api/v1/user/tags", {
         withCredentials: true,
@@ -14,22 +16,9 @@ export const getTags = () => {
       })
       .catch((error) => {
         console.log("error res:", error);
-      });
-  };
-};
-
-export const getTag = (tagId) => {
-  return async (dispatch) => {
-    axios
-      .get(`http://localhost:3001/api/v1/user/tags/${tagId.id}`, {
-        withCredentials: true,
       })
-      .then((response) => {
-        const tag = response.data;
-        dispatch(getTagAction(tag));
-      })
-      .catch((error) => {
-        console.log("error res:", error);
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
       });
   };
 };

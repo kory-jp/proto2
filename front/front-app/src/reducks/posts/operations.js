@@ -123,12 +123,17 @@ export const getUsersFavoritePosts = (userId, queryPage, setSumPage) => {
   };
 };
 
-export const SearchTagGetPosts = (tagId, setSumPage, queryPage) => {
+export const searchTagGetPosts = (label, setSumPage, queryPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/tags/${tagId.id}/search/?page=${queryPage}`,
+      .post(
+        `http://localhost:3001/api/v1/user/tags/search/?page=${queryPage}`,
+        {
+          tag: {
+            label: label,
+          },
+        },
         {
           withCredentials: true,
         }

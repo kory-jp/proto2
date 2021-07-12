@@ -9,7 +9,6 @@ class Api::V1::User::SearchController < Api::V1::User::Base
       keywords.each do |keyword|
         result_users = result_users.or(User.where("nickname LIKE ?", "%#{keyword}%").or(User.where("introduction LIKE ?", "%#{keyword}%")))
       end
-      # binding.pry
       users = result_users.page(params[:page] ||=1).per(10).order(created_at: "DESC")
       page_length = result_users.page(1).per(10).total_pages
       usersArray = []
@@ -51,7 +50,8 @@ class Api::V1::User::SearchController < Api::V1::User::Base
         tags.each do |tag|
           tagObj = {}
           tagObj["id"] = tag.id
-          tagObj["name"] = tag.name
+          tagObj["value"] = tag.value
+          tagObj["label"] = tag.label
           tagArray.push(tagObj)
         end
         postObj["tags"] = tagArray

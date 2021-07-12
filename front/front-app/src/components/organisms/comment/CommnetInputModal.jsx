@@ -63,7 +63,7 @@ export const CommentInputModal = (props) => {
               </FormControl>
               <PrimaryButton
                 onClick={onClickNewComments}
-                loading={loadingState}
+                isLoading={loadingState}
                 disabled={comment===""}
               >
                 コメント送信

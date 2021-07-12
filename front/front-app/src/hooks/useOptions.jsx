@@ -11,7 +11,7 @@ export const useOptions = () => {
   const tagOptions = useSelector((state)=> state.tags.list)
    const options = (
     tagOptions.map(tagOption => (
-      { value: tagOption.id, label: tagOption.name }
+      {id: tagOption.id, value: tagOption.value, label: tagOption.label }
     ))
   )
   return options

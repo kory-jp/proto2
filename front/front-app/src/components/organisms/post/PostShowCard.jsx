@@ -43,7 +43,7 @@ export const PostShowCard = (props)=> {
   },[dispatch, favorite, postId, currentUserId])
 
   const toTagIndex = useCallback((tag)=> {
-    dispatch(push(`/posts/tag/${tag.id}`))
+    dispatch(push(`/posts/tag?label=${tag.label}`))
     returnTop()
   },[dispatch, returnTop])
   return(
@@ -88,20 +88,22 @@ export const PostShowCard = (props)=> {
               </Link>
             ): null
           }
-          <Flex mt="2" mb="2">
           {
             tags? tags.length > 0 && (
-              tags.map(tag => (
-                <PrimaryTag
-                  key={tag.id}
-                  onClick={()=> toTagIndex(tag)}
-                >
-                  {tag.name}
-                </PrimaryTag>
-              ))
+              <Flex mt="2" mb="2">
+                {
+                  tags.map(tag => (
+                    <PrimaryTag
+                      key={tag.id}
+                      onClick={()=> toTagIndex(tag)}
+                    >
+                      {tag.label}
+                    </PrimaryTag>
+                  ))
+                }
+              </Flex>
             ): null
           }
-          </Flex>
           <Flex justifyContent="space-between" pt="2" alignItems="flex-end">
             <Flex alignItems="flex-end">
               <DefaultUserIconImage

@@ -22,7 +22,8 @@ class Api::V1::User::UsersController < Api::V1::User::Base
       tags.each do |tag|
         tagObj = {}
         tagObj["id"] = tag.id
-        tagObj["name"] = tag.name
+        tagObj["value"] = tag.value
+        tagObj["label"] = tag.label
         tagArray.push(tagObj)
       end
       postObj["tags"] = tagArray
@@ -36,7 +37,6 @@ class Api::V1::User::UsersController < Api::V1::User::Base
   end
 
   def favorite_posts
-    # binding.pry
     user = User.find(params[:id])
     favorite_posts = user.favorite_posts
     posts = favorite_posts.page(params[:page] ||=1).per(10).order(created_at: "DESC")
@@ -55,7 +55,8 @@ class Api::V1::User::UsersController < Api::V1::User::Base
       tags.each do |tag|
         tagObj = {}
         tagObj["id"] = tag.id
-        tagObj["name"] = tag.name
+        tagObj["value"] = tag.value
+        tagObj["label"] = tag.label
         tagArray.push(tagObj)
       end
       postObj["tags"] = tagArray

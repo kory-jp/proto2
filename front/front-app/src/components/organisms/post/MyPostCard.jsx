@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react'
 import { Flex } from '@chakra-ui/layout'
-import { Image, Link } from "@chakra-ui/react"
+import { Box, Image, Link } from "@chakra-ui/react"
 import CreateIcon from '@material-ui/icons/Create';
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
-import { DefaultFlex, DefaultText, DefaultTitleText } from '../../../assets/style/chakraStyles';
+import { DefaultFlex, DefaultTitleText, DefaultText } from '../../../assets/style/chakraStyles';
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
 import PrimaryTag from '../../atoms/tag/PrimaryTag';
 import useReturnTop from '../../../hooks/useReturnTop';
@@ -22,7 +22,7 @@ export const MyPostCard = (props)=> {
   },[dispatch, returnTop, id])
 
   const toTagIndex = useCallback((tag)=> {
-    dispatch(push(`/posts/tag/${tag.id}`))
+    dispatch(push(`/posts/tag?label=${tag.label}`))
     returnTop()
   },[dispatch, returnTop])
 
@@ -44,27 +44,31 @@ export const MyPostCard = (props)=> {
         cursor="pointer"
       />
       <DefaultFlex flexDirection="column" justifyContent="space-between" w="100%" p="2" ml="2">
-        <DefaultTitleText
-          fontWeight="bold"
-          onClick={toPostShow}
-          cursor="pointer"
-        >
-          {title}
-        </DefaultTitleText>
-        <Flex>
-            {
-              tags? tags.length > 0 && (
-                tags.map(tag => (
-                  <PrimaryTag
-                    key={tag.id}
-                    onClick={() => toTagIndex(tag)}
-                  >
-                    {tag.name}
-                  </PrimaryTag>
-                ))
-              ): null
-            }
-        </Flex>
+        <Box>
+          <DefaultTitleText
+            fontWeight="bold"
+            onClick={()=> dispatch(push('/posts/show/' + id))}
+            cursor="pointer"
+            >
+            {title}
+          </DefaultTitleText>
+              {
+                 tags.length > 0 && (
+                  <Flex>
+                    {
+                      tags.map(tag => (
+                        <PrimaryTag
+                        key={tag.id}
+                        onClick={() => toTagIndex(tag)}
+                        >
+                          {tag.label}
+                        </PrimaryTag>
+                      ))
+                    }
+                  </Flex>
+                )
+              }
+        </Box>
         <Flex justifyContent="space-between">
           { 
             user_id === currentUserId ? (

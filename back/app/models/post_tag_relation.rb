@@ -19,6 +19,6 @@
 #  fk_rails_...  (tag_id => tags.id)
 #
 class PostTagRelation < ApplicationRecord
-  belongs_to :post
-  belongs_to :tag
+  belongs_to :post, optional: true
+  belongs_to :tag, optional: true
 end

@@ -24,7 +24,7 @@ export const PostCard = (props)=> {
   },[dispatch, returnTop, userId])
 
   const toTagIndex = useCallback((tag)=> {
-    dispatch(push(`/posts/tag/${tag.id}`))
+    dispatch(push(`/posts/tag?label=${tag.label}`))
     returnTop()
   },[dispatch, returnTop])
 
@@ -50,20 +50,22 @@ export const PostCard = (props)=> {
           > 
             {title}
           </DefaultTitleText>
-          <Flex>
-            {
-              tags? tags.length > 0 && (
-                tags.map(tag => (
-                  <PrimaryTag
-                    key={tag.id}
-                    onClick={() => toTagIndex(tag)}
-                  >
-                    {tag.name}
-                  </PrimaryTag>
-                ))
-              ): null
-            }
-        </Flex>
+          {
+            tags.length > 0 && (
+              <Flex>
+                {
+                  tags.map(tag => (
+                    <PrimaryTag
+                      key={tag.id}
+                      onClick={() => toTagIndex(tag)}
+                    >
+                      {tag.label}
+                    </PrimaryTag>
+                  ))
+                }
+              </Flex>
+            )
+          }
         </Flex>
         <Flex justifyContent="space-between">
           <DefaultText

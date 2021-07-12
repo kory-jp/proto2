@@ -3,7 +3,8 @@
 # Table name: tags
 #
 #  id         :bigint           not null, primary key
-#  name       :string(255)      not null
+#  label      :string(255)      not null
+#  value      :string(255)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

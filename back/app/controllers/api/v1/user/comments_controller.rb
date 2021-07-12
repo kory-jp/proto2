@@ -31,6 +31,11 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
     end
   end
 
+  def edit
+    comment = Comment.find(params[:id])
+    render json: comment
+  end
+
   def update
     p session.to_hash
     comment = Comment.find(params[:id])

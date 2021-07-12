@@ -33,14 +33,14 @@ Rails.application.routes.draw do
             end
           end
         end
-        resources :comments, only: [:create, :update, :destroy] do
+        resources :comments, only: [:create, :edit, :update, :destroy] do
           member do
             get :comments_index
           end
         end
         resources :tags, only: [:index, :show] do
-          member do
-            get :search
+          collection do
+            post :search
           end
         end
       end

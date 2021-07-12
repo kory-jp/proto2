@@ -8,11 +8,6 @@ export const TagsReducer = (state = initialState.tags, action) => {
         ...state,
         list: [...action.payload],
       };
-    case Actions.GET_TAG:
-      return {
-        ...state,
-        ...action.payload,
-      };
     default:
       return state;
   }

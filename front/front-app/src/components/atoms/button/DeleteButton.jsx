@@ -1,23 +1,20 @@
-import { Button } from "@chakra-ui/button";
+import DefaultButton from "./DefaultButton";
 
 export const DeleteButton = (props) => {
-  const  {children, onClick, disabled = false, loading = false, w } = props;
+  const {children} = props
+
   return(
-    <Button
+    <DefaultButton
       bg="gray.100"
       color="red"
-      w={w}
+      {...props}
       _hover={{
         bg: "red.400",
         color: "white"
       }}
-      fontSize={{base: "sm", md: "lg"}}
-      isLoading={loading}
-      disabled={disabled || loading}
-      onClick={onClick}
     >
       {children}
-    </Button>
+    </DefaultButton>
   )
 }
 
