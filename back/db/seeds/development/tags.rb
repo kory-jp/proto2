@@ -1,9 +1,9 @@
 Tag.create([
-  { name: 'Test_A'},
-  { name: 'Test_B'},
-  { name: 'Test_C'},
-  { name: 'Test_D'},
-  { name: 'Test_E'},
-  { name: 'Test_F'},
-  { name: 'Test_G'},
+  {value: "test_A", label: "test_A"},
+  {value: "test_B", label: "test_B"},
+  {value: "test_C", label: "test_C"},
+  {value: "test_D", label: "test_D"},
+  {value: "test_E", label: "test_E"},
+  {value: "test_F", label: "test_F"},
+  {value: "test_G", label: "test_G"},
 ])

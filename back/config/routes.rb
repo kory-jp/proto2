@@ -31,8 +31,8 @@ Rails.application.routes.draw do
           end
         end
         resources :tags, only: [:index, :show] do
-          member do
-            get :search
+          collection do
+            post :search
           end
         end
       end

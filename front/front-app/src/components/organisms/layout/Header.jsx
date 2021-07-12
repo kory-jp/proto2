@@ -23,8 +23,8 @@ export const Header = ()=> {
   const tagOptions = useSelector((state)=> state.tags.list)
 
   const onChangeTagSearch = useCallback((event)=> {
-    const tagId = event.target.value
-    tagId? dispatch(push ({ pathname:`/posts/tag/${tagId}`, state: 'hello'})): dispatch(push("/posts"))
+    const tagValue = event.target.value
+    tagValue? dispatch(push (`/posts/tag?label=${tagValue}`)): dispatch(push("/posts"))
     event.target.value = "";
   },[dispatch])
 
@@ -45,7 +45,7 @@ export const Header = ()=> {
             <Select placeholder="Tag Search" mr="2" bg="white" onChange={onChangeTagSearch}>
             {
              tagOptions.map(tagOption => (
-               <option key={tagOption.id} value={tagOption.id} >{tagOption.name}</option>
+               <option key={tagOption.id} value={tagOption.value} >{tagOption.label}</option>
              ))
            }
             </Select>

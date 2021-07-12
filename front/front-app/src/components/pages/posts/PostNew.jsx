@@ -41,6 +41,7 @@ export const PostNew = ()=> {
   }, [setTitle])
 
   const selectTags = useCallback((event)=> {
+    console.log(event)
     setTags(event)
   },[setTags])
 
@@ -65,7 +66,7 @@ export const PostNew = ()=> {
     formData.append('post[user_id]', currentUserId)
     formData.append('post[title]', title)
     for(let i in tags) {
-      let tagId = tags[i].value
+      let tagId = tags[i].id
       formData.append('post[tag_ids][]', tagId)
     }
     formData.append('post[content]', content)

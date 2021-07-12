@@ -10,7 +10,7 @@ class Api::V1::User::TagsController < Api::V1::User::Base
   end
 
   def search
-    tag = Tag.find(params[:id])
+    tag = Tag.find_by(label: params[:tag][:label])
     posts = tag.posts.page(params[:page] ||=1).per(10).order(created_at: "DESC")
     page_length = posts.page(1).per(10).total_pages
     postsArray = []
@@ -27,7 +27,8 @@ class Api::V1::User::TagsController < Api::V1::User::Base
       tags.each do |tag|
         tagObj = {}
         tagObj["id"] = tag.id
-        tagObj["name"] = tag.name
+        tagObj["value"] = tag.value
+        tagObj["label"] = tag.label
         tagArray.push(tagObj)
       end
       postObj["tags"] = tagArray

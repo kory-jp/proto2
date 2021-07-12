@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { Box, Stack, Center } from '@chakra-ui/layout'
@@ -30,7 +30,7 @@ export const PostEdit = ()=> {
   const dispatch = useDispatch()
   const postId = useParams();
   const [title, setTitle] =  useState('');
-  const [tags, setTags] =  useState({});
+  const [tags, setTags] =  useState([]);
   const [content, setContent] =  useState('');
   const [image, setImage] =  useState();
   const [preview, setPreview] = useState('');
@@ -98,20 +98,15 @@ export const PostEdit = ()=> {
       })
   },[dispatch])
 
-  let defaultValueArr = useRef([])
-  const defaultValue = useMemo(() => {
-    defaultValueArr.current = []
-    for(let i in tags) {
-       defaultValueArr.current.push(options[ tags[i]? tags[i].id -1 : null ])
-    } 
-    return defaultValueArr.current
-  },[options, tags])
-
-
   useEffect(()=> {
     editAuth(postId)
     getPostStatus(postId)
-  },[dispatch, editAuth, getPostStatus, postId ])
+  },[dispatch, editAuth, getPostStatus, postId])
+
+  // useEffect(()=> {
+  //   setValues(tags)
+  // },[tags])
+
 
   const createFormData = useCallback(()=> {
     const formData = new FormData();
@@ -119,7 +114,7 @@ export const PostEdit = ()=> {
     formData.append('post[user_id]', currentUserId)
     formData.append('post[title]', title)
     for(let i in tags) {
-      let tagId = tags[i].value ? tags[i].value : tags[i].id
+      let tagId = tags[i].id
       formData.append('post[tag_ids][]', tagId)
     }
     formData.append('post[content]', content)
@@ -155,10 +150,9 @@ export const PostEdit = ()=> {
               <FormControl id="tag">
                 <FormLabel fontSize={{base: "sm", md: "lg"}}>タグ</FormLabel>
                 <SelectComponent 
-                  // key={defaultValue}
                   onChange={selectTags}
                   options={options}
-                  defaultValue={defaultValue}
+                  value={tags}
                 />
               </FormControl>
               <FormControl id="content">

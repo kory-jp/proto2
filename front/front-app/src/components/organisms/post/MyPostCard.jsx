@@ -17,7 +17,7 @@ export const MyPostCard = (props)=> {
   const {id, user_id, tags, title, image, created_at} = props.post;
 
   const toTagIndex = useCallback((tag)=> {
-    dispatch(push(`/posts/tag/${tag.id}`))
+    dispatch(push(`/posts/tag?label=${tag.label}`))
     returnTop()
   },[dispatch, returnTop])
 
@@ -51,7 +51,7 @@ export const MyPostCard = (props)=> {
                         key={tag.id}
                         onClick={() => toTagIndex(tag)}
                         >
-                          {tag.name}
+                          {tag.label}
                         </PrimaryTag>
                       ))
                     }

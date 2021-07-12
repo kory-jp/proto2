@@ -10,23 +10,22 @@ import useLoadingState from '../../../hooks/useLoadingState';
 import usePagination from '../../../hooks/usePagination';
 import DefaultPagination from '../../molecules/DefaultPagination';
 import useReturnTop from '../../../hooks/useReturnTop';
-import { useParams } from 'react-router';
+import { useLocation } from 'react-router';
 import { DefaultBox, DefaultTitleText } from '../../../assets/style/chakraStyles';
-import { getTag } from '../../../reducks/tags/operations';
 import { Divider } from '@chakra-ui/react';
 
 export const PostIndex = ()=> {
-  const tagId = useParams()
+  const {search} = useLocation()
+  const query = new URLSearchParams(search)
+  const label = query.get("label")
   const dispatch =  useDispatch();
   const {sumPage, setSumPage, queryPage} = usePagination()
   const loadingState = useLoadingState()
   
   useEffect(()=> {
-    dispatch(searchTagGetPosts(tagId, setSumPage, queryPage))
-    dispatch(getTag(tagId))
-  },[tagId, queryPage, setSumPage, dispatch])
+    dispatch(searchTagGetPosts(label, setSumPage, queryPage))
+  },[label, queryPage, setSumPage, dispatch])
   const posts = useSelector((state)=> state.posts.list)
-  const tag = useSelector((state)=> state.tags)
   
   const returnTop = useReturnTop()
   
@@ -43,7 +42,7 @@ export const PostIndex = ()=> {
       ): (
         <>
           <DefaultBox mb="5">
-            <DefaultTitleText>「{tag.name}」記事一覧</DefaultTitleText>
+            <DefaultTitleText>「{label}」記事一覧</DefaultTitleText>
             <Divider colorScheme="blackAlpha" />
           </DefaultBox>
           {posts.length > 0 && (

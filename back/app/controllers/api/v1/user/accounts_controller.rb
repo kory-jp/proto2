@@ -17,7 +17,7 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
       tags.each do |tag|
         tagObj = {}
         tagObj["id"] = tag.id
-        tagObj["name"] = tag.name
+        tagObj["label"] = tag.label
         tagArray.push(tagObj)
       end
       postObj["tags"] = tagArray
