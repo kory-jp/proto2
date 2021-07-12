@@ -1,17 +1,16 @@
 const initialState = {
   loading: {
-    status: false
+    status: false,
   },
-  
+
   currentUser: {
-    // logged_in: false,
-    id: '',
-    name: '',
-    nickname: '',
-    email: '',
-    password: '',
-    introduction: '',
-    image: ''
+    id: "",
+    name: "",
+    nickname: "",
+    email: "",
+    password: "",
+    introduction: "",
+    image: "",
   },
 
   users: {
@@ -20,7 +19,15 @@ const initialState = {
 
   posts: {
     list: [],
-  }
-}
+  },
+
+  comments: {
+    list: [],
+  },
+
+  tags: {
+    list: [],
+  },
+};
 
 export default initialState;

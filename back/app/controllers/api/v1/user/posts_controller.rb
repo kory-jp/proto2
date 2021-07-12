@@ -12,6 +12,16 @@ class Api::V1::User::PostsController < Api::V1::User::Base
       postObj["content"] = post.content
       postObj["image"] = post.image
       postObj["created_at"] = post.created_at.strftime('%Y/%m/%d')
+      tagArray = []
+      tags = post.tags
+      tags.each do |tag|
+        tagObj = {}
+        tagObj["id"] = tag.id
+        tagObj["value"] = tag.value
+        tagObj["label"] = tag.label
+        tagArray.push(tagObj)
+      end
+      postObj["tags"] = tagArray
       user = User.find_by(id: post.user_id)
       user_id = user.id
       postObj["userId"] = user_id
@@ -37,6 +47,16 @@ class Api::V1::User::PostsController < Api::V1::User::Base
     postObj["content"] = post.content
     postObj["image"] = post.image
     postObj["created_at"] = post.created_at.strftime('%Y/%m/%d')
+    tagArray = []
+    tags = post.tags
+    tags.each do |tag|
+      tagObj = {}
+      tagObj["id"] = tag.id
+      tagObj["value"] = tag.value
+      tagObj["label"] = tag.label
+      tagArray.push(tagObj)
+    end
+    postObj["tags"] = tagArray
     user = User.find_by(id: post.user_id)
     user_name = user.name
     postObj["name"] = user_name
@@ -45,14 +65,13 @@ class Api::V1::User::PostsController < Api::V1::User::Base
     user_icon = user.image_data
     postObj["user_icon"] = user_icon
     render json: postObj
+
   end
 
   def create
     post = Post.new(post_params)
-    if post.save
+    if post.save!
       render json: {status: 200, post: post}
-    else
-      render json: {status: 500}
     end
   end
 
@@ -67,7 +86,10 @@ class Api::V1::User::PostsController < Api::V1::User::Base
 
   def update
     post = Post.find(params[:id])
-    post.update(post_params)
+    if post_params[:tag_ids] === nil
+      post.tags = []
+    end
+    post.update!(post_params)
     if post.save
       render json: {status: 200, post: post}
     else
@@ -76,12 +98,12 @@ class Api::V1::User::PostsController < Api::V1::User::Base
   end
 
   def destroy
-    post = Post.find(params[:id])
+    post = Post.find(params[:id])  
     post.destroy
   end
 
   private
   def post_params
-    params.require(:post).permit(:user_id, :title, :content, :image)
+    params.require(:post).permit(:user_id, :title, :content, :image, tag_ids:[])
   end
 end

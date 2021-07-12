@@ -11,10 +11,30 @@ import {
 import { FormControl, FormLabel } from "@material-ui/core";
 import useLoadingState from "../../../hooks/useLoadingState";
 import PrimaryButton from "../../atoms/button/PrimaryButton"
+import useGetCurrentUserId from "../../../hooks/useGetCurrentUserId";
+import { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import useMessage from "../../../hooks/useMessage";
+import { newComment } from "../../../reducks/comments/operations";
 
 export const CommentInputModal = (props) => {
-  const {isOpen, onClose, comment, onClick, onChange } = props;
+  const {isOpen, onClose, postId } = props;
+  const currentUserId = useGetCurrentUserId()
+  const [comment, setComment] = useState("")
+  const dispatch  = useDispatch()
   const loadingState = useLoadingState()
+  const showMessage  = useMessage()
+  
+  const inputComment = useCallback((e)=> {
+    setComment(e.target.value)
+  },[setComment])
+
+  const onClickNewComments = useCallback(() => {
+    dispatch(newComment(showMessage, postId, currentUserId, comment))
+    setComment("")
+    onClose()
+  },[setComment, comment, currentUserId, dispatch, onClose, postId, showMessage])
+
   return(
     <Modal 
     isOpen={isOpen} 
@@ -26,7 +46,7 @@ export const CommentInputModal = (props) => {
       <ModalOverlay>
         <ModalContent pb="5">
           <ModalHeader>
-            新規コメント投稿
+            "新規コメント投稿"
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody mx={4}>
@@ -38,12 +58,12 @@ export const CommentInputModal = (props) => {
                   rows="10"
                   placeholder="コメントを入力してください"
                   value={comment}
-                  onChange={onChange}
+                  onChange={inputComment}
                 />
               </FormControl>
               <PrimaryButton
-                onClick={onClick}
-                loading={loadingState}
+                onClick={onClickNewComments}
+                isLoading={loadingState}
                 disabled={comment===""}
               >
                 コメント送信

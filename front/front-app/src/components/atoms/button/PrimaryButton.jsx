@@ -1,17 +1,16 @@
-import { Button } from "@chakra-ui/button";
+import DefaultButton from "./DefaultButton";
 
 export const PrimaryButton = (props) => {
-  const  {children, onClick, disabled = false, loading = false} = props;
+  const  {children } = props;
   return(
-    <Button
+    <DefaultButton
       bg="gray.400"
       color="white"
-      fontSize={{base: "sm", md: "lg"}}
-      isLoading={loading}
-      disabled={disabled || loading}
-      onClick={onClick}
+      {...props}
     >
       {children}
-    </Button>
+    </DefaultButton>
   )
 }
+
+export default PrimaryButton;

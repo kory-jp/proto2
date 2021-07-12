@@ -22,20 +22,30 @@ import useLoadingState from '../../../hooks/useLoadingState';
 import { nowLoadingAction } from '../../../reducks/loading/actions';
 import { DefaultBox, DefaultImage } from '../../../assets/style/chakraStyles'
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
+import SelectComponent from '../../organisms/layout/SelectComponent';
+import useOptions from '../../../hooks/useOptions';
+import DeleteButton from '../../atoms/button/DeleteButton';
 
 export const PostEdit = ()=> {
   const dispatch = useDispatch()
   const postId = useParams();
   const [title, setTitle] =  useState('');
+  const [tags, setTags] =  useState([]);
   const [content, setContent] =  useState('');
   const [image, setImage] =  useState();
   const [preview, setPreview] = useState('');
   const currentUserId = useGetCurrentUserId()
   const loadingState = useLoadingState()
+  const options = useOptions()
 
   const inputTitle = useCallback((event)=> {
     setTitle(event.target.value)
   }, [setTitle])
+
+  const selectTags = useCallback((event)=> {
+    setTags(event)
+  },[setTags])
+
 
   const inputContent = useCallback((event)=> {
     setContent(event.target.value)
@@ -68,6 +78,7 @@ export const PostEdit = ()=> {
       })
   },[dispatch])
 
+
   // 編集前データを取得
   const getPostStatus = useCallback((postId) => {
     dispatch(nowLoadingAction(true))
@@ -79,28 +90,38 @@ export const PostEdit = ()=> {
         setTitle(data.title)
         setContent(data.content)
         setPreview(data.image.url)
+        setTags(data.tags)
       }).catch(error => {
         console.log("error:", error)
       }).finally(()=> {
         dispatch(nowLoadingAction(false))
       })
   },[dispatch])
-  
+
   useEffect(()=> {
     editAuth(postId)
     getPostStatus(postId)
-  },[editAuth, getPostStatus, postId])
+  },[dispatch, editAuth, getPostStatus, postId])
+
+  // useEffect(()=> {
+  //   setValues(tags)
+  // },[tags])
+
 
   const createFormData = useCallback(()=> {
     const formData = new FormData();
 
     formData.append('post[user_id]', currentUserId)
     formData.append('post[title]', title)
+    for(let i in tags) {
+      let tagId = tags[i].id
+      formData.append('post[tag_ids][]', tagId)
+    }
     formData.append('post[content]', content)
     if (image) formData.append('post[image]', image)
 
     return formData
-  },[currentUserId, title, content, image])
+  },[currentUserId, title, tags, content, image])
   const formData = createFormData();
   const showMessage = useMessage()
 
@@ -124,6 +145,14 @@ export const PostEdit = ()=> {
                   required={true}
                   value={title}
                   onChange={inputTitle}
+                />
+              </FormControl>
+              <FormControl id="tag">
+                <FormLabel fontSize={{base: "sm", md: "lg"}}>タグ</FormLabel>
+                <SelectComponent 
+                  onChange={selectTags}
+                  options={options}
+                  value={tags}
                 />
               </FormControl>
               <FormControl id="content">
@@ -169,20 +198,19 @@ export const PostEdit = ()=> {
               <PrimaryButton
                 type="submit"
                 onClick={()=> dispatch(updatePost(postId, formData, showMessage))}
-                loading={loadingState}
+                isLoading={loadingState}
                 disabled={title === "" || content === ""}
                 fontSize={{base: "sm", md: "lg"}}
               >
                 編集
               </PrimaryButton>
-              <PrimaryButton
+              <DeleteButton
                 type="submit"
-                loading={loadingState}
+                isLoading={loadingState}
                 onClick={()=> dispatch(deletePost(postId, showMessage))}
-                fontSize={{base: "sm", md: "lg"}}
               >
                 削除
-              </PrimaryButton>
+              </DeleteButton>
             </Stack>
           </DefaultBox>
         )

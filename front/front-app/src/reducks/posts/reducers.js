@@ -3,7 +3,7 @@ import initialState from "../store/initialState";
 
 export const PostsReducer = (state = initialState.posts, action) => {
   switch (action.type) {
-    case Actions.GETPOSTS:
+    case Actions.GET_POSTS:
       return {
         ...state,
         list: [...action.payload],
@@ -13,22 +13,22 @@ export const PostsReducer = (state = initialState.posts, action) => {
         ...state,
         list: [...action.payload],
       };
-    case Actions.NEWPOST:
+    case Actions.NEW_POST:
       return {
         ...state,
         ...action.payload,
       };
-    case Actions.SHOWPOST:
+    case Actions.SHOW_POST:
       return {
         ...state,
         ...action.payload,
       };
-    case Actions.UPDATEPOST:
+    case Actions.UPDATE_POST:
       return {
         ...state,
         ...action.payload,
       };
-    case Actions.DELETEPOST:
+    case Actions.DELETE_POST:
       return {
         ...state,
         ...action.payload,

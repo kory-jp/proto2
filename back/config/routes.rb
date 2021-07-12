@@ -7,7 +7,7 @@ Rails.application.routes.draw do
         post '/login', to: 'sessions#login'
         delete '/logout', to: 'sessions#logout'
         get '/logged_in', to: 'sessions#logged_in?'
-        resources :accounts, only: [:show, :edit, :update] do
+        resources :accounts, only: [:show, :edit] do
           member do
             get :myposts
           end
@@ -25,9 +25,14 @@ Rails.application.routes.draw do
             get :auth
           end
         end
-        resources :comments do
+        resources :comments, only: [:create, :edit, :update, :destroy] do
           member do
             get :comments_index
+          end
+        end
+        resources :tags, only: [:index, :show] do
+          collection do
+            post :search
           end
         end
       end

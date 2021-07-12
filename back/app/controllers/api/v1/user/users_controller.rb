@@ -17,6 +17,15 @@ class Api::V1::User::UsersController < Api::V1::User::Base
       postObj["content"] = post.content
       postObj["image"] = post.image
       postObj["created_at"] = post.created_at.strftime('%Y/%m/%d')
+      tagArray = []
+      tags = post.tags
+      tags.each do |tag|
+        tagObj = {}
+        tagObj["id"] = tag.id
+        tagObj["name"] = tag.name
+        tagArray.push(tagObj)
+      end
+      postObj["tags"] = tagArray
       postsArray.push(postObj)
     end
     data = {

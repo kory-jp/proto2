@@ -1,7 +1,7 @@
-export const GETPOSTS = "GETPOSTS";
+export const GET_POSTS = "GET_POSTS";
 export const getPostsAction = (posts) => {
   return {
-    type: "GETPOSTS",
+    type: GET_POSTS,
     payload: posts,
   };
 };
@@ -9,45 +9,45 @@ export const getPostsAction = (posts) => {
 export const GET_USERS_POSTS = "GET_USERS_POSTS";
 export const getUsersPostsAction = (posts) => {
   return {
-    type: "GET_USERS_POSTS",
+    type: GET_USERS_POSTS,
     payload: posts,
   };
 };
 
-export const NEWPOST = "NEWPOST";
+export const NEW_POST = "NEW_POST";
 export const newPostAction = (postStatus) => {
   return {
-    type: "NEWPOST",
+    type: NEW_POST,
     payload: {
       ...postStatus,
     },
   };
 };
 
-export const SHOWPOST = "SHOWPOST";
+export const SHOW_POST = "SHOW_POST";
 export const showPostAction = (postStatus) => {
   return {
-    type: "SHOWPOST",
+    type: SHOW_POST,
     payload: {
       ...postStatus,
     },
   };
 };
 
-export const UPDATEPOST = "UPDATEPOST";
+export const UPDATE_POST = "UPDATE_POST";
 export const updatePostAction = (postStatus) => {
   return {
-    type: "UPDATEPOST",
+    type: UPDATE_POST,
     payload: {
       ...postStatus,
     },
   };
 };
 
-export const DELETEPOST = "DELETEPOST";
+export const DELETE_POST = "DELETE_POST";
 export const deletePostAction = (postStatus) => {
   return {
-    type: "DELETEPOST",
+    type: DELETE_POST,
     payload: {
       ...postStatus,
     },

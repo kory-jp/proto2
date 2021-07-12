@@ -1,9 +1,9 @@
-export const SHOWUSERS = 'SHOWUSERS'
+export const SHOW_USERS = "SHOW_USERS";
 export const showUsersAction = (usersStatus) => {
   return {
-    type: 'SHOWUSERS',
+    type: SHOW_USERS,
     payload: {
-      ...usersStatus
-    }
-  }
-}
+      ...usersStatus,
+    },
+  };
+};

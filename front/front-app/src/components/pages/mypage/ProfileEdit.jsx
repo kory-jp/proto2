@@ -194,7 +194,7 @@ export const ProfileEdit = ()=> {
                 <PrimaryButton
                   type="submit"
                   onClick={()=> dispatch(updateCurrentUser(userId, formData, showMessage))}
-                  loading = {loadingState}
+                  isLoading = {loadingState}
                   disabled = {name === "" || email === ""}
                   fontSize={{base: "sm", md: "lg"}}
                 >
