@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Flex } from '@chakra-ui/layout'
 import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
 import { DefaultFlex, DefaultText, DefaultUserIconImage } from '../../../assets/style/chakraStyles'
+import { useParams } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
+import { showUsers } from '../../../reducks/users/operations'
 
-export const UsersShowCard = (props) => {
-  const {name, nickname, introduction, userIcon } = props.users;
+export const UsersShowCard = () => {
+
+  const userId = useParams();
+  const dispatch = useDispatch()
+
+  useEffect(()=> {
+    dispatch(showUsers(userId))
+  },[dispatch, userId])
+  
+  const users =  useSelector((state)=> state.users)
+  const { nickname, introduction, userIcon} = users
+
   return(
     <DefaultFlex
     flexDirection="column"
@@ -31,7 +44,7 @@ export const UsersShowCard = (props) => {
             as="h2"
             fontWeight="bold"
           >
-            {nickname? nickname : name}
+            {nickname}
           </DefaultText>
           <DefaultText>
             {introduction}

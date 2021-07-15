@@ -7,20 +7,20 @@ import { useParams } from "react-router";
 import {push} from 'connected-react-router';
 
 import useLoadingState from '../../../hooks/useLoadingState';
-import { getCurrentUserPosts } from "../../../reducks/posts/operations";
+import { getCurretUserFavoritePosts } from "../../../reducks/posts/operations";
 import MyPostCard from '../../organisms/post/MyPostCard';
 import usePagination from '../../../hooks/usePagination';
 import DefaultPagination from '../../molecules/DefaultPagination';
 import useReturnTop from '../../../hooks/useReturnTop';
 
-export const MyPosts = () => {
+export const FavoritePosts = () => {
   const currentUserId = useParams()
   const dispatch = useDispatch()
-  const { sumPage, setSumPage, queryPage} = usePagination()
   const loadingState = useLoadingState()
+  const { sumPage, setSumPage, queryPage} = usePagination()
 
   useEffect(()=> {
-    dispatch(getCurrentUserPosts(currentUserId, queryPage, setSumPage))
+    dispatch(getCurretUserFavoritePosts(currentUserId, queryPage, setSumPage))
   },[dispatch, currentUserId, queryPage, setSumPage])
 
   const posts = useSelector((state)=> state.posts.list)
@@ -48,7 +48,7 @@ export const MyPosts = () => {
           borderRadius="md"
           fontSize={{base: "md", md: "2xl"}}
         >
-          投稿一覧
+          高評価記事一覧
         </Text>
         {posts.length > 0 && (
           <Box mr="2" ml="2" mb="2">
@@ -71,4 +71,4 @@ export const MyPosts = () => {
   )
 }
 
-export default MyPosts;
+export default FavoritePosts;

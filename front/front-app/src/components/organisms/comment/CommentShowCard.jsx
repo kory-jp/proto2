@@ -12,7 +12,7 @@ import useReturnTop from "../../../hooks/useReturnTop";
 
 export const CommentShowCard = ( props ) => {
   const commentData = props.commentData;
-  const { user_id, name, nickname, icon, comment} = commentData;
+  const { user_id, nickname, icon, comment} = commentData;
   const currentUserId = useGetCurrentUserId()
   const { isOpen, onOpen, onClose} = useDisclosure()
   const dispatch = useDispatch()
@@ -41,7 +41,7 @@ export const CommentShowCard = ( props ) => {
                 onClick={toUserinfoPage}
                 cursor="pointer"
               >
-                {nickname? nickname : name}
+                {nickname}
               </DefaultText>
             </Flex>
             <Flex>
@@ -63,7 +63,9 @@ export const CommentShowCard = ( props ) => {
           </Flex>
           <Divider/>
           <Flex mt="4">
-            {comment}
+            <DefaultText>
+              {comment}
+            </DefaultText>
           </Flex>
         </Stack>
       </DefaultFlex>

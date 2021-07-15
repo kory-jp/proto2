@@ -53,7 +53,6 @@ export const CommentEditModal = (props) => {
 
   const onClickDeleteComment = useCallback(()=> {
     dispatch(deleteComment(commentData, postId, showMessage))
-
     onClose()
   },[commentData, postId, dispatch,showMessage, onClose])
 

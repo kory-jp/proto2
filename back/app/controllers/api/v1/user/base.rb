@@ -1,13 +1,12 @@
 class Api::V1::User::Base < ApplicationController
   before_action :current_user
-  before_action :authenticate_user!, except: [:new, :create, :update]
+  before_action :authenticate_user!, except: [:new, :create, :update, :search, :signup]
   helper_method :login!
   
   private
   def current_user
     if session[:user_id]
-      @current_user ||= 
-      User.find_by(id: session[:user_id])
+      @current_user ||= User.find_by(id: session[:user_id])
     end
   end
   

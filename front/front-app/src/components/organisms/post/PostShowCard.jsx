@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Flex } from '@chakra-ui/layout'
 import { Link } from "@chakra-ui/react"
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { push } from 'connected-react-router'
 import CreateIcon from '@material-ui/icons/Create';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
@@ -15,16 +15,49 @@ import { DefaultFlex,
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId'
 import PrimaryTag from '../../atoms/tag/PrimaryTag'
 import useReturnTop from '../../../hooks/useReturnTop'
+import { createFavorite, destroyFavorite } from '../../../reducks/favorite/operations'
+import { useParams } from 'react-router'
+import GoodButton from '../../atoms/button/GoodButton'
+import useLoadingState from '../../../hooks/useLoadingState'
+import { nowLoadingAction } from '../../../reducks/loading/actions'
 
 export const PostShowCard = (props)=> {
   const dispatch = useDispatch()
   const returnTop = useReturnTop()
-  const {id, user_id, name, nickname, userIcon, title, tags, image, content, created_at} = props.post;
+  const { user_id, nickname, userIcon, title, tags, image, content, created_at} = props.post;
+  const postId = useParams()
   const currentUserId = useGetCurrentUserId()
+  const loadingState = useLoadingState()
+  
+  const favorite = useSelector((state)=> state.favorite.status)
+
+  const toggleFavorite = useCallback(()=> {
+    if (favorite){
+      dispatch(destroyFavorite(postId, currentUserId))
+    } else {
+      dispatch(createFavorite(postId, currentUserId))
+    }
+  },[dispatch, favorite, postId, currentUserId])
+
+  const toShowUsers = useCallback(()=> {
+    dispatch(push(`/users/${user_id}`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
+  },[dispatch, returnTop, user_id])
+
+  const toEditPost = useCallback(()=> {
+    dispatch(push(`/posts/edit/${postId.id}`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
+  },[dispatch, returnTop, postId])
+
   const toTagIndex = useCallback((tag)=> {
     dispatch(push(`/posts/tag?label=${tag.label}`))
+    dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop])
+
+
   return(
     <DefaultFlex
     flexDirection="column"
@@ -51,10 +84,15 @@ export const PostShowCard = (props)=> {
           >
             {title}
           </DefaultTitleText>
+          <GoodButton
+            onClick={toggleFavorite}
+            favorite={favorite}
+            loadingState={loadingState}
+          />
           { 
             user_id === currentUserId ? (
               <Link
-                onClick={()=> dispatch(push(`/posts/edit/${id}`))}
+                onClick={toEditPost}
                 fontSize={{base: "sm", md: "lg"}}
               >
                 <CreateIcon fontSize="small"/>
@@ -84,14 +122,14 @@ export const PostShowCard = (props)=> {
               src={userIcon? userIcon : defaultUserIcon}
               alt="userIcon"
               mr="3"
-              onClick={()=> dispatch(push(`/users/${user_id}`))}
+              onClick={toShowUsers}
               cursor="pointer"
               />
               <DefaultText
-                onClick={()=> dispatch(push(`/users/${user_id}`))}
+                onClick={toShowUsers}
                 cursor="pointer"
               >
-                {nickname? nickname: name}
+                {nickname}
               </DefaultText>
             </Flex>
             <DefaultText>{created_at}</DefaultText>

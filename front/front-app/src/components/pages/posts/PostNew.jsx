@@ -41,7 +41,6 @@ export const PostNew = ()=> {
   }, [setTitle])
 
   const selectTags = useCallback((event)=> {
-    console.log(event)
     setTags(event)
   },[setTags])
 

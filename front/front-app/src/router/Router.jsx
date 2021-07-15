@@ -12,6 +12,8 @@ import PostShow from '../components/pages/posts/PostShow'
 import RegistrationPage from '../components/pages/RegistrationPage'
 import UsersInfo from '../components/pages/users/UsersInfo'
 import DefaultLayout from '../components/templates/DefaultLayout'
+import FavoritePosts from '../components/pages/mypage/FavoritePosts'
+import SearchResult from '../components/pages/SearchResult'
 
 export const Router = () => {
   return(
@@ -27,6 +29,8 @@ export const Router = () => {
           <Route path={"/posts/edit/:id"} component={PostEdit} />
           <Route path={"/mypage/:id/edit"} component={ProfileEdit} />
           <Route path={"/mypage/:id/posts"} component={MyPosts} />
+          <Route path={"/searchResult"} component={SearchResult} />
+          <Route path={"/mypage/:id/favoritePosts"} component={FavoritePosts} />
           <Route path={"/users/:id"} component={UsersInfo} />
         </DefaultLayout>
       </Auth>

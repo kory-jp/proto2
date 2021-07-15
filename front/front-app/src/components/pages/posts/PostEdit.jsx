@@ -103,11 +103,6 @@ export const PostEdit = ()=> {
     getPostStatus(postId)
   },[dispatch, editAuth, getPostStatus, postId])
 
-  // useEffect(()=> {
-  //   setValues(tags)
-  // },[tags])
-
-
   const createFormData = useCallback(()=> {
     const formData = new FormData();
 

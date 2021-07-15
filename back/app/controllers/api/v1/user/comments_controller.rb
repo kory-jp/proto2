@@ -37,6 +37,7 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
   end
 
   def update
+    p session.to_hash
     comment = Comment.find(params[:id])
     if comment.user_id == current_user.id
       comment.update(comment_params)
