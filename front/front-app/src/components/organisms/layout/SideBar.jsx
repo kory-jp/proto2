@@ -24,7 +24,6 @@ export const SideBar = ()=> {
 
   const toNewPost = useCallback(()=> {
     dispatch(push('/posts/new'))
-    dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop])
 
