@@ -37,6 +37,8 @@ export const DefaultImage = (props) => {
   return (
     <Image
       boxSize={{ base: "2xs", md: "md" }}
+      minH="200px"
+      minw="130px"
       objectFit="cover"
       shadow="md"
       borderRadius="md"

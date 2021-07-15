@@ -9,6 +9,7 @@ import { PostShowCard} from '../../organisms/post/PostShowCard'
 import CommentArea from '../../organisms/comment/CommentArea';
 import { getComments } from '../../../reducks/comments/operations';
 import usePagination from '../../../hooks/usePagination';
+import { confirmFavorited } from '../../../reducks/favorite/operations';
 
 export const PostShow = ()=> {
   const dispatch = useDispatch()
@@ -17,6 +18,7 @@ export const PostShow = ()=> {
   useEffect(()=> {
     dispatch(showPost(postId))
     dispatch(getComments(postId, setSumPage, queryPage))
+    dispatch(confirmFavorited(postId))
   },[postId, dispatch, queryPage, setSumPage])
 
   const post = useSelector((state)=> state.posts)

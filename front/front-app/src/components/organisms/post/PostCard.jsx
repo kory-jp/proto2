@@ -7,6 +7,7 @@ import defaultImage from '../../../assets/img/defaultImage.jpeg'
 import { DefaultFlex, DefaultText, DefaultTitleText } from '../../../assets/style/chakraStyles';
 import useReturnTop from '../../../hooks/useReturnTop';
 import PrimaryTag from '../../atoms/tag/PrimaryTag'
+import { nowLoadingAction } from '../../../reducks/loading/actions';
 
 export const PostCard = (props)=> {
   const dispatch = useDispatch()
@@ -15,16 +16,19 @@ export const PostCard = (props)=> {
 
   const toPostShow = useCallback(()=> {
     dispatch(push('/posts/show/' + id))
+    dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop, id])
 
   const toUserInfoPage = useCallback(() => {
     dispatch(push(`users/${userId}`))
+    dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop, userId])
 
   const toTagIndex = useCallback((tag)=> {
     dispatch(push(`/posts/tag?label=${tag.label}`))
+    dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop])
 

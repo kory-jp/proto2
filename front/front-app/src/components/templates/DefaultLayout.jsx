@@ -9,6 +9,7 @@ export const DefaultLayout = (props)=> {
     <>
       <Box 
         position="fixed" 
+        zIndex="100"
         top="0" 
         w="full"
       >

@@ -33,7 +33,7 @@ export const UsersPosts = () => {
   return(
     <>
     { loadingState? (
-      <Center  h="100vh" w={{base: "50vh", md: "100vh"}}>
+      <Center w={{base: "50vh", md: "100vh"}}>
         <Spinner/>
       </Center>
     ): (

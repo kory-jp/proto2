@@ -15,34 +15,45 @@ import {push} from 'connected-react-router';
 import { logOut } from '../../reducks/currentUser/operations';
 import useGetCurrentUserId from '../../hooks/useGetCurrentUserId';
 import SearchInputForm from './SearchInputForm';
+import useReturnTop from '../../hooks/useReturnTop';
+import { nowLoadingAction } from '../../reducks/loading/actions';
+import { useCallback } from 'react';
 
 export const MenuDrawer = (props) => {
   const {onClose, isOpen, keyword, model, onChangeKeyword, onChangeModel, toSearchResult} = props;
   const dispatch =  useDispatch();
   const showMessage = useMessage();
+  const returnTop = useReturnTop()
   const currentUserId = useGetCurrentUserId()
 
-  const toNewPost = () => {
+  const toNewPost = useCallback(() => {
     dispatch(push('/posts/new'))
+    dispatch(nowLoadingAction(true));
+    returnTop()
     onClose()
-  }
+  },[dispatch, onClose, returnTop])
 
-  const toMyPosts = () => {
+  const toMyPosts = useCallback(() => {
     dispatch(push(`/mypage/${currentUserId}/posts`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
     onClose()
-  }
+  },[dispatch, onClose, returnTop, currentUserId])
 
-  const toFavoritePosts = () => {
+  const toFavoritePosts = useCallback(() => {
     dispatch(push(`/mypage/${currentUserId}/favoritePosts`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
     onClose()
-  }
+  },[dispatch, onClose, returnTop, currentUserId])
 
-  const toEditProfile = () => {
+  const toEditProfile = useCallback(() => {
     dispatch(push(`/mypage/${currentUserId}/edit`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
     onClose()
-  }
+  },[dispatch, onClose, returnTop, currentUserId])
 
-  
   
   return(
     <Drawer placement="left" size="xs" onClose={onClose} isOpen={isOpen}>

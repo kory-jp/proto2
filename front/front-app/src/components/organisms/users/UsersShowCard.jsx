@@ -7,8 +7,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { showUsers } from '../../../reducks/users/operations'
 
 export const UsersShowCard = () => {
-  // export const UsersShowCard = (props) => {
-  // const {name, nickname, introduction, userIcon } = props.users;
 
   const userId = useParams();
   const dispatch = useDispatch()

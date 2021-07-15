@@ -3,18 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Spinner } from "@chakra-ui/spinner";
 import { Box, Center } from '@chakra-ui/layout';
-import { nowLoadingAction } from "../../../reducks/loading/actions";
-import { getPostsAction } from "../../../reducks/posts/actions";
-import { getUsersAction } from "../../../reducks/users/actions";
+import { nowLoadingAction } from "../../reducks/loading/actions";
+import { getPostsAction } from "../../reducks/posts/actions";
+import { getUsersAction } from "../../reducks/users/actions";
 import { useCallback, useEffect } from "react";
-import usePagination from "../../../hooks/usePagination";
-import useLoadingState from "../../../hooks/useLoadingState";
-import PostCard from "../../organisms/post/PostCard";
-import UsersCard from "../../organisms/users/UsersCard";
-import DefaultPagination from "../../molecules/DefaultPagination";
+import usePagination from "../../hooks/usePagination";
+import useLoadingState from "../../hooks/useLoadingState";
+import PostCard from "../organisms/post/PostCard";
+import UsersCard from "../organisms/users/UsersCard";
+import DefaultPagination from "../molecules/DefaultPagination";
 import { push } from "connected-react-router";
-import useReturnTop from "../../../hooks/useReturnTop";
-import { DefaultBox, DefaultTitleText } from "../../../assets/style/chakraStyles";
+import useReturnTop from "../../hooks/useReturnTop";
+import { DefaultBox, DefaultTitleText } from "../../assets/style/chakraStyles";
 
 export const SearchResult = () => {
   const {search} = useLocation();
@@ -56,7 +56,9 @@ export const SearchResult = () => {
           console.log("error res:", error);
         })
         .finally(() => {
-          dispatch(nowLoadingAction(false));
+          setTimeout(()=> {
+            dispatch(nowLoadingAction(false));
+          }, 800)
         });
     };
   },[keyword, model, setSumPage]);
@@ -110,25 +112,35 @@ export const SearchResult = () => {
   } else if(model==="user"){
     return(
       <>
-        <DefaultBox mb="5">
-          <DefaultTitleText>
-            「{keyword}」の検索結果
-          </DefaultTitleText>
-        </DefaultBox>
-        {users.length > 0 && (
-          <Box mr="2" ml="2" mb="2">
-            {
-              users.map(user =>(
-                <UsersCard key={user.id} user={user}/>
-              ))
-            }
-          </Box>
-        )}
-        <DefaultPagination 
-          count={sumPage}
-          onChange={changeCurrentPage}
-          page={queryPage}
-        />
+        {
+          loadingState? (
+            <Center  h="100vh" w={{base: "50vh", md: "100vh"}}>
+              <Spinner/>
+            </Center>
+          ):(
+            <>
+              <DefaultBox mb="5">
+                <DefaultTitleText>
+                  「{keyword}」の検索結果
+                </DefaultTitleText>
+              </DefaultBox>
+              {users.length > 0 && (
+                <Box mr="2" ml="2" mb="2">
+                  {
+                    users.map(user =>(
+                      <UsersCard key={user.id} user={user}/>
+                    ))
+                  }
+                </Box>
+              )}
+              <DefaultPagination 
+                count={sumPage}
+                onChange={changeCurrentPage}
+                page={queryPage}
+              />
+            </>
+          )
+        }
       </>
     )
   }

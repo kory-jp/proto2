@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { Flex } from '@chakra-ui/layout'
 import { Link } from "@chakra-ui/react"
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,10 +15,11 @@ import { DefaultFlex,
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId'
 import PrimaryTag from '../../atoms/tag/PrimaryTag'
 import useReturnTop from '../../../hooks/useReturnTop'
-import { confirmFavorited, createFavorite, destroyFavorite } from '../../../reducks/favorite/operations'
+import { createFavorite, destroyFavorite } from '../../../reducks/favorite/operations'
 import { useParams } from 'react-router'
 import GoodButton from '../../atoms/button/GoodButton'
 import useLoadingState from '../../../hooks/useLoadingState'
+import { nowLoadingAction } from '../../../reducks/loading/actions'
 
 export const PostShowCard = (props)=> {
   const dispatch = useDispatch()
@@ -27,10 +28,6 @@ export const PostShowCard = (props)=> {
   const postId = useParams()
   const currentUserId = useGetCurrentUserId()
   const loadingState = useLoadingState()
-
-  useEffect(()=> {
-    dispatch(confirmFavorited(postId))
-  },[dispatch, postId])
   
   const favorite = useSelector((state)=> state.favorite.status)
 
@@ -42,10 +39,25 @@ export const PostShowCard = (props)=> {
     }
   },[dispatch, favorite, postId, currentUserId])
 
+  const toShowUsers = useCallback(()=> {
+    dispatch(push(`/users/${user_id}`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
+  },[dispatch, returnTop, user_id])
+
+  const toEditPost = useCallback(()=> {
+    dispatch(push(`/posts/edit/${postId.id}`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
+  },[dispatch, returnTop, postId])
+
   const toTagIndex = useCallback((tag)=> {
     dispatch(push(`/posts/tag?label=${tag.label}`))
+    dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop])
+
+
   return(
     <DefaultFlex
     flexDirection="column"
@@ -80,7 +92,7 @@ export const PostShowCard = (props)=> {
           { 
             user_id === currentUserId ? (
               <Link
-                onClick={()=> dispatch(push(`/posts/edit/${postId.id}`))}
+                onClick={toEditPost}
                 fontSize={{base: "sm", md: "lg"}}
               >
                 <CreateIcon fontSize="small"/>
@@ -110,11 +122,11 @@ export const PostShowCard = (props)=> {
               src={userIcon? userIcon : defaultUserIcon}
               alt="userIcon"
               mr="3"
-              onClick={()=> dispatch(push(`/users/${user_id}`))}
+              onClick={toShowUsers}
               cursor="pointer"
               />
               <DefaultText
-                onClick={()=> dispatch(push(`/users/${user_id}`))}
+                onClick={toShowUsers}
                 cursor="pointer"
               >
                 {nickname}

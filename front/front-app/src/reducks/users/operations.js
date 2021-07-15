@@ -1,10 +1,9 @@
 import axios from "axios";
 import { nowLoadingAction } from "../loading/actions";
-import { showUsersAction } from "./actions";
+import { getUsersAction, showUsersAction } from "./actions";
 
 export const showUsers = (userId) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .get(`http://localhost:3001/api/v1/user/users/${userId.id}`, {
         withCredentials: true,
@@ -20,6 +19,24 @@ export const showUsers = (userId) => {
             userIcon: user.image_data.url,
           })
         );
+      })
+      .catch((error) => {
+        console.log("error:", error);
+      });
+  };
+};
+
+export const getFollows = () => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
+    axios
+      .get("http://localhost:3001/api/v1/user/accounts/follows", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        const follows = response.data;
+        dispatch(getUsersAction(follows));
       })
       .catch((error) => {
         console.log("error:", error);

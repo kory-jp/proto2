@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Flex, Stack } from "@chakra-ui/layout";
 import { Divider } from "@chakra-ui/react"
 import { useDispatch } from 'react-redux';
@@ -13,38 +13,65 @@ import useMessage from '../../../hooks/useMessage';
 import SideBarButton from '../../atoms/button/SIdeBarButton';
 import { logOut } from '../../../reducks/currentUser/operations';
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
+import useReturnTop from '../../../hooks/useReturnTop';
+import { nowLoadingAction } from '../../../reducks/loading/actions';
 
 export const SideBar = ()=> {
   const dispatch =  useDispatch();
   const showMessage = useMessage();
+  const returnTop = useReturnTop()
   const currentUserId = useGetCurrentUserId()
+
+  const toNewPost = useCallback(()=> {
+    dispatch(push('/posts/new'))
+    dispatch(nowLoadingAction(true));
+    returnTop()
+  },[dispatch, returnTop])
+
+  const toMyPosts = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/posts`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
+  const toMyFavoritePosts = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/favoritePosts`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
+  const toEditProfile = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/edit`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
 
   return(
     <Flex flexDirection="column" bg="white" shadow="md" borderRadius="md" p="2">
       <Stack mt="5" spacing="5">
         <SideBarButton
-          onClick={()=> dispatch(push('/posts/new'))}
+          onClick={toNewPost}
           leftIcon={<BorderColorIcon />}
         >
           新規投稿
         </SideBarButton>
         <SideBarButton
-          onClick={()=> dispatch(push(`/mypage/${currentUserId}/posts`))}
+          onClick={toMyPosts}
           leftIcon={<FolderIcon />}
         >
           投稿記事
         </SideBarButton>
         <SideBarButton
-          onClick={()=> dispatch(push(`/mypage/${currentUserId}/favoritePosts`))}
+          onClick={toMyFavoritePosts}
           leftIcon={<ThumbUpIcon />}
         >
-          お気に入り記事
+          高評価記事
         </SideBarButton>
       </Stack>
       <Divider color="gray.500" mt="3" mb="4" />
       <Stack mb="7" spacing="5">
         <SideBarButton
-          onClick={()=> dispatch(push(`/mypage/${currentUserId}/edit`))}
+          onClick={toEditProfile}
           leftIcon={<PersonIcon />}
           >
           個人情報修正

@@ -13,7 +13,7 @@ import RegistrationPage from '../components/pages/RegistrationPage'
 import UsersInfo from '../components/pages/users/UsersInfo'
 import DefaultLayout from '../components/templates/DefaultLayout'
 import FavoritePosts from '../components/pages/mypage/FavoritePosts'
-import SearchResult from '../components/pages/mypage/SearchResult'
+import SearchResult from '../components/pages/SearchResult'
 
 export const Router = () => {
   return(
