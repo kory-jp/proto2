@@ -40,7 +40,6 @@ export const SearchInputForm = (props) => {
         w="auto" 
         minW="130px"
         mr="2"
-        onKeyDown={onKeyDown}
       >
         <option value="post">記事</option>
         <option value="user">ユーザー</option>
