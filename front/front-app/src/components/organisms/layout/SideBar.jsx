@@ -16,27 +16,13 @@ import SideBarButton from '../../atoms/button/SIdeBarButton';
 import { logOut } from '../../../reducks/currentUser/operations';
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
 import useReturnTop from '../../../hooks/useReturnTop';
+import { nowLoadingAction } from '../../../reducks/loading/actions';
 
 export const SideBar = ()=> {
   const dispatch =  useDispatch();
   const showMessage = useMessage();
-  const currentUserId = useGetCurrentUserId()
   const returnTop = useReturnTop()
-
-  const toNewPost = useCallback(()=> {
-    dispatch(push('/posts/new'))
-    returnTop()
-  },[dispatch, returnTop])
-
-  const toMyPosts = useCallback(()=> {
-    dispatch(push(`/mypage/${currentUserId}/posts`))
-    returnTop()
-  },[dispatch, returnTop, currentUserId])
-
-  const toFavoritePosts = useCallback(()=> {
-    dispatch(push(`/mypage/${currentUserId}/favoritePosts`))
-    returnTop()
-  },[dispatch, returnTop, currentUserId])
+  const currentUserId = useGetCurrentUserId()
 
   const toFollows = useCallback(()=> {
     dispatch(push(`/mypage/${currentUserId}/follows`))
@@ -48,8 +34,26 @@ export const SideBar = ()=> {
     returnTop()
   },[dispatch, returnTop, currentUserId])
 
+  const toNewPost = useCallback(()=> {
+    dispatch(push('/posts/new'))
+    returnTop()
+  },[dispatch, returnTop])
+
+  const toMyPosts = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/posts`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
+  const toMyFavoritePosts = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/favoritePosts`))
+    dispatch(nowLoadingAction(true));
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
   const toEditProfile = useCallback(()=> {
     dispatch(push(`/mypage/${currentUserId}/edit`))
+    dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop, currentUserId])
 
@@ -69,10 +73,10 @@ export const SideBar = ()=> {
           投稿記事
         </SideBarButton>
         <SideBarButton
-          onClick={toFavoritePosts}
+          onClick={toMyFavoritePosts}
           leftIcon={<ThumbUpIcon />}
         >
-          お気に入り記事
+          高評価記事
         </SideBarButton>
       </Stack>
       <Divider color="gray.500" mt="3" mb="4" />

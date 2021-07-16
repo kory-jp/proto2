@@ -1,6 +1,5 @@
 import axios from "axios";
 import { push } from "connected-react-router";
-import { nowLoadingAction } from "../loading/actions";
 import {
   deleteCommentAction,
   editCommentAction,
@@ -11,7 +10,6 @@ import {
 
 export const getComments = (postId, setSumPage, queryPage) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .get(
         `http://localhost:3001/api/v1/user/comments/${postId.id}/comments_index?page=${queryPage}`,
@@ -25,9 +23,6 @@ export const getComments = (postId, setSumPage, queryPage) => {
       })
       .catch((error) => {
         console.log("error res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };
@@ -67,7 +62,6 @@ export const newComment = (showMessage, postId, currentUserId, comment) => {
 
 export const editComments = (commentId) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .get(`http://localhost:3001/api/v1/user/comments/${commentId}/edit`, {
         withCredentials: true,
@@ -79,16 +73,12 @@ export const editComments = (commentId) => {
       })
       .catch((error) => {
         console.log("error res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };
 
 export const updateComment = (commentData, comment, showMessage, returnTop) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .patch(
         `http://localhost:3001/api/v1/user/comments/${commentData.id}`,
@@ -115,23 +105,18 @@ export const updateComment = (commentData, comment, showMessage, returnTop) => {
           showMessage({ title: "編集完了しました", status: "success" });
           dispatch(push(`/posts/show/${commentData.post_id}`));
           returnTop();
-          // window.location.reload();
         } else {
           showMessage({ title: "編集に失敗しました", status: "error" });
         }
       })
       .catch((error) => {
         console.log("post res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };
 
 export const deleteComment = (commentData, postId, showMessage) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .delete(`http://localhost:3001/api/v1/user/comments/${commentData.id}`, {
         withCredentials: true,
@@ -150,9 +135,6 @@ export const deleteComment = (commentData, postId, showMessage) => {
       })
       .catch((error) => {
         console.log("post res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };

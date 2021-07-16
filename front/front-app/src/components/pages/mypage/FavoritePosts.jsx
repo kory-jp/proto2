@@ -48,7 +48,7 @@ export const FavoritePosts = () => {
           borderRadius="md"
           fontSize={{base: "md", md: "2xl"}}
         >
-          お気に入り記事一覧
+          高評価記事一覧
         </Text>
         {posts.length > 0 && (
           <Box mr="2" ml="2" mb="2">

@@ -9,6 +9,7 @@ import { DefaultFlex, DefaultTitleText, DefaultText } from '../../../assets/styl
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
 import PrimaryTag from '../../atoms/tag/PrimaryTag';
 import useReturnTop from '../../../hooks/useReturnTop';
+import { nowLoadingAction } from '../../../reducks/loading/actions';
 
 export const MyPostCard = (props)=> {
   const dispatch = useDispatch()
@@ -18,16 +19,19 @@ export const MyPostCard = (props)=> {
 
   const toPostShow = useCallback(()=> {
     dispatch(push('/posts/show/' + id))
+    dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop, id])
 
   const toTagIndex = useCallback((tag)=> {
     dispatch(push(`/posts/tag?label=${tag.label}`))
+    dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop])
 
   const toPostEdit = useCallback(()=> {
     dispatch(push('/posts/edit/' + id))
+    dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop, id])
 
@@ -47,7 +51,7 @@ export const MyPostCard = (props)=> {
         <Box>
           <DefaultTitleText
             fontWeight="bold"
-            onClick={()=> dispatch(push('/posts/show/' + id))}
+            onClick={toPostShow}
             cursor="pointer"
             >
             {title}

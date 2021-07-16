@@ -16,8 +16,8 @@ import useReturnTop from '../../../hooks/useReturnTop';
 export const MyPosts = () => {
   const currentUserId = useParams()
   const dispatch = useDispatch()
-  const loadingState = useLoadingState()
   const { sumPage, setSumPage, queryPage} = usePagination()
+  const loadingState = useLoadingState()
 
   useEffect(()=> {
     dispatch(getCurrentUserPosts(currentUserId, queryPage, setSumPage))

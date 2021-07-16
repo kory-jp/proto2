@@ -26,7 +26,9 @@ export const getPosts = (setSumPage, queryPage) => {
         console.log("error res:", error);
       })
       .finally(() => {
-        dispatch(nowLoadingAction(false));
+        setTimeout(() => {
+          dispatch(nowLoadingAction(false));
+        }, 800);
       });
   };
 };
@@ -49,7 +51,9 @@ export const getCurrentUserPosts = (currentUserId, queryPage, setSumPage) => {
         console.log("error res:", error);
       })
       .finally(() => {
-        dispatch(nowLoadingAction(false));
+        setTimeout(() => {
+          dispatch(nowLoadingAction(false));
+        }, 800);
       });
   };
 };
@@ -72,7 +76,9 @@ export const getUsersPosts = (userId, setSumPage, queryPage) => {
         console.log("error res:", error);
       })
       .finally(() => {
-        dispatch(nowLoadingAction(false));
+        setTimeout(() => {
+          dispatch(nowLoadingAction(false));
+        }, 800);
       });
   };
 };
@@ -95,7 +101,9 @@ export const getCurretUserFavoritePosts = (userId, queryPage, setSumPage) => {
         console.log("error res:", error);
       })
       .finally(() => {
-        dispatch(nowLoadingAction(false));
+        setTimeout(() => {
+          dispatch(nowLoadingAction(false));
+        }, 800);
       });
   };
 };
@@ -118,7 +126,9 @@ export const getUsersFavoritePosts = (userId, queryPage, setSumPage) => {
         console.log("error res:", error);
       })
       .finally(() => {
-        dispatch(nowLoadingAction(false));
+        setTimeout(() => {
+          dispatch(nowLoadingAction(false));
+        }, 800);
       });
   };
 };
@@ -148,39 +158,15 @@ export const searchTagGetPosts = (label, setSumPage, queryPage) => {
         console.log("error res:", error);
       })
       .finally(() => {
-        dispatch(nowLoadingAction(false));
-      });
-  };
-};
-
-export const SearchKeywordGetPosts = (tagId, setSumPage, queryPage) => {
-  return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
-    axios
-      .get(
-        `http://localhost:3001/api/v1/user/tags/${tagId.id}/search/?page=${queryPage}`,
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        const posts = response.data.posts;
-        const page_length = response.data.page_length;
-        setSumPage(page_length);
-        dispatch(getUsersPostsAction(posts));
-      })
-      .catch((error) => {
-        console.log("error res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
+        setTimeout(() => {
+          dispatch(nowLoadingAction(false));
+        }, 800);
       });
   };
 };
 
 export const newPost = (formData, showMessage) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .post(
         "http://localhost:3001/api/v1/user/posts",
@@ -212,9 +198,6 @@ export const newPost = (formData, showMessage) => {
       })
       .catch((error) => {
         console.log("post res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };
@@ -247,14 +230,15 @@ export const showPost = (postId) => {
         console.log("error:", error);
       })
       .finally(() => {
-        dispatch(nowLoadingAction(false));
+        setTimeout(() => {
+          dispatch(nowLoadingAction(false));
+        }, 800);
       });
   };
 };
 
 export const updatePost = (postId, formData, showMessage) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .patch(
         `http://localhost:3001/api/v1/user/posts/${postId.id}`,
@@ -286,16 +270,12 @@ export const updatePost = (postId, formData, showMessage) => {
       })
       .catch((error) => {
         console.log("post res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };
 
 export const deletePost = (postId, showMessage) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .delete(`http://localhost:3001/api/v1/user/posts/${postId.id}`, {
         withCredentials: true,
@@ -315,9 +295,6 @@ export const deletePost = (postId, showMessage) => {
       })
       .catch((error) => {
         console.log("post res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };

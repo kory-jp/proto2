@@ -9,6 +9,7 @@ import { DefaultFlex, UsersPageButton } from '../../../assets/style/chakraStyles
 import UsersFavoritePosts from "./UsersFavoritePosts";
 import { push } from "connected-react-router";
 import useReturnTop from "../../../hooks/useReturnTop";
+import { nowLoadingAction } from "../../../reducks/loading/actions";
 
 export const UsersInfo = () => {
   const userId = useParams();
@@ -17,11 +18,13 @@ export const UsersInfo = () => {
 
   const toUsersPost = useCallback(()=> {
     dispatch(push(`/users/${userId.id}`))
+    dispatch(nowLoadingAction(true));
     returnTop();
   },[dispatch, returnTop, userId.id])
 
   const toFavoritePosts = useCallback(()=> {
     dispatch(push(`/users/${userId.id}/favoritePosts`))
+    dispatch(nowLoadingAction(true));
     returnTop();
   },[dispatch, returnTop, userId.id])
   
@@ -42,7 +45,7 @@ export const UsersInfo = () => {
           <UsersPageButton
             onClick={toFavoritePosts}
           >
-            お気に入り
+            高評価記事
           </UsersPageButton>
       </DefaultFlex>
       <Switch>

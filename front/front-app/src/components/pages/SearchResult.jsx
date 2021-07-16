@@ -3,18 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Spinner } from "@chakra-ui/spinner";
 import { Box, Center } from '@chakra-ui/layout';
-import { push } from "connected-react-router";
-import { nowLoadingAction } from "../../../reducks/loading/actions";
-import { getPostsAction } from "../../../reducks/posts/actions";
-import { getUsersAction } from "../../../reducks/users/actions";
+import { nowLoadingAction } from "../../reducks/loading/actions";
+import { getPostsAction } from "../../reducks/posts/actions";
+import { getUsersAction } from "../../reducks/users/actions";
 import { useCallback, useEffect } from "react";
-import usePagination from "../../../hooks/usePagination";
-import useLoadingState from "../../../hooks/useLoadingState";
-import PostCard from "../../organisms/post/PostCard";
-import UsersCard from "../../organisms/users/UsersCard";
-import DefaultPagination from "../../molecules/DefaultPagination";
-import useReturnTop from "../../../hooks/useReturnTop";
-import { DefaultBox, DefaultText } from "../../../assets/style/chakraStyles";
+import usePagination from "../../hooks/usePagination";
+import useLoadingState from "../../hooks/useLoadingState";
+import PostCard from "../organisms/post/PostCard";
+import UsersCard from "../organisms/users/UsersCard";
+import DefaultPagination from "../molecules/DefaultPagination";
+import { push } from "connected-react-router";
+import useReturnTop from "../../hooks/useReturnTop";
+import { DefaultBox, DefaultTitleText, DefaultText } from "../../assets/style/chakraStyles";
 
 export const SearchResult = () => {
   const {search} = useLocation();
@@ -56,7 +56,9 @@ export const SearchResult = () => {
           console.log("error res:", error);
         })
         .finally(() => {
-          dispatch(nowLoadingAction(false));
+          setTimeout(()=> {
+            dispatch(nowLoadingAction(false));
+          }, 800)
         });
     };
   },[keyword, model, setSumPage]);
@@ -118,9 +120,9 @@ export const SearchResult = () => {
           ):(
             <>
               <DefaultBox mb="5">
-                <DefaultText>
+                <DefaultTitleText>
                   「{keyword}」の検索結果
-                </DefaultText>
+                </DefaultTitleText>
               </DefaultBox>
               {users.length > 0 && (
                 <Box mr="2" ml="2" mb="2">

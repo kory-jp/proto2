@@ -9,11 +9,20 @@ import { Link } from '@chakra-ui/react';
 import {MenuDrawer} from '../../molecules/MenuDrawer';
 import { getTags } from '../../../reducks/tags/operations';
 import SearchInputForm from '../../molecules/SearchInputForm';
+import useReturnTop from '../../../hooks/useReturnTop';
+import { nowLoadingAction } from '../../../reducks/loading/actions';
+import { useLocation } from 'react-router';
 
 export const Header = ()=> {
   const dispatch =  useDispatch();
+  const returnTop = useReturnTop()
   const {isOpen, onOpen, onClose} = useDisclosure()
   const [keyword, setKeyword] = useState('')
+  const {pathname, search} = useLocation()
+  const query =  new URLSearchParams(search);
+  const nowLabel = query.get("label")
+  const nowKeyword = query.get("keyword")
+  const nowModel = query.get("model")
   const [model, setModel] = useState('post')
 
   const onChangeKeyword = useCallback((event)=> {
@@ -32,15 +41,31 @@ export const Header = ()=> {
   const onChangeTagSearch = useCallback((event)=> {
     const tagValue = event.target.value
     tagValue? dispatch(push (`/posts/tag?label=${tagValue}`)): dispatch(push("/posts"))
+    if (nowLabel !== tagValue){
+      dispatch(nowLoadingAction(true));
+    }
     event.target.value = "";
-  },[dispatch])
+  },[dispatch, nowLabel])
+
+  const toTop = useCallback(()=> {
+    dispatch(push('/posts'))
+    if(pathname !== "/posts"){
+      dispatch(nowLoadingAction(true));
+    }
+    returnTop()
+  },[dispatch, returnTop, pathname])
 
   const toSearchResult = useCallback(()=> {
     dispatch(push(`/searchResult?model=${model}&keyword=${keyword}`))
+    if(nowModel !== model) {
+      if(nowKeyword !== keyword){
+        dispatch(nowLoadingAction(true));
+      }
+    }
     setModel("post")
     setKeyword("")
     onClose()
-  },[dispatch, keyword, model, onClose])
+  },[dispatch, keyword, model, nowModel, nowKeyword, onClose])
 
   return(
     <>
@@ -62,7 +87,7 @@ export const Header = ()=> {
             as="h1"
             fontSize={{base: "sm", md: "xl"}}
             fontWeight="bold"
-            onClick={()=> dispatch(push('/posts'))}
+            onClick={toTop}
             cursor="pointer"
             ml="7"
           >
@@ -76,7 +101,6 @@ export const Header = ()=> {
               onChangeModel={onChangeModel}
               toSearchResult={toSearchResult}
             />
-            
           </Flex>
           <Flex display={{base: "none", md: "flex"}} >
             <Select placeholder="Tag Search" mr="2" bg="white" onChange={onChangeTagSearch}>

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux"
 import useReturnTop from "../../../hooks/useReturnTop"
 import { useCallback } from "react"
 import { push } from "connected-react-router"
+import { nowLoadingAction } from "../../../reducks/loading/actions"
 
 export const UsersCard = (props) => {
   const { id, nickname, introduction, image} = props.user
@@ -13,6 +14,7 @@ export const UsersCard = (props) => {
   
   const toUserInfoPage = useCallback(() => {
     dispatch(push(`users/${id}`))
+    dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop, id])
 

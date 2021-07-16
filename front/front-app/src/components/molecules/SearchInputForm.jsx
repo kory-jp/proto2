@@ -4,10 +4,23 @@ import { Select, Input } from "@chakra-ui/react"
 import { Button } from '@chakra-ui/button';
 
 export const SearchInputForm = (props) => {
-  const {keyword, model, onChangeKeyword, onChangeModel, toSearchResult} = props
+  const {keyword, 
+        model, 
+        onChangeKeyword, 
+        onChangeModel, 
+        toSearchResult, 
+      } = props
+
   return(
-    <FormControl id="search" display="flex" flexDirection={{base: "column", md: "row"}}>
+    <FormControl 
+      id="search" 
+      display="flex" 
+      flexDirection={{base: "column", md: "row"}}
+      as="form"
+    >
     <Input
+      id="keywordSearch"
+      type="search"
       value={keyword}
       onChange={onChangeKeyword}
       placeholder="キーワード入力"
@@ -23,11 +36,13 @@ export const SearchInputForm = (props) => {
         w="auto" 
         minW="130px"
         mr="2"
-        >
+      >
         <option value="post">記事</option>
         <option value="user">ユーザー</option>
       </Select>
       <Button
+        type="submit"
+        name="submit"
         onClick={toSearchResult}
         disabled={keyword===""}
         shadow="md"
