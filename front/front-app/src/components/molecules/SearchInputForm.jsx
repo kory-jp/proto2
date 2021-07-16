@@ -19,6 +19,7 @@ export const SearchInputForm = (props) => {
       as="form"
     >
     <Input
+      id="keywordSearch"
       type="search"
       value={keyword}
       onChange={onChangeKeyword}
