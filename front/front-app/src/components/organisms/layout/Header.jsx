@@ -24,7 +24,6 @@ export const Header = ()=> {
   const nowKeyword = query.get("keyword")
   const nowModel = query.get("model")
   const [model, setModel] = useState('post')
-  const [composing, setComposing] = useState(false)
 
   const onChangeKeyword = useCallback((event)=> {
     setKeyword(event.target.value)
@@ -68,21 +67,6 @@ export const Header = ()=> {
     onClose()
   },[dispatch, keyword, model, nowModel, nowKeyword, onClose])
 
-  const enterToSearchResult = useCallback((event)=> {
-    if(composing){
-      if(event.key === 'Enter') {
-        dispatch(push(`/searchResult?model=${model}&keyword=${keyword}`))
-        if(nowModel !== model) {
-          if(nowKeyword !== keyword){
-            dispatch(nowLoadingAction(true));
-          }
-        }
-        setModel("post")
-        setKeyword("")
-      }
-    }
-  },[dispatch, keyword, model, nowModel, nowKeyword, composing])
-
   return(
     <>
       <Flex 
@@ -116,11 +100,7 @@ export const Header = ()=> {
               onChangeKeyword={onChangeKeyword}
               onChangeModel={onChangeModel}
               toSearchResult={toSearchResult}
-              onCompositionStart={(e)=> setComposing(false)}
-              onCompositionEnd={(e)=> setComposing(true)}
-              onKeyDown={enterToSearchResult}
             />
-            
           </Flex>
           <Flex display={{base: "none", md: "flex"}} >
             <Select placeholder="Tag Search" mr="2" bg="white" onChange={onChangeTagSearch}>

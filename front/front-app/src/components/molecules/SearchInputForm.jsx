@@ -9,9 +9,6 @@ export const SearchInputForm = (props) => {
         onChangeKeyword, 
         onChangeModel, 
         toSearchResult, 
-        onKeyDown, 
-        onCompositionStart, 
-        onCompositionEnd
       } = props
 
   return(
@@ -19,6 +16,7 @@ export const SearchInputForm = (props) => {
       id="search" 
       display="flex" 
       flexDirection={{base: "column", md: "row"}}
+      as="form"
     >
     <Input
       type="search"
@@ -28,9 +26,6 @@ export const SearchInputForm = (props) => {
       textAlign="center"
       bg="white"
       mr="2"
-      onCompositionStart={onCompositionStart}
-      onCompositionEnd={onCompositionEnd}
-      onKeyDown={onKeyDown}
     />
     <Flex>
       <Select
