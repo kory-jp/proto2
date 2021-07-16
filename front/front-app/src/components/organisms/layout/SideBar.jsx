@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Flex, Stack } from "@chakra-ui/layout";
 import { Divider } from "@chakra-ui/react"
 import { useDispatch } from 'react-redux';
@@ -8,43 +8,92 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import FolderIcon from '@material-ui/icons/Folder';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import GroupIcon from '@material-ui/icons/Group';
 
 import useMessage from '../../../hooks/useMessage';
 import SideBarButton from '../../atoms/button/SIdeBarButton';
 import { logOut } from '../../../reducks/currentUser/operations';
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
+import useReturnTop from '../../../hooks/useReturnTop';
 
 export const SideBar = ()=> {
   const dispatch =  useDispatch();
   const showMessage = useMessage();
   const currentUserId = useGetCurrentUserId()
+  const returnTop = useReturnTop()
+
+  const toNewPost = useCallback(()=> {
+    dispatch(push('/posts/new'))
+    returnTop()
+  },[dispatch, returnTop])
+
+  const toMyPosts = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/posts`))
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
+  const toFavoritePosts = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/favoritePosts`))
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
+  const toFollows = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/follows`))
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
+  const toFollowers = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/followers`))
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
+  const toEditProfile = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/edit`))
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
 
   return(
     <Flex flexDirection="column" bg="white" shadow="md" borderRadius="md" p="2">
-      <Stack mt="5" spacing="5">
+      <Stack mt="5" mb="3" spacing="5">
         <SideBarButton
-          onClick={()=> dispatch(push('/posts/new'))}
+          onClick={toNewPost}
           leftIcon={<BorderColorIcon />}
         >
           新規投稿
         </SideBarButton>
         <SideBarButton
-          onClick={()=> dispatch(push(`/mypage/${currentUserId}/posts`))}
+          onClick={toMyPosts}
           leftIcon={<FolderIcon />}
         >
           投稿記事
         </SideBarButton>
         <SideBarButton
-          onClick={()=> dispatch(push(`/mypage/${currentUserId}/favoritePosts`))}
+          onClick={toFavoritePosts}
           leftIcon={<ThumbUpIcon />}
         >
           お気に入り記事
         </SideBarButton>
       </Stack>
       <Divider color="gray.500" mt="3" mb="4" />
+      <Stack mb="3" spacing="5">
+        <SideBarButton
+          onClick={toFollows}
+          leftIcon={<GroupAddIcon />}
+        >
+          フォロー
+        </SideBarButton>
+        <SideBarButton
+          onClick={toFollowers}
+          leftIcon={<GroupIcon />}
+        >
+          フォロワー
+        </SideBarButton>
+      </Stack>
+      <Divider color="gray.500" mt="3" mb="4" />
       <Stack mb="7" spacing="5">
         <SideBarButton
-          onClick={()=> dispatch(push(`/mypage/${currentUserId}/edit`))}
+          onClick={toEditProfile}
           leftIcon={<PersonIcon />}
           >
           個人情報修正

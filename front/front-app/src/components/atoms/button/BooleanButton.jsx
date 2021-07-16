@@ -12,6 +12,7 @@ export const BooleanButton = (props) => {
       outline="none"
       disabled={loadingState}
       mb="2"
+      borderRadius="full"
     >
       {children}
     </Button>

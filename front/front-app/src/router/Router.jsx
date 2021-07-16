@@ -14,6 +14,8 @@ import UsersInfo from '../components/pages/users/UsersInfo'
 import DefaultLayout from '../components/templates/DefaultLayout'
 import FavoritePosts from '../components/pages/mypage/FavoritePosts'
 import SearchResult from '../components/pages/mypage/SearchResult'
+import Follows from '../components/pages/mypage/Follows'
+import Followers from '../components/pages/mypage/Followers'
 
 export const Router = () => {
   return(
@@ -29,6 +31,8 @@ export const Router = () => {
           <Route path={"/posts/edit/:id"} component={PostEdit} />
           <Route path={"/mypage/:id/edit"} component={ProfileEdit} />
           <Route path={"/mypage/:id/posts"} component={MyPosts} />
+          <Route path={"/mypage/:id/follows"} component={Follows} />
+          <Route path={"/mypage/:id/followers"} component={Followers} />
           <Route path={"/searchResult"} component={SearchResult} />
           <Route path={"/mypage/:id/favoritePosts"} component={FavoritePosts} />
           <Route path={"/users/:id"} component={UsersInfo} />

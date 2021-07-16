@@ -1,7 +1,7 @@
 class Api::V1::User::RelationshipsController < Api::V1::User::Base
 
   def following_by
-    # binding.pry
+    @@current_user = current_user
     if current_user.active_relationships.find_by(follower_id: params[:user_id]).present?
       render json: true
     else
@@ -17,8 +17,7 @@ class Api::V1::User::RelationshipsController < Api::V1::User::Base
   end
 
   def destroy 
-    # binding.pry
-    follow = current_user.active_relationships.find_by(follower_id: params[:user_id])
+    follow = @@current_user.active_relationships.find_by(follower_id: params[:user_id])
     if follow.destroy
       render json: false
     end

@@ -13,6 +13,7 @@ import { UsersReducers } from "../users/reducers";
 import { CommentsReducer } from "../comments/reducers";
 import { TagsReducer } from "../tags/reducers";
 import { FavoriteReducer } from "../favorite/reducers";
+import { FollowReducer } from "../follow/reducers";
 
 export default function createState(history) {
   return reduxCreateStore(
@@ -25,6 +26,7 @@ export default function createState(history) {
       comments: CommentsReducer,
       tags: TagsReducer,
       favorite: FavoriteReducer,
+      follow: FollowReducer,
     }),
     applyMiddleware(routerMiddleware(history), thunk)
   );

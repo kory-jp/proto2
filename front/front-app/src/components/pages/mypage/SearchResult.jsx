@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Spinner } from "@chakra-ui/spinner";
 import { Box, Center } from '@chakra-ui/layout';
+import { push } from "connected-react-router";
 import { nowLoadingAction } from "../../../reducks/loading/actions";
 import { getPostsAction } from "../../../reducks/posts/actions";
 import { getUsersAction } from "../../../reducks/users/actions";
@@ -12,9 +13,8 @@ import useLoadingState from "../../../hooks/useLoadingState";
 import PostCard from "../../organisms/post/PostCard";
 import UsersCard from "../../organisms/users/UsersCard";
 import DefaultPagination from "../../molecules/DefaultPagination";
-import { push } from "connected-react-router";
 import useReturnTop from "../../../hooks/useReturnTop";
-import { DefaultBox, DefaultTitleText } from "../../../assets/style/chakraStyles";
+import { DefaultBox, DefaultText } from "../../../assets/style/chakraStyles";
 
 export const SearchResult = () => {
   const {search} = useLocation();
@@ -84,9 +84,9 @@ export const SearchResult = () => {
           ):(
             <>
               <DefaultBox mb="5">
-                <DefaultTitleText>
+                <DefaultText>
                   「{keyword}」の検索結果
-                </DefaultTitleText>
+                </DefaultText>
               </DefaultBox>
               {posts.length > 0 && (
                 <Box mr="2" ml="2" mb="2">
@@ -110,25 +110,35 @@ export const SearchResult = () => {
   } else if(model==="user"){
     return(
       <>
-        <DefaultBox mb="5">
-          <DefaultTitleText>
-            「{keyword}」の検索結果
-          </DefaultTitleText>
-        </DefaultBox>
-        {users.length > 0 && (
-          <Box mr="2" ml="2" mb="2">
-            {
-              users.map(user =>(
-                <UsersCard key={user.id} user={user}/>
-              ))
-            }
-          </Box>
-        )}
-        <DefaultPagination 
-          count={sumPage}
-          onChange={changeCurrentPage}
-          page={queryPage}
-        />
+        {
+          loadingState? (
+            <Center  h="100vh" w={{base: "50vh", md: "100vh"}}>
+              <Spinner/>
+            </Center>
+          ):(
+            <>
+              <DefaultBox mb="5">
+                <DefaultText>
+                  「{keyword}」の検索結果
+                </DefaultText>
+              </DefaultBox>
+              {users.length > 0 && (
+                <Box mr="2" ml="2" mb="2">
+                  {
+                    users.map(user =>(
+                      <UsersCard key={user.id} user={user}/>
+                    ))
+                  }
+                </Box>
+              )}
+              <DefaultPagination 
+                count={sumPage}
+                onChange={changeCurrentPage}
+                page={queryPage}
+              />
+            </>
+          )
+        }
       </>
     )
   }

@@ -20,7 +20,7 @@ Bundler.require(*Rails.groups)
 module Proto2
   class Application < Rails::Application
     config.load_defaults 6.0
-    config.api_only = true
+    config.api_only = false
     config.time_zone = "Tokyo"
     config.i18n.load_path +=
       Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}").to_s]

@@ -32,7 +32,6 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
   end
 
   def favorite_posts
-    # binding.pry
     favorite_posts = current_user.favorite_posts
     posts = favorite_posts.page(params[:page] ||=1).per(10).order(created_at: "DESC")
     page_length = posts.page(1).per(10).total_pages
@@ -76,6 +75,20 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
     if user.update(user_params)
       render json: user
     end
+  end
+
+  def follows
+    # user = User.find(params[:id])
+    # users = user.followings
+    binding.pry
+    follows = current_user.followings
+    render json: follows
+  end
+
+  def followers
+    user = User.find(params[:id])
+    users = user.followers
+    render josn: users
   end
   
 

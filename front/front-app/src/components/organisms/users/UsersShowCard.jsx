@@ -1,24 +1,40 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Flex } from '@chakra-ui/layout'
-import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
-import { DefaultFlex, DefaultText, DefaultUserIconImage } from '../../../assets/style/chakraStyles'
 import { useParams } from 'react-router'
+import { Divider } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+
 import { showUsers } from '../../../reducks/users/operations'
+import { confirmFollowing, createFollowing, destroyFollowing } from '../../../reducks/follow/operations'
+import BooleanButton from '../../atoms/button/BooleanButton'
+import { DefaultFlex, DefaultText, DefaultTitleText, DefaultUserIconImage } from '../../../assets/style/chakraStyles'
+import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
+import useLoadingState from '../../../hooks/useLoadingState'
 
 export const UsersShowCard = () => {
-  // export const UsersShowCard = (props) => {
-  // const {name, nickname, introduction, userIcon } = props.users;
 
   const userId = useParams();
   const dispatch = useDispatch()
+  const loadingState = useLoadingState()
 
   useEffect(()=> {
     dispatch(showUsers(userId))
+    dispatch(confirmFollowing(userId))
   },[dispatch, userId])
   
   const users =  useSelector((state)=> state.users)
   const { nickname, introduction, userIcon} = users
+
+  const follow = useSelector((state)=> state.follow.status)
+
+  const toggleFollow = useCallback(()=> {
+    if (follow === true ) {
+      dispatch(destroyFollowing(userId))
+    } else if(follow === false ){
+      dispatch(createFollowing(userId))
+    }
+  },[dispatch, follow, userId])
 
   return(
     <DefaultFlex
@@ -38,16 +54,28 @@ export const UsersShowCard = () => {
         />
         <DefaultFlex
         flexDirection="column"
-        // w="full"
         w={{base: "full", xl: "75%"}}
         m={{base: "auto", md: "2"}}
         >
-          <DefaultText
-            as="h2"
-            fontWeight="bold"
-          >
-            {nickname}
-          </DefaultText>
+          <Flex>
+            <DefaultTitleText
+              as="h2"
+              mr="5"
+            >
+              {nickname}
+            </DefaultTitleText>
+            <BooleanButton
+              onClick={toggleFollow}
+              colorBoolean={follow}
+              loadingState={loadingState}
+            >
+              Follow
+              <GroupAddIcon style={{fontSize: 14, marginLeft: 5}}/>
+            </BooleanButton>
+          </Flex>
+          <Divider 
+            mb="2"
+          />
           <DefaultText>
             {introduction}
           </DefaultText>
