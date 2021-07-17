@@ -16,7 +16,7 @@ export const showUsers = (userId) => {
             name: user.name,
             nickname: user.nickname,
             introduction: user.introduction,
-            userIcon: user.image_data.url,
+            userIcon: user.image.url,
           })
         );
       })
@@ -26,7 +26,7 @@ export const showUsers = (userId) => {
   };
 };
 
-export const getFollows = () => {
+export const getMyFollows = (setSumPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
     axios
@@ -34,36 +34,40 @@ export const getFollows = () => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response);
-        const follows = response.data;
+        const follows = response.data.follows;
         dispatch(getUsersAction(follows));
+        setSumPage(response.data.page_length);
       })
       .catch((error) => {
         console.log("error:", error);
       })
       .finally(() => {
-        dispatch(nowLoadingAction(false));
+        setTimeout(() => {
+          dispatch(nowLoadingAction(false));
+        }, 800);
       });
   };
 };
 
-// export const getFollows = () => {
-//   return async (dispatch) => {
-//     dispatch(nowLoadingAction(true));
-//     axios
-//       .get("http://localhost:3001/api/v1/user/accounts/follows", {
-//         withCredentials: true,
-//       })
-//       .then((response) => {
-//         console.log(response);
-//         const follows = response.data;
-//         dispatch(getUsersAction(follows));
-//       })
-//       .catch((error) => {
-//         console.log("error:", error);
-//       })
-//       .finally(() => {
-//         dispatch(nowLoadingAction(false));
-//       });
-//   };
-// };
+export const getMyFollowers = (setSumPage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
+    axios
+      .get("http://localhost:3001/api/v1/user/accounts/followers", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        const followers = response.data.followers;
+        dispatch(getUsersAction(followers));
+        setSumPage(response.data.page_length);
+      })
+      .catch((error) => {
+        console.log("error:", error);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          dispatch(nowLoadingAction(false));
+        }, 800);
+      });
+  };
+};

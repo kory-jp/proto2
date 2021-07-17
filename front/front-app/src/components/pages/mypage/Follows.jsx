@@ -8,8 +8,8 @@ import useLoadingState from "../../../hooks/useLoadingState";
 import UsersCard from "../../organisms/users/UsersCard";
 import DefaultPagination from "../../molecules/DefaultPagination";
 import useReturnTop from "../../../hooks/useReturnTop";
-import { DefaultBox, DefaultText } from "../../../assets/style/chakraStyles";
-import { getFollows } from "../../../reducks/users/operations";
+import { DefaultBox, DefaultTitleText } from "../../../assets/style/chakraStyles";
+import { getMyFollows } from "../../../reducks/users/operations";
 
 export const Follows = () => {
   const loadingState = useLoadingState()
@@ -18,8 +18,8 @@ export const Follows = () => {
   const { sumPage, setSumPage, queryPage } = usePagination()
 
   useEffect(()=> {
-    dispatch(getFollows())
-  },[dispatch])
+    dispatch(getMyFollows(setSumPage))
+  },[dispatch, setSumPage])
 
   const follows = useSelector(state => state.users.list)
 
@@ -39,9 +39,9 @@ export const Follows = () => {
       ):(
         <>
           <DefaultBox mb="5">
-            <DefaultText>
+            <DefaultTitleText>
               フォロー一覧
-            </DefaultText>
+            </DefaultTitleText>
           </DefaultBox>
           {follows.length > 0 && (
             <Box mr="2" ml="2" mb="2">

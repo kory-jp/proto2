@@ -33,7 +33,7 @@ export const DefaultTitleText = (props) => {
   return (
     <Text
       fontSize={{ base: "sm", md: "2xl" }}
-      fontWeight="bold"
+      color="gray.600"
       display="flex"
       alignItems="center"
       {...props}

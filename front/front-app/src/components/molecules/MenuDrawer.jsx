@@ -47,6 +47,18 @@ export const MenuDrawer = (props) => {
     onClose()
   },[dispatch, onClose, returnTop, currentUserId])
 
+  const toMyFollows = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/follows`))
+    returnTop()
+    onClose()
+  },[dispatch, returnTop, onClose, currentUserId])
+
+  const toMyFollowers = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/followers`))
+    returnTop()
+    onClose()
+  },[dispatch, returnTop, onClose, currentUserId])
+
   const toEditProfile = useCallback(() => {
     dispatch(push(`/mypage/${currentUserId}/edit`))
     dispatch(nowLoadingAction(true));
@@ -103,6 +115,27 @@ export const MenuDrawer = (props) => {
             </Button>
           </Stack>
           <Divider 
+          mb="7"
+          />
+          <Stack spacing="4">
+            <Button
+              bg="white"
+              onClick={toMyFollows}
+              fontSize="sm"
+              w="100%"
+              >
+                フォロー
+            </Button>
+            <Button
+              bg="white"
+              onClick={toMyFollowers}
+              fontSize="sm"
+              w="100%"
+              >
+                フォロワー
+            </Button>
+          </Stack>
+          <Divider
           mb="7"
           />
           <Stack spacing="4">            

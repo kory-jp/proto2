@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :password_digest, null: false
       t.boolean :suspended, null: false, default: false
       t.text :introduction
-      t.text :image_data
+      t.string :image
 
       t.timestamps
     end

@@ -10,9 +10,12 @@ class Api::V1::User::RelationshipsController < Api::V1::User::Base
   end
 
   def create
-    follow = current_user.active_relationships.build(follower_id: params[:user_id])
-    if follow.save
-      render json: true
+    @@current_user = current_user
+    if current_user.id != params[:user_id].to_i
+      follow = current_user.active_relationships.build(follower_id: params[:user_id])
+      if follow.save
+        render json: true
+      end
     end
   end
 

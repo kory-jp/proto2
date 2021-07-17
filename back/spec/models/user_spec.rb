@@ -4,7 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  email           :string(255)      not null
-#  image_data      :text(65535)
+#  image           :string(255)
 #  introduction    :text(65535)
 #  name            :string(255)      not null
 #  nickname        :string(255)

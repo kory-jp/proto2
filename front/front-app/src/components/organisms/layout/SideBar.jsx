@@ -24,12 +24,12 @@ export const SideBar = ()=> {
   const returnTop = useReturnTop()
   const currentUserId = useGetCurrentUserId()
 
-  const toFollows = useCallback(()=> {
+  const toMyFollows = useCallback(()=> {
     dispatch(push(`/mypage/${currentUserId}/follows`))
     returnTop()
   },[dispatch, returnTop, currentUserId])
 
-  const toFollowers = useCallback(()=> {
+  const toMyFollowers = useCallback(()=> {
     dispatch(push(`/mypage/${currentUserId}/followers`))
     returnTop()
   },[dispatch, returnTop, currentUserId])
@@ -82,13 +82,13 @@ export const SideBar = ()=> {
       <Divider color="gray.500" mt="3" mb="4" />
       <Stack mb="3" spacing="5">
         <SideBarButton
-          onClick={toFollows}
+          onClick={toMyFollows}
           leftIcon={<GroupAddIcon />}
         >
           フォロー
         </SideBarButton>
         <SideBarButton
-          onClick={toFollowers}
+          onClick={toMyFollowers}
           leftIcon={<GroupIcon />}
         >
           フォロワー

@@ -11,10 +11,13 @@ import BooleanButton from '../../atoms/button/BooleanButton'
 import { DefaultFlex, DefaultText, DefaultTitleText, DefaultUserIconImage } from '../../../assets/style/chakraStyles'
 import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
 import useLoadingState from '../../../hooks/useLoadingState'
+import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId'
 
 export const UsersShowCard = () => {
 
   const userId = useParams();
+  const id = Number(userId.id)
+  const currentUserId = useGetCurrentUserId()
   const dispatch = useDispatch()
   const loadingState = useLoadingState()
 
@@ -64,14 +67,18 @@ export const UsersShowCard = () => {
             >
               {nickname}
             </DefaultTitleText>
-            <BooleanButton
-              onClick={toggleFollow}
-              colorBoolean={follow}
-              loadingState={loadingState}
-            >
-              Follow
-              <GroupAddIcon style={{fontSize: 14, marginLeft: 5}}/>
-            </BooleanButton>
+            {
+              currentUserId !== id ? (
+                <BooleanButton
+                onClick={toggleFollow}
+                colorBoolean={follow}
+                loadingState={loadingState}
+              >
+                Follow
+                <GroupAddIcon style={{fontSize: 14, marginLeft: 5}}/>
+              </BooleanButton>
+              ) : null
+            }
           </Flex>
           <Divider 
             mb="2"

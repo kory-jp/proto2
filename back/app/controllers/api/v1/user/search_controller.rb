@@ -19,7 +19,7 @@ class Api::V1::User::SearchController < Api::V1::User::Base
         userObj["nickname"] = user.nickname
         userObj["email"] = user.email
         userObj["introduction"] = user.introduction
-        userObj["image"] = user.image_data
+        userObj["image"] = user.image
         userObj["created_at"] = user.created_at.strftime('%Y/%m/%d')
         usersArray.push(userObj)
       end

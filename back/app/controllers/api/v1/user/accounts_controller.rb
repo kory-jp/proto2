@@ -78,23 +78,49 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
   end
 
   def follows
-    # user = User.find(params[:id])
-    # users = user.followings
-    binding.pry
-    follows = current_user.followings
-    render json: follows
+    users = current_user.followings
+    page_length = users.page(1).per(10).total_pages
+    usersArray = []
+    users.each do |user|
+      userObj = {}
+      userObj["id"] = user.id
+      userObj["name"] = user.name
+      userObj["nickname"] = user.nickname
+      userObj["introduction"] = user.introduction
+      userObj["image"] = user.image
+      usersArray.push(userObj)
+    end
+    data = {
+      'follows': usersArray,
+      'page_length': page_length
+    }
+    render json: data
   end
 
   def followers
-    user = User.find(params[:id])
-    users = user.followers
-    render josn: users
+    users = current_user.followers
+    page_length = users.page(1).per(10).total_pages
+    usersArray = []
+    users.each do |user|
+      userObj = {}
+      userObj["id"] = user.id
+      userObj["name"] = user.name
+      userObj["nickname"] = user.nickname
+      userObj["introduction"] = user.introduction
+      userObj["image"] = user.image
+      usersArray.push(userObj)
+    end
+    data = {
+      'followers': usersArray,
+      'page_length': page_length
+    }
+    render json: data
   end
   
 
   private
   
   def user_params
-    params.require(:user).permit(:id, :name, :email, :nickname, :introduction, :image_data)
+    params.require(:user).permit(:id, :name, :email, :nickname, :introduction, :image)
   end
 end

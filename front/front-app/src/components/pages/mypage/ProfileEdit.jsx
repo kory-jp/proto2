@@ -42,13 +42,13 @@ export const ProfileEdit = ()=> {
     .get(`http://localhost:3001/api/v1/user/accounts/${userId.id}/edit`,
     {withCredentials: true} 
       ).then(response => {
-        const {name, nickname, email, introduction, image_data} = response.data
+        const {name, nickname, email, introduction, image} = response.data
         if (response.data) {
           setName(name)
           setNickname(nickname === null? "" : nickname)
           setEmail(email)
           setIntroduction(introduction === null? "" : introduction)
-          setPreview(image_data.url)
+          setPreview(image.url)
         } else {
           dispatch(push('/posts'))
         }
@@ -98,7 +98,7 @@ export const ProfileEdit = ()=> {
     formData.append('user[nickname]', nickname)
     formData.append('user[email]', email)
     formData.append('user[introduction]', introduction)
-    if (image) formData.append('user[image_data]', image)
+    if (image) formData.append('user[image]', image)
 
     return formData
   },[userId, name, nickname, email, introduction, image])
