@@ -69,4 +69,46 @@ class Api::V1::User::UsersController < Api::V1::User::Base
     render json: data
   end
   
+  def follows
+    user = User.find(params[:id])
+    users = user.followings
+    page_length = users.page(1).per(10).total_pages
+    usersArray = []
+    users.each do |user|
+      userObj = {}
+      userObj["id"] = user.id
+      userObj["name"] = user.name
+      userObj["nickname"] = user.nickname
+      userObj["introduction"] = user.introduction
+      userObj["image"] = user.image
+      usersArray.push(userObj)
+    end
+    data = {
+      'follows': usersArray,
+      'page_length': page_length
+    }
+    render json: data
+  end
+
+  def followers
+    user = User.find(params[:id])
+    users = user.followers
+    page_length = users.page(1).per(10).total_pages
+    usersArray = []
+    users.each do |user|
+      userObj = {}
+      userObj["id"] = user.id
+      userObj["name"] = user.name
+      userObj["nickname"] = user.nickname
+      userObj["introduction"] = user.introduction
+      userObj["image"] = user.image
+      usersArray.push(userObj)
+    end
+    data = {
+      'followers': usersArray,
+      'page_length': page_length
+    }
+    render json: data
+  end
+
 end

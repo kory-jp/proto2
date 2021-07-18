@@ -18,8 +18,8 @@ export const Followers = () => {
   const { sumPage, setSumPage, queryPage } = usePagination()
 
   useEffect(()=> {
-    dispatch(getMyFollowers(setSumPage))
-  },[dispatch, setSumPage])
+    dispatch(getMyFollowers(queryPage, setSumPage))
+  },[dispatch, queryPage, setSumPage])
 
   const follows = useSelector(state => state.users.list)
 

@@ -10,6 +10,8 @@ import UsersFavoritePosts from "./UsersFavoritePosts";
 import { push } from "connected-react-router";
 import useReturnTop from "../../../hooks/useReturnTop";
 import { nowLoadingAction } from "../../../reducks/loading/actions";
+import UsersFollows from "./UsersFollows";
+import UsersFollowers from "./UsersFollowers";
 
 export const UsersInfo = () => {
   const userId = useParams();
@@ -27,6 +29,18 @@ export const UsersInfo = () => {
     dispatch(nowLoadingAction(true));
     returnTop();
   },[dispatch, returnTop, userId.id])
+
+  const toUsersFollows = useCallback(()=> {
+    dispatch(push(`/users/${userId.id}/follows`))
+    dispatch(nowLoadingAction(true));
+    returnTop();
+  },[dispatch, returnTop, userId])
+
+  const toUsersFollowers = useCallback(()=> {
+    dispatch(push(`/users/${userId.id}/followers`))
+    dispatch(nowLoadingAction(true));
+    returnTop();
+  },[dispatch, returnTop, userId])
   
   return(
     <Box>
@@ -47,10 +61,22 @@ export const UsersInfo = () => {
           >
             高評価記事
           </UsersPageButton>
+          <UsersPageButton
+            onClick={toUsersFollows}
+          >
+            フォロー
+          </UsersPageButton>
+          <UsersPageButton
+            onClick={toUsersFollowers}
+          >
+            フォロワー
+          </UsersPageButton>
       </DefaultFlex>
       <Switch>
         <Route exact path={"/users/:id"} component={UsersPosts}/>
-        <Route exact path={"/users/:id/favoritePosts"} component={UsersFavoritePosts}/>
+        <Route path={"/users/:id/favoritePosts"} component={UsersFavoritePosts}/>
+        <Route path={"/users/:id/follows"} component={UsersFollows}/>
+        <Route path={"/users/:id/followers"} component={UsersFollowers}/>
       </Switch>
     </Box>
   )

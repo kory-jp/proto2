@@ -26,13 +26,16 @@ export const showUsers = (userId) => {
   };
 };
 
-export const getMyFollows = (setSumPage) => {
+export const getMyFollows = (queryPage, setSumPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
     axios
-      .get("http://localhost:3001/api/v1/user/accounts/follows", {
-        withCredentials: true,
-      })
+      .get(
+        `http://localhost:3001/api/v1/user/accounts/follows/?page=${queryPage}`,
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         const follows = response.data.follows;
         dispatch(getUsersAction(follows));
@@ -49,13 +52,68 @@ export const getMyFollows = (setSumPage) => {
   };
 };
 
-export const getMyFollowers = (setSumPage) => {
+export const getMyFollowers = (queryPage, setSumPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
     axios
-      .get("http://localhost:3001/api/v1/user/accounts/followers", {
-        withCredentials: true,
+      .get(
+        `http://localhost:3001/api/v1/user/accounts/followers/?page=${queryPage}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        const followers = response.data.followers;
+        dispatch(getUsersAction(followers));
+        setSumPage(response.data.page_length);
       })
+      .catch((error) => {
+        console.log("error:", error);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          dispatch(nowLoadingAction(false));
+        }, 800);
+      });
+  };
+};
+
+export const getUsersFollows = (userId, queryPage, setSumPage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
+    axios
+      .get(
+        `http://localhost:3001/api/v1/user/users/${userId.id}/follows/?page=${queryPage}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        const follows = response.data.follows;
+        dispatch(getUsersAction(follows));
+        setSumPage(response.data.page_length);
+      })
+      .catch((error) => {
+        console.log("error:", error);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          dispatch(nowLoadingAction(false));
+        }, 800);
+      });
+  };
+};
+
+export const getUsersFollowers = (userId, queryPage, setSumPage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
+    axios
+      .get(
+        `http://localhost:3001/api/v1/user/users/${userId.id}/followers/?page=${queryPage}`,
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         const followers = response.data.followers;
         dispatch(getUsersAction(followers));

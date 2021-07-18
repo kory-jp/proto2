@@ -1,5 +1,4 @@
 import axios from "axios";
-import { nowLoadingAction } from "../loading/actions";
 import {
   confirmFavoritedAction,
   createFavoriteAction,
@@ -31,7 +30,6 @@ export const confirmFavorited = (postId) => {
 
 export const createFavorite = (postId, currentUserId) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .post(
         `http://localhost:3001/api/v1/user/posts/${postId.id}/favorites`,
@@ -56,16 +54,12 @@ export const createFavorite = (postId, currentUserId) => {
       })
       .catch((error) => {
         console.log("error res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };
 
 export const destroyFavorite = (postId) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .delete(
         `http://localhost:3001/api/v1/user/posts/${postId.id}/favorites`,
@@ -83,9 +77,6 @@ export const destroyFavorite = (postId) => {
       })
       .catch((error) => {
         console.log("error res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };

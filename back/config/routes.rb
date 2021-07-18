@@ -27,6 +27,8 @@ Rails.application.routes.draw do
           member do
             get :posts
             get :favorite_posts
+            get :follows
+            get :followers
           end
         end
         resources :posts do
