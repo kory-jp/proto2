@@ -32,9 +32,9 @@ export const UsersShowCard = () => {
   const follow = useSelector((state)=> state.follow.status)
 
   const toggleFollow = useCallback(()=> {
-    if (follow === true ) {
+    if (follow ) {
       dispatch(destroyFollowing(userId))
-    } else if(follow === false ){
+    } else {
       dispatch(createFollowing(userId))
     }
   },[dispatch, follow, userId])
