@@ -62,7 +62,7 @@ class Api::V1::User::PostsController < Api::V1::User::Base
     postObj["name"] = user_name
     user_nickname = user.nickname
     postObj["nickname"] = user_nickname
-    user_icon = user.image_data
+    user_icon = user.image
     postObj["user_icon"] = user_icon
     render json: postObj
 

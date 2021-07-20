@@ -1,7 +1,7 @@
 class Api::V1::User::FavoritesController < Api::V1::User::Base
 
   def favorited_by
-    p session.to_hash
+    # p session.to_hash
     post = Post.find(params[:post_id])
     if post.favorites.where(user_id: current_user.id).exists?
       render json: true

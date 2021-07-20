@@ -12,7 +12,7 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
       user = User.find_by(id: comment.user_id)
       commentObj["name"] = user.name
       commentObj["nickname"] = user.nickname
-      commentObj["icon"] = user.image_data
+      commentObj["icon"] = user.image
       commentObj["comment"] = comment.comment
       commentObj["created_at"] = comment.created_at.strftime('%Y/%m/%d')
       commentsArray.push(commentObj)

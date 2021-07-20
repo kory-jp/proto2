@@ -8,6 +8,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import FolderIcon from '@material-ui/icons/Folder';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import GroupIcon from '@material-ui/icons/Group';
 
 import useMessage from '../../../hooks/useMessage';
 import SideBarButton from '../../atoms/button/SIdeBarButton';
@@ -21,6 +23,16 @@ export const SideBar = ()=> {
   const showMessage = useMessage();
   const returnTop = useReturnTop()
   const currentUserId = useGetCurrentUserId()
+
+  const toMyFollows = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/follows`))
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
+  const toMyFollowers = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/followers`))
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
 
   const toNewPost = useCallback(()=> {
     dispatch(push('/posts/new'))
@@ -47,7 +59,7 @@ export const SideBar = ()=> {
 
   return(
     <Flex flexDirection="column" bg="white" shadow="md" borderRadius="md" p="2">
-      <Stack mt="5" spacing="5">
+      <Stack mt="5" mb="3" spacing="5">
         <SideBarButton
           onClick={toNewPost}
           leftIcon={<BorderColorIcon />}
@@ -65,6 +77,21 @@ export const SideBar = ()=> {
           leftIcon={<ThumbUpIcon />}
         >
           高評価記事
+        </SideBarButton>
+      </Stack>
+      <Divider color="gray.500" mt="3" mb="4" />
+      <Stack mb="3" spacing="5">
+        <SideBarButton
+          onClick={toMyFollows}
+          leftIcon={<GroupAddIcon />}
+        >
+          フォロー
+        </SideBarButton>
+        <SideBarButton
+          onClick={toMyFollowers}
+          leftIcon={<GroupIcon />}
+        >
+          フォロワー
         </SideBarButton>
       </Stack>
       <Divider color="gray.500" mt="3" mb="4" />

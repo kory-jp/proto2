@@ -1,4 +1,4 @@
-table_names = %w(users posts comments tags post_tag_relations favorites)
+table_names = %w(users posts comments tags post_tag_relations favorites relationships)
 
 table_names.each do |table_name|
   path = Rails.root.join("db", "seeds", Rails.env, "#{table_name}.rb")

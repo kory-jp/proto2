@@ -30,7 +30,15 @@ export const DefaultText = (props) => {
 };
 
 export const DefaultTitleText = (props) => {
-  return <Text fontSize={{ base: "sm", md: "2xl" }} {...props} />;
+  return (
+    <Text
+      fontSize={{ base: "sm", md: "2xl" }}
+      color="gray.600"
+      display="flex"
+      alignItems="center"
+      {...props}
+    />
+  );
 };
 
 export const DefaultImage = (props) => {

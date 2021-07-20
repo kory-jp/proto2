@@ -32,6 +32,10 @@ const initialState = {
   favorite: {
     status: false,
   },
+
+  follow: {
+    status: false,
+  },
 };
 
 export default initialState;

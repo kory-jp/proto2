@@ -4,6 +4,7 @@ import { Link } from "@chakra-ui/react"
 import { useDispatch, useSelector } from 'react-redux'
 import { push } from 'connected-react-router'
 import CreateIcon from '@material-ui/icons/Create';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
 import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
 import { DefaultFlex, 
@@ -17,8 +18,8 @@ import PrimaryTag from '../../atoms/tag/PrimaryTag'
 import useReturnTop from '../../../hooks/useReturnTop'
 import { createFavorite, destroyFavorite } from '../../../reducks/favorite/operations'
 import { useParams } from 'react-router'
-import GoodButton from '../../atoms/button/GoodButton'
 import useLoadingState from '../../../hooks/useLoadingState'
+import BooleanButton from '../../atoms/button/BooleanButton'
 import { nowLoadingAction } from '../../../reducks/loading/actions'
 
 export const PostShowCard = (props)=> {
@@ -84,11 +85,14 @@ export const PostShowCard = (props)=> {
           >
             {title}
           </DefaultTitleText>
-          <GoodButton
+          <BooleanButton
             onClick={toggleFavorite}
-            favorite={favorite}
+            colorBoolean={favorite}
             loadingState={loadingState}
-          />
+          >
+            Good!
+            <ThumbUpIcon style={{fontSize: 13, marginLeft: 5}}/>
+          </BooleanButton>
           { 
             user_id === currentUserId ? (
               <Link

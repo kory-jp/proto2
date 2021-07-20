@@ -15,6 +15,12 @@ Rails.application.routes.draw do
           end
           collection do
             patch :update
+            resource :relationships, only: [:create] do
+              post :following_by
+              patch :destroy
+            end
+            get :follows
+            get :followers
           end
         end
         resources :users, only: [:show] do

@@ -13,7 +13,7 @@ export const UsersCard = (props) => {
   const returnTop = useReturnTop
   
   const toUserInfoPage = useCallback(() => {
-    dispatch(push(`users/${id}`))
+    dispatch(push(`/users/${id}`))
     dispatch(nowLoadingAction(true));
     returnTop()
   },[dispatch, returnTop, id])

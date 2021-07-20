@@ -8,6 +8,7 @@ import {
 
 export const confirmFollowing = (userId) => {
   return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
     axios
       .post(
         "http://localhost:3001/api/v1/user/accounts/relationships/following_by",
@@ -26,12 +27,16 @@ export const confirmFollowing = (userId) => {
       })
       .catch((error) => {
         console.log("error res:", error);
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
       });
   };
 };
 
 export const createFollowing = (userId) => {
   return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
     axios
       .post(
         "http://localhost:3001/api/v1/user/accounts/relationships",
@@ -41,7 +46,6 @@ export const createFollowing = (userId) => {
         }
       )
       .then((response) => {
-        console.log(response);
         const status = response.data;
         dispatch(
           createFollowingAction({
@@ -51,14 +55,18 @@ export const createFollowing = (userId) => {
       })
       .catch((error) => {
         console.log("error res:", error);
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
       });
   };
 };
 
 export const destroyFollowing = (userId) => {
   return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
     axios
-      .delete(
+      .patch(
         "http://localhost:3001/api/v1/user/accounts/relationships",
         { user_id: userId.id },
         {
@@ -66,7 +74,6 @@ export const destroyFollowing = (userId) => {
         }
       )
       .then((response) => {
-        console.log(response);
         const status = response.data;
         dispatch(
           destroyFollowingAction({
@@ -76,6 +83,9 @@ export const destroyFollowing = (userId) => {
       })
       .catch((error) => {
         console.log("error res:", error);
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
       });
   };
 };
