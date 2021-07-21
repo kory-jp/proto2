@@ -72,7 +72,7 @@ export const UsersPageButton = (props) => {
     <Button
       colorScheme="teal"
       variant="ghost"
-      fontSize={{ base: "xs", md: "lg" }}
+      fontSize={{ base: "5px", md: "lg" }}
       {...props}
     />
   );
