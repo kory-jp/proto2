@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { push } from 'connected-react-router'
 import CreateIcon from '@material-ui/icons/Create';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
 import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
 import { DefaultFlex, 
@@ -90,8 +91,19 @@ export const PostShowCard = (props)=> {
             colorBoolean={favorite}
             loadingState={loadingState}
           >
-            Good!
-            <ThumbUpIcon style={{fontSize: 13, marginLeft: 5}}/>
+            {
+              favorite ? (
+                <>
+                  高評価済
+                  <ThumbUpIcon style={{fontSize: 13, marginLeft: 5}}/>
+                </>
+              ) : (
+                <>
+                  高評価する
+                  <ThumbsUpDownIcon style={{fontSize: 13, marginLeft: 5}}/>
+                </>
+              )
+            }
           </BooleanButton>
           { 
             user_id === currentUserId ? (

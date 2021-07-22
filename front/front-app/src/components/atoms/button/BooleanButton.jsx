@@ -6,8 +6,8 @@ export const BooleanButton = (props) => {
     <Button
       onClick={onClick} 
       colorScheme={colorBoolean? "blue" : "gray" }
-      fontSize={{base: "11px", md: "15px"}}
-      w={{base: "60px", md: "85px"}}
+      fontSize={{base: "8px", md: "15px"}}
+      w={{base: "100px", md: "130px"}}
       h={{base: "30px", md: "45px"}}
       outline="none"
       disabled={loadingState}

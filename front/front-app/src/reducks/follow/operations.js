@@ -1,5 +1,4 @@
 import axios from "axios";
-import { nowLoadingAction } from "../loading/actions";
 import {
   confirmFollowingAction,
   createFollowingAction,
@@ -8,7 +7,6 @@ import {
 
 export const confirmFollowing = (userId) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .post(
         "http://localhost:3001/api/v1/user/accounts/relationships/following_by",
@@ -27,16 +25,12 @@ export const confirmFollowing = (userId) => {
       })
       .catch((error) => {
         console.log("error res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };
 
 export const createFollowing = (userId) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .post(
         "http://localhost:3001/api/v1/user/accounts/relationships",
@@ -55,16 +49,12 @@ export const createFollowing = (userId) => {
       })
       .catch((error) => {
         console.log("error res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };
 
 export const destroyFollowing = (userId) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .patch(
         "http://localhost:3001/api/v1/user/accounts/relationships",
@@ -83,9 +73,6 @@ export const destroyFollowing = (userId) => {
       })
       .catch((error) => {
         console.log("error res:", error);
-      })
-      .finally(() => {
-        dispatch(nowLoadingAction(false));
       });
   };
 };

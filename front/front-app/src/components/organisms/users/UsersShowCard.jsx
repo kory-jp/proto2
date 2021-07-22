@@ -4,6 +4,7 @@ import { useParams } from 'react-router'
 import { Divider } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import CheckIcon from '@material-ui/icons/Check';
 
 import { showUsers } from '../../../reducks/users/operations'
 import { confirmFollowing, createFollowing, destroyFollowing } from '../../../reducks/follow/operations'
@@ -60,10 +61,11 @@ export const UsersShowCard = () => {
         w={{base: "full", xl: "75%"}}
         m={{base: "auto", md: "2"}}
         >
-          <Flex>
+          <Flex flexDirection={{base: "column", md: "unset"}}>
             <DefaultTitleText
               as="h2"
               mr="5"
+              mb={{base: "3", md: "0"}}
             >
               {nickname}
             </DefaultTitleText>
@@ -74,8 +76,19 @@ export const UsersShowCard = () => {
                 colorBoolean={follow}
                 loadingState={loadingState}
               >
-                Follow
-                <GroupAddIcon style={{fontSize: 14, marginLeft: 5}}/>
+                {
+                  follow ? (
+                    <>
+                      フォロー中
+                      <CheckIcon style={{fontSize: 14, marginLeft: 5}}/>
+                    </>
+                  ) : (
+                    <>
+                      フォローする
+                      <GroupAddIcon style={{fontSize: 14, marginLeft: 5}}/>
+                    </>
+                  )
+                }
               </BooleanButton>
               ) : null
             }
