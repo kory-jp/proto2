@@ -7,7 +7,7 @@ import {push} from 'connected-react-router';
 
 import useLoadingState from '../../../hooks/useLoadingState';
 import { getUsersFavoritePosts } from "../../../reducks/posts/operations";
-import MyPostCard from '../../organisms/post/MyPostCard';
+import PostCard from '../../organisms/post/PostCard';
 import usePagination from '../../../hooks/usePagination';
 import DefaultPagination from '../../molecules/DefaultPagination';
 import useReturnTop from '../../../hooks/useReturnTop';
@@ -41,7 +41,7 @@ export const UsersFavoritePosts = (props) => {
           <Box mr="2" ml="2" mb="2">
             {
               posts.map(post =>(
-                <MyPostCard key={post.id} post={post}/>
+                <PostCard key={post.id} post={post}/>
                 ))
               }
           </Box>

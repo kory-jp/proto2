@@ -46,6 +46,9 @@ class Api::V1::User::UsersController < Api::V1::User::Base
       postObj = {}
       postObj["id"] = post.id
       postObj["user_id"] = post.user_id
+      user = User.find_by(id: post.user_id)
+      user_nickname = user.nickname
+      postObj["nickname"] = user_nickname
       postObj["title"] = post.title
       postObj["content"] = post.content
       postObj["image"] = post.image

@@ -40,6 +40,9 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
       postObj = {}
       postObj["id"] = post.id
       postObj["user_id"] = post.user_id
+      user = User.find_by(id: post.user_id)
+      user_nickname = user.nickname
+      postObj["nickname"] = user_nickname
       postObj["title"] = post.title
       postObj["content"] = post.content
       postObj["image"] = post.image
@@ -67,13 +70,13 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
     user = User.find(params[:id])
     if user === current_user
       render json: user
+      @@current_user = current_user
     end
   end
   
   def update
-    user = User.find(params[:user][:id])
-    if user.update(user_params)
-      render json: user
+    if @@current_user.update(user_params)
+      render json: @@current_user
     end
   end
 

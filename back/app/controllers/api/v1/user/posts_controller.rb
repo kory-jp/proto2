@@ -24,7 +24,6 @@ class Api::V1::User::PostsController < Api::V1::User::Base
       postObj["tags"] = tagArray
       user = User.find_by(id: post.user_id)
       user_id = user.id
-      postObj["userId"] = user_id
       user_name = user.name
       postObj["name"] = user_name
       user_nickname = user.nickname
@@ -71,13 +70,13 @@ class Api::V1::User::PostsController < Api::V1::User::Base
   def create
     post = Post.new(post_params)
     if post.save!
-      render json: {status: 200, post: post}
+      render json: post
     end
   end
 
   def auth
     post = Post.find(params[:id])
-    if post.user_id == @current_user.id
+    if post.user_id == current_user.id
       render json: true
     else
       render json: false
@@ -91,15 +90,21 @@ class Api::V1::User::PostsController < Api::V1::User::Base
     end
     post.update!(post_params)
     if post.save
-      render json: {status: 200, post: post}
+      render json: post
     else
-      render json: {status: 500}
+      render status: 400
     end
   end
 
   def destroy
-    post = Post.find(params[:id])  
-    post.destroy
+    post = Post.find(params[:id]) 
+    if current_user.id === post.user_id
+      if post.destroy
+        render status: 200
+      end
+    else
+      render status: 400
+    end
   end
 
   private

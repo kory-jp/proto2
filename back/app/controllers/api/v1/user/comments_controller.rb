@@ -37,7 +37,6 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
   end
 
   def update
-    p session.to_hash
     comment = Comment.find(params[:id])
     if comment.user_id == current_user.id
       comment.update(comment_params)
@@ -49,7 +48,12 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
 
   def destroy
     comment = Comment.find(params[:id])
-    comment.destroy
+    if current_user.id == comment.user_id
+      comment.destroy
+      render status: 200
+    else
+      render status: 400
+    end
   end
 
   private
