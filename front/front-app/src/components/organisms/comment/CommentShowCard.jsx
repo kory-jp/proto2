@@ -12,7 +12,7 @@ import useReturnTop from "../../../hooks/useReturnTop";
 
 export const CommentShowCard = ( props ) => {
   const commentData = props.commentData;
-  const { user_id, nickname, icon, comment} = commentData;
+  const { user_id, nickname, icon, comment, created_at} = commentData;
   const currentUserId = useGetCurrentUserId()
   const { isOpen, onOpen, onClose} = useDisclosure()
   const dispatch = useDispatch()
@@ -62,9 +62,13 @@ export const CommentShowCard = ( props ) => {
             </Flex>
           </Flex>
           <Divider/>
-          <Flex mt="4">
+          <Flex mt="4" flexDirection="column">
             <DefaultText>
               {comment}
+            </DefaultText>
+            <Divider mt="6"/>
+            <DefaultText mt="2" textAlign="right" >
+              {created_at}
             </DefaultText>
           </Flex>
         </Stack>

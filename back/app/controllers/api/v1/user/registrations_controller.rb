@@ -2,10 +2,11 @@ class Api::V1::User::RegistrationsController < Api::V1::User::Base
 
   def signup
     @user = User.new(registrations_params)
-
     if @user.save
       login!
       render json: @user
+    else
+      render status: 400
     end
   end
 

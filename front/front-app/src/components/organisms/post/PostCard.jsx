@@ -12,7 +12,7 @@ import { nowLoadingAction } from '../../../reducks/loading/actions';
 export const PostCard = (props)=> {
   const dispatch = useDispatch()
   const returnTop = useReturnTop()
-  const {id, userId, title, tags, nickname, image, created_at} = props.post;
+  const {id, user_id, title, tags, nickname, image, created_at} = props.post;
 
   const toPostShow = useCallback(()=> {
     dispatch(push('/posts/show/' + id))
@@ -21,10 +21,10 @@ export const PostCard = (props)=> {
   },[dispatch, returnTop, id])
 
   const toUserInfoPage = useCallback(() => {
-    dispatch(push(`users/${userId}`))
+    dispatch(push(`/users/${user_id}`))
     dispatch(nowLoadingAction(true));
     returnTop()
-  },[dispatch, returnTop, userId])
+  },[dispatch, returnTop, user_id])
 
   const toTagIndex = useCallback((tag)=> {
     dispatch(push(`/posts/tag?label=${tag.label}`))
