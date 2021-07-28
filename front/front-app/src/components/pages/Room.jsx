@@ -1,5 +1,5 @@
 import { Center, Spinner } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router"
 import useGetCurrentUserId from "../../hooks/useGetCurrentUserId"
@@ -15,7 +15,6 @@ export const Room = () => {
   const dispatch = useDispatch()
   const loadingState = useLoadingState()
   const currentUserId = useGetCurrentUserId()
-  const [addMessageFlag, setAddMessageFlag] = useState(false)
 
   useEffect(()=> {
     dispatch(getRoom(roomId))
@@ -35,7 +34,7 @@ export const Room = () => {
           </>
         )
       }
-      <DMInputForm roomId={room.id} currentUserId={currentUserId} addMessageFlag={addMessageFlag} setAddMessageFlag={setAddMessageFlag}/>
+      <DMInputForm roomId={room.id} currentUserId={currentUserId}/>
     </>
   )
 }

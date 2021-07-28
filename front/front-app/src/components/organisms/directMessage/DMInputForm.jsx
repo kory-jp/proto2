@@ -17,7 +17,7 @@ import { updateRoom } from "../../../reducks/rooms/operations";
 
 
 export const DMInputForm = (props) => {
-  const {roomId, currentUserId, addMessageFlag, setAddMessageFlag} = props
+  const {roomId, currentUserId} = props
   const [content, setContent] =  useState('');
   const [image, setImage] =  useState();
   const loadingState = useLoadingState(false)
@@ -53,15 +53,10 @@ export const DMInputForm = (props) => {
 
   const onClickUpdateRoom = useCallback(()=> {
     dispatch(updateRoom(formData))
-    if(addMessageFlag){
-      setAddMessageFlag(false)
-    } else {
-      setAddMessageFlag(false)
-    }
     setContent('')
     setImage()
     setPreview('')
-  },[dispatch, formData, addMessageFlag, setAddMessageFlag])
+  },[dispatch, formData])
 
   return(
     <>
