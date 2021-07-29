@@ -4,7 +4,9 @@ class Api::V1::User::MessagesController < Api::V1::User::Base
       @message = Message.create(params.require(:message).permit(:user_id, :room_id, :content, :image))
       if @message.save
         @room = Room.find(params[:message][:room_id])
-        messages = @room.messages.limit(15).order("created_at DESC").reverse
+        messages = @room.messages.page(params[:page] ||=1).per(10).order("created_at DESC").reverse
+        messagePage = Message.where(room_id: params[:message][:room_id])
+        page_length = messagePage.page(1).per(10).total_pages
         messageArray = []
         messages.each do |message|
           messageObj = {}
@@ -38,7 +40,8 @@ class Api::V1::User::MessagesController < Api::V1::User::Base
             id: @room.id,
             messages: messageArray,
             users: userArray
-          }
+          },
+          page_length: page_length
         }
       end
     end

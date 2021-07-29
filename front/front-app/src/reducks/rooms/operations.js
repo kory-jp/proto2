@@ -3,7 +3,7 @@ import { push } from "connected-react-router";
 import { nowLoadingAction } from "../loading/actions";
 import { createRoomAction, getRoomAction, updateRoomAction } from "./actions";
 
-export const createRoom = (userId) => {
+export const createRoom = (userId, setSumPage) => {
   return async (dispatch) => {
     axios
       .post(
@@ -19,6 +19,7 @@ export const createRoom = (userId) => {
       )
       .then((response) => {
         dispatch(createRoomAction(response.data.room));
+        setSumPage(response.data.page_length);
         const roomId = response.data.room.id;
         dispatch(push(`/room/${roomId}`));
       })
@@ -28,16 +29,20 @@ export const createRoom = (userId) => {
   };
 };
 
-export const getRoom = (roomId) => {
+export const getRoom = (roomId, setSumPage, queryPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
     axios
-      .get(`http://localhost:3001/api/v1/user/rooms/${roomId.id}`, {
-        withCredentials: true,
-      })
+      .get(
+        `http://localhost:3001/api/v1/user/rooms/${roomId.id}/?page=${queryPage}`,
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         if (response.data) {
           dispatch(getRoomAction(response.data.room));
+          setSumPage(response.data.page_length);
         } else {
           dispatch(push("/posts"));
         }
@@ -53,7 +58,7 @@ export const getRoom = (roomId) => {
   };
 };
 
-export const updateRoom = (formData) => {
+export const updateRoom = (formData, setSumPage) => {
   return async (dispatch) => {
     axios
       .post(
@@ -70,6 +75,7 @@ export const updateRoom = (formData) => {
       )
       .then((response) => {
         dispatch(updateRoomAction(response.data.room));
+        setSumPage(response.data.page_length);
       })
       .catch((error) => {
         console.log("error:", error);

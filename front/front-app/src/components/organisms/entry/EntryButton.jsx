@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import useGetCurrentUserId from "../../../hooks/useGetCurrentUserId";
+import usePagination from "../../../hooks/usePagination";
 import { createRoom } from "../../../reducks/rooms/operations";
 import BooleanButton from "../../atoms/button/BooleanButton";
 
@@ -12,6 +13,7 @@ export const EntryButton = () => {
   const currentUserId = useGetCurrentUserId()
   const [isRoom, setIsRoom] = useState(false)
   const [roomId, setRoomId] = useState('')
+  const {setSumPage} = usePagination()
   const dispatch = useDispatch()
   
   // 既存のルームがあるか確認
@@ -46,9 +48,9 @@ export const EntryButton = () => {
     if(isRoom) {
       dispatch(push(`/room/${roomId}`))
     } else {
-      dispatch(createRoom(userId))
+      dispatch(createRoom(userId, setSumPage))
     }
-  },[isRoom, roomId, userId, dispatch])
+  },[isRoom, roomId, userId, dispatch, setSumPage])
 
   return(
     <>

@@ -7,7 +7,6 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
       if current_user_entry.save
         if users_entry.save
           messageArray = []
-
           entries = @room.entries
           userArray = []
           entries.each do |entry|
@@ -24,7 +23,8 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
               id: @room.id,
               messages: messageArray,
               users: userArray
-            }
+            },
+            page_length: 1
           }
         end
       end
@@ -34,8 +34,9 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
   def show
     @room = Room.find(params[:id])
     if Entry.where(user_id: current_user.id, room_id: @room.id).present?
-
-      messages = @room.messages.limit(15).order("created_at DESC").reverse
+      messages = @room.messages.page(params[:page] ||=1).per(10).order("created_at DESC").reverse
+      messagePage = Message.where(room_id: params[:id])
+      page_length = messagePage.page(1).per(10).total_pages
       messageArray = []
       messages.each do |message|
         messageObj = {}
@@ -69,7 +70,8 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
           id: @room.id,
           messages: messageArray,
           users: userArray
-        }
+        },
+        page_length: page_length
       }
     end
   end
