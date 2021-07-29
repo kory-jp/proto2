@@ -16,6 +16,7 @@ import FavoritePosts from '../components/pages/mypage/FavoritePosts'
 import Follows from '../components/pages/mypage/Follows'
 import Followers from '../components/pages/mypage/Followers'
 import SearchResult from '../components/pages/SearchResult'
+import Room from '../components/pages/Room'
 
 export const Router = () => {
   return(
@@ -33,8 +34,9 @@ export const Router = () => {
           <Route path={"/mypage/:id/posts"} component={MyPosts} />
           <Route path={"/mypage/:id/follows"} component={Follows} />
           <Route path={"/mypage/:id/followers"} component={Followers} />
-          <Route path={"/searchResult"} component={SearchResult} />
           <Route path={"/mypage/:id/favoritePosts"} component={FavoritePosts} />
+          <Route path={"/searchResult"} component={SearchResult} />
+          <Route path={"/room/:id"} component={Room} />
           <Route path={"/users/:id"} component={UsersInfo} />
         </DefaultLayout>
       </Auth>

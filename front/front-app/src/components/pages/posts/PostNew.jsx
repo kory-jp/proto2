@@ -48,7 +48,7 @@ export const PostNew = ()=> {
     setContent(event.target.value)
   }, [setContent])
 
-  const PreviewImage = useCallback((event) => {
+  const previewImage = useCallback((event) => {
     const imageFile = event.target.files[0]
     setPreview(window.URL.createObjectURL(imageFile))
   },[])
@@ -56,8 +56,8 @@ export const PostNew = ()=> {
   const inputImage = useCallback((event)=> {
     const file = event.target.files[0]
     setImage(file)
-    PreviewImage(event)
-  }, [setImage, PreviewImage])
+    previewImage(event)
+  }, [setImage, previewImage])
   
   const createFormData = useCallback(()=> {
     const formData = new FormData();
@@ -74,6 +74,11 @@ export const PostNew = ()=> {
     return formData
   },[currentUserId, title, tags, content, image])
   const formData = createFormData();
+
+  const onClickCancelImage = useCallback(()=> {
+    setImage(undefined)
+    setPreview('')
+  },[])
 
 
   return(
@@ -128,7 +133,7 @@ export const PostNew = ()=> {
           preview ?
           <Box>
             <Button
-              onClick={()=> setPreview('')}
+              onClick={onClickCancelImage}
             >
               <CancelIcon />
             </Button>

@@ -36,6 +36,16 @@ const initialState = {
   follow: {
     status: false,
   },
+
+  room: {
+    id: "",
+    users: {
+      list: [],
+    },
+    messages: {
+      list: [],
+    },
+  },
 };
 
 export default initialState;

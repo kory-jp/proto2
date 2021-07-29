@@ -26,7 +26,13 @@ export const DefaultFlex = (props) => {
 };
 
 export const DefaultText = (props) => {
-  return <Text fontSize={{ base: "xs", md: "lg" }} {...props} />;
+  return (
+    <Text
+      fontSize={{ base: "xs", md: "lg" }}
+      wordBreak="break-word"
+      {...props}
+    />
+  );
 };
 
 export const DefaultTitleText = (props) => {

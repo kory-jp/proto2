@@ -51,6 +51,9 @@ Rails.application.routes.draw do
             post :search
           end
         end
+        post 'entries/check', to: 'entries#check'
+        resources :rooms
+        resources :messages
       end
 
       namespace :admin do

@@ -51,7 +51,7 @@ export const PostEdit = ()=> {
     setContent(event.target.value)
   }, [setContent])
 
-  const PreviewImage = useCallback((e) => {
+  const previewImage = useCallback((e) => {
     const imageFile = e.target.files[0]
     setPreview(window.URL.createObjectURL(imageFile))
   },[setPreview])
@@ -59,8 +59,8 @@ export const PostEdit = ()=> {
   const inputImage = useCallback((event)=> {
     const file = event.target.files[0]
     setImage(file)
-    PreviewImage(event)
-  }, [setImage, PreviewImage])
+    previewImage(event)
+  }, [setImage, previewImage])
 
 
   // 編集権限者か確認、権限者でない場合はTOPページへリダレクト
@@ -119,6 +119,11 @@ export const PostEdit = ()=> {
   },[currentUserId, title, tags, content, image])
   const formData = createFormData();
   const showMessage = useMessage()
+
+  const onClickCancelImage = useCallback(()=> {
+    setImage(undefined)
+    setPreview('')
+  },[])
 
   return(
     <>
@@ -180,7 +185,7 @@ export const PostEdit = ()=> {
                 preview ?
                 <Box>
                   <Button
-                    onClick={()=> setPreview('')}
+                    onClick={onClickCancelImage}
                   >
                     <CancelIcon />
                   </Button>

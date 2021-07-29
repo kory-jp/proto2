@@ -13,6 +13,7 @@ import { DefaultFlex, DefaultText, DefaultTitleText, DefaultUserIconImage } from
 import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
 import useLoadingState from '../../../hooks/useLoadingState'
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId'
+import EntryButton from '../entry/EntryButton'
 
 export const UsersShowCard = () => {
 
@@ -92,6 +93,7 @@ export const UsersShowCard = () => {
               </BooleanButton>
               ) : null
             }
+            <EntryButton />
           </Flex>
           <Divider 
             mb="2"
