@@ -28,7 +28,7 @@ export const DMInputForm = (props) => {
     setContent(event.target.value)
   }, [setContent])
 
-  const PreviewImage = useCallback((event) => {
+  const previewImage = useCallback((event) => {
     const imageFile = event.target.files[0]
     setPreview(window.URL.createObjectURL(imageFile))
   },[])
@@ -36,8 +36,8 @@ export const DMInputForm = (props) => {
   const inputImage = useCallback((event)=> {
     const file = event.target.files[0]
     setImage(file)
-    PreviewImage(event)
-  }, [setImage, PreviewImage])
+    previewImage(event)
+  }, [setImage, previewImage])
 
   const createFormData = useCallback(()=> {
     const formData = new FormData();
@@ -50,6 +50,11 @@ export const DMInputForm = (props) => {
     return formData
   },[currentUserId, roomId, content, image])
   const formData = createFormData();
+
+  const onClickCancelImage = useCallback(()=> {
+    setImage(undefined)
+    setPreview('')
+  },[])
 
   const onClickUpdateRoom = useCallback(()=> {
     dispatch(updateRoom(formData))
@@ -90,7 +95,7 @@ export const DMInputForm = (props) => {
           preview ?
           <Box>
             <Button
-              onClick={()=> setPreview('')}
+              onClick={onClickCancelImage}
             >
               <CancelIcon />
             </Button>

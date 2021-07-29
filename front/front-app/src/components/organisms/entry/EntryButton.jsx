@@ -62,7 +62,7 @@ export const EntryButton = () => {
               {
                 isRoom ? (
                   <>
-                    チェットを再開
+                    チャットを再開
                   </>
                 ) : (
                   <>
