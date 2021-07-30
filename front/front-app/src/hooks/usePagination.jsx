@@ -6,7 +6,7 @@ export const usePagination = () => {
 
   const {search} = useLocation()
   const query = new URLSearchParams(search);
-  const queryPageStr = query.get("page")
+  const queryPageStr = query.get("page") ? query.get("page") : "1"
   const queryPage = Number(queryPageStr)
   return { sumPage, setSumPage ,queryPage}
 }

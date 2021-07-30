@@ -45,7 +45,7 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
         messageObj["room_id"] = message.room_id
         messageObj["content"] = message.content
         messageObj["image"] = message.image
-        messageObj["created_at"] = message.created_at.strftime('%Y/%m/%d')
+        messageObj["created_at"] = message.created_at.strftime('%Y/%m/%d %H:%M')
         user = User.find_by(id: message.user_id)
         user_nickname = user.nickname
         messageObj["nickname"] = user_nickname
