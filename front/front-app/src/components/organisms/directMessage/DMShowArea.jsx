@@ -45,18 +45,20 @@ export const DMShowArea = (props) => {
         ) : null
       }
       <Divider mt="4" mb="4"/>
-      <DefaultFlex
-        bg="gray.100"
-        flexDirection='column'
-      >
-        {
-          messages.length > 0 ? (
-            messages.map(message => (
-              <MessageCard key={message.id} message={message}/>
-            ))
-          ) : null
-        }
-      </DefaultFlex>
+      {
+        messages.length > 0 ? (
+          <DefaultFlex
+            bg="gray.100"
+            flexDirection='column'
+          >
+            {
+              messages.map(message => (
+                <MessageCard key={message.id} message={message}/>
+              ))
+            }
+          </DefaultFlex>
+        ) : null
+      }
     </DefaultFlex>
   )
 }
