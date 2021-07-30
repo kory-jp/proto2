@@ -55,7 +55,6 @@ export const getRoom = (roomId) => {
 
 export const updateRoom = (formData) => {
   return async (dispatch) => {
-    dispatch(nowLoadingAction(true));
     axios
       .post(
         "http://localhost:3001/api/v1/user/messages",
@@ -74,11 +73,6 @@ export const updateRoom = (formData) => {
       })
       .catch((error) => {
         console.log("error:", error);
-      })
-      .finally(() => {
-        setTimeout(() => {
-          dispatch(nowLoadingAction(false));
-        }, 800);
       });
   };
 };
