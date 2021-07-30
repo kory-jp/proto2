@@ -28,7 +28,6 @@ export const Rooms = () => {
         }
       )
       .then((response) => {
-        console.log(response.data);
         setRooms(response.data.rooms);
         const page_length = response.data.page_length;
         setSumPage(page_length);
