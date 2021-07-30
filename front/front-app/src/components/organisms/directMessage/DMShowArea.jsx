@@ -1,20 +1,30 @@
-import { Divider, Flex } from "@chakra-ui/react";
+import { Center, Divider, Flex, Spinner } from "@chakra-ui/react";
 import { DefaultFlex, DefaultTitleText, DefaultUserIconImage } from "../../../assets/style/chakraStyles";
 import defaultUserIcon from "../../../assets/img/defaultUserIcon.jpeg"
 import MessageCard from "./MessageCard";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
+import useReturnTop from "../../../hooks/useReturnTop";
+import DefaultPagination from "../../molecules/DefaultPagination";
+import useLoadingState from "../../../hooks/useLoadingState";
 
 export const DMShowArea = (props) => {
-  const {room, currentUserId} = props;
+  const {room, currentUserId, sumPage, queryPage} = props;
+  const returnTop = useReturnTop()
   const dispatch = useDispatch()
+  const loadingState = useLoadingState()
   const messages = room.messages
   const users = room.users
 
   const toUserInfoPage = useCallback((user)=> {
     dispatch(push(`/users/${user.id}`))
   },[dispatch])
+
+  const changeCurrentPage = useCallback((e, page) =>{
+    dispatch(push(`/room/${room.id}/?page=${page}`))
+    returnTop()
+  },[dispatch, returnTop, room.id])
 
   return(
     <DefaultFlex mb="4" flexDirection='column'>
@@ -44,20 +54,40 @@ export const DMShowArea = (props) => {
           ))
         ) : null
       }
-      <Divider mt="4" mb="4"/>
+      <Divider mt="4" mb="4" />
       {
-        messages.length > 0 ? (
-          <DefaultFlex
-            bg="gray.100"
-            flexDirection='column'
-          >
+        loadingState ? (
+          <Center  h="100vh" w={{base: "50vh", md: "100vh"}}>
+          <Spinner/>
+        </Center>
+        ) : (
+          <>
             {
-              messages.map(message => (
-                <MessageCard key={message.id} message={message}/>
-              ))
+              messages.length > 0 ? (
+                <DefaultFlex
+                  bg="gray.100"
+                  flexDirection='column'
+                >
+                  {
+                    messages.map(message => (
+                      <MessageCard key={message.id} message={message}/>
+                    ))
+                  }
+                  <Flex
+                    ml="auto"
+                    mr="auto"
+                  >
+                    <DefaultPagination 
+                      count={sumPage}
+                      onChange={changeCurrentPage}
+                      page={queryPage}
+                      />
+                  </Flex>
+                </DefaultFlex>
+              ) : null
             }
-          </DefaultFlex>
-        ) : null
+          </>
+        )
       }
     </DefaultFlex>
   )
