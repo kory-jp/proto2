@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       namespace :user do
-        root "top#index"
         post '/signup', to: "registrations#signup"
         post '/login', to: 'sessions#login'
         delete '/logout', to: 'sessions#logout'
@@ -52,7 +51,8 @@ Rails.application.routes.draw do
           end
         end
         post 'entries/check', to: 'entries#check'
-        resources :rooms
+        resources :rooms, only: [:index, :create, :show] do
+        end
         resources :messages
       end
 

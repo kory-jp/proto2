@@ -59,6 +59,12 @@ export const MenuDrawer = (props) => {
     onClose()
   },[dispatch, returnTop, onClose, currentUserId])
 
+  const toRooms = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/rooms`))
+    returnTop()
+    onClose()
+  },[dispatch, returnTop, onClose, currentUserId])
+
   const toEditProfile = useCallback(() => {
     dispatch(push(`/mypage/${currentUserId}/edit`))
     dispatch(nowLoadingAction(true));
@@ -135,9 +141,16 @@ export const MenuDrawer = (props) => {
                 フォロワー
             </Button>
           </Stack>
-          <Divider
-          mb="7"
-          />
+          <Divider mb="7"/>
+          <Button
+            bg="white"
+            onClick={toRooms}
+            fontSize="sm"
+            w="100%"
+          >
+            チャットルーム
+          </Button>
+          <Divider mb="7"/>
           <Stack spacing="4">            
             <Button
               bg="white"
