@@ -1,7 +1,7 @@
-import { Flex, Image } from "@chakra-ui/react";
+import { Box, Flex, Image } from "@chakra-ui/react";
 import { DefaultFlex, DefaultText, DefaultTitleText } from "../../../assets/style/chakraStyles";
 import defaultUserIcon from "../../../assets/img/defaultUserIcon.jpeg"
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 import useReturnTop from "../../../hooks/useReturnTop";
@@ -21,7 +21,7 @@ export const RoomCard = (props) => {
     return string
   },[])
 
-  const editMessage = editStringLength(message[0])
+  const editMessage = useMemo(()=> editStringLength(message[0]),[editStringLength, message])
 
   const toRoom = useCallback(()=> {
     dispatch(push(`/room/${id}`))
@@ -30,7 +30,7 @@ export const RoomCard = (props) => {
 
   return(
     <DefaultFlex w="100%" mb="2">
-      <Flex>
+      <Flex> 
         <Image 
           src={icon.url? icon.url : defaultUserIcon}
           alt="投稿画像"
@@ -51,9 +51,11 @@ export const RoomCard = (props) => {
         >
           {nickname}
         </DefaultTitleText>
-        <DefaultText>
-          {editMessage}
-        </DefaultText>
+        <Box>
+          <DefaultText>
+            {editMessage}
+          </DefaultText>
+        </Box>
       </Flex>
     </ DefaultFlex>
   )
