@@ -13,9 +13,13 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
       roomObj["nickname"] = user.nickname
       roomObj["icon"] = user.image
       message = room.messages.order(created_at: :desc).limit(1)
-      roomObj["message"] = *message.pluck(:content)
+      message_arr = *message.pluck(:content)
+      roomObj["message"] = message_arr[0]
+      created_at_arr = *message.pluck(:created_at)
+      roomObj["created_at"] = created_at_arr[0].strftime('%Y/%m/%d %H:%M')
       rooms.push(roomObj)
     end
+
     data = {
       'rooms': rooms,
       'page_length': page_length

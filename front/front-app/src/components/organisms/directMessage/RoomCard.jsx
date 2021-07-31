@@ -1,4 +1,4 @@
-import { Box, Flex, Image } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { DefaultFlex, DefaultText, DefaultTitleText } from "../../../assets/style/chakraStyles";
 import defaultUserIcon from "../../../assets/img/defaultUserIcon.jpeg"
 import { useCallback, useMemo } from "react";
@@ -7,7 +7,7 @@ import { push } from "connected-react-router";
 import useReturnTop from "../../../hooks/useReturnTop";
 
 export const RoomCard = (props) => {
-  const {id, nickname, icon, message} = props.room;
+  const {id, nickname, icon, message, created_at} = props.room;
   const dispatch = useDispatch()
   const returnTop = useReturnTop()
 
@@ -21,7 +21,7 @@ export const RoomCard = (props) => {
     return string
   },[])
 
-  const editMessage = useMemo(()=> editStringLength(message[0]),[editStringLength, message])
+  const editMessage = useMemo(()=> editStringLength(message),[editStringLength, message])
 
   const toRoom = useCallback(()=> {
     dispatch(push(`/room/${id}`))
@@ -51,11 +51,14 @@ export const RoomCard = (props) => {
         >
           {nickname}
         </DefaultTitleText>
-        <Box>
-          <DefaultText>
-            {editMessage}
-          </DefaultText>
-        </Box>
+        <DefaultText>
+          {editMessage}
+        </DefaultText>
+        <DefaultText
+        fontSize={{base: "3", md: "14"}}
+        >
+          {created_at}
+        </DefaultText>
       </Flex>
     </ DefaultFlex>
   )
