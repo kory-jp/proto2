@@ -10,6 +10,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import GroupIcon from '@material-ui/icons/Group';
+import ForumIcon from '@material-ui/icons/Forum';
 
 import useMessage from '../../../hooks/useMessage';
 import SideBarButton from '../../atoms/button/SIdeBarButton';
@@ -23,16 +24,6 @@ export const SideBar = ()=> {
   const showMessage = useMessage();
   const returnTop = useReturnTop()
   const currentUserId = useGetCurrentUserId()
-
-  const toMyFollows = useCallback(()=> {
-    dispatch(push(`/mypage/${currentUserId}/follows`))
-    returnTop()
-  },[dispatch, returnTop, currentUserId])
-
-  const toMyFollowers = useCallback(()=> {
-    dispatch(push(`/mypage/${currentUserId}/followers`))
-    returnTop()
-  },[dispatch, returnTop, currentUserId])
 
   const toNewPost = useCallback(()=> {
     dispatch(push('/posts/new'))
@@ -48,6 +39,21 @@ export const SideBar = ()=> {
   const toMyFavoritePosts = useCallback(()=> {
     dispatch(push(`/mypage/${currentUserId}/favoritePosts`))
     dispatch(nowLoadingAction(true));
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
+  const toMyFollows = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/follows`))
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
+  const toMyFollowers = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/followers`))
+    returnTop()
+  },[dispatch, returnTop, currentUserId])
+
+  const toRooms = useCallback(()=> {
+    dispatch(push(`/mypage/${currentUserId}/rooms`))
     returnTop()
   },[dispatch, returnTop, currentUserId])
 
@@ -94,6 +100,13 @@ export const SideBar = ()=> {
           フォロワー
         </SideBarButton>
       </Stack>
+      <Divider color="gray.500" mt="3" mb="4" />
+      <SideBarButton
+        onClick={toRooms}
+        leftIcon={<ForumIcon />}
+      >
+        チャットルーム
+      </SideBarButton>
       <Divider color="gray.500" mt="3" mb="4" />
       <Stack mb="7" spacing="5">
         <SideBarButton

@@ -1,4 +1,28 @@
 class Api::V1::User::RoomsController < Api::V1::User::Base
+  def index
+    entries = current_user.entries.page(params[:page] ||=1).per(10).order(created_at: "DESC")
+    page_length = current_user.entries.page(1).per(10).total_pages
+    rooms = []
+    entries.each do |entry|
+      roomObj = {}
+      room = Room.find(entry.room_id)
+      roomObj["id"] = room.id
+      other_entry = room.entries.where.not(user_id: current_user.id)
+      user = User.find(other_entry[0].user_id)
+      roomObj["user_id"] = user.id
+      roomObj["nickname"] = user.nickname
+      roomObj["icon"] = user.image
+      message = room.messages.order(created_at: :desc).limit(1)
+      roomObj["message"] = *message.pluck(:content)
+      rooms.push(roomObj)
+    end
+    data = {
+      'rooms': rooms,
+      'page_length': page_length
+    }
+    render json: data
+  end
+
   def create
     @room = Room.create
     current_user_entry = Entry.create(:room_id => @room.id, :user_id => current_user.id)
