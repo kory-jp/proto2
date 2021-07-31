@@ -28,6 +28,11 @@ export const Rooms = () => {
         }
       )
       .then((response) => {
+        response.data.rooms.sort((a, b)=> {
+          if(b.created_at < a.created_at) return -1;
+          if(b.created_at > a.created_at) return 1;
+          return 0;
+        })
         setRooms(response.data.rooms);
         const page_length = response.data.page_length;
         setSumPage(page_length);
