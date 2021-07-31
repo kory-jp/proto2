@@ -31,29 +31,30 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
     @room = Room.create
     current_user_entry = Entry.create(:room_id => @room.id, :user_id => current_user.id)
     users_entry = Entry.create(params.require(:room).permit(:user_id, :room_id).merge(:room_id => @room.id))
-    if @room.save
-      if current_user_entry.save
-        if users_entry.save
-          messageArray = []
-          entries = @room.entries
-          userArray = []
-          entries.each do |entry|
-            user = User.find_by(id: entry.user_id)
-            userObj = {}
-            userObj["id"] = user.id
-            userObj["nickname"] = user.nickname
-            userObj["icon"] = user.image
-            userArray.push(userObj)
+    unless current_user_entry.user_id == users_entry.user_id
+      if @room.save
+        if current_user_entry.save
+          if users_entry.save
+            messageArray = []
+            entries = @room.entries
+            userArray = []
+            entries.each do |entry|
+              user = User.find_by(id: entry.user_id)
+              userObj = {}
+              userObj["id"] = user.id
+              userObj["nickname"] = user.nickname
+              userObj["icon"] = user.image
+              userArray.push(userObj)
+            end
+            render json: {
+              room: {
+                id: @room.id,
+                messages: messageArray,
+                users: userArray
+              },
+              page_length: 1
+            }
           end
-    
-          render json: {
-            room: {
-              id: @room.id,
-              messages: messageArray,
-              users: userArray
-            },
-            page_length: 1
-          }
         end
       end
     end
@@ -81,7 +82,6 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
         messageObj["icon"] = user_icon
         messageArray.push(messageObj)
       end
-
       entries = @room.entries
       userArray = []
       entries.each do |entry|
@@ -92,7 +92,6 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
         userObj["icon"] = user.image
         userArray.push(userObj)
       end
-
       render json: {
         room: {
           id: @room.id,

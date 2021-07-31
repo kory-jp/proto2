@@ -1,6 +1,5 @@
 import { Box, Center } from '@chakra-ui/layout';
 import { Spinner } from "@chakra-ui/spinner";
-import { Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
@@ -12,6 +11,7 @@ import MyPostCard from '../../organisms/post/MyPostCard';
 import usePagination from '../../../hooks/usePagination';
 import DefaultPagination from '../../molecules/DefaultPagination';
 import useReturnTop from '../../../hooks/useReturnTop';
+import { DefaultFlex, DefaultTitleText } from '../../../assets/style/chakraStyles';
 
 export const MyPosts = () => {
   const currentUserId = useParams()
@@ -38,27 +38,25 @@ export const MyPosts = () => {
     ): (
       <>
         <Box>
-        <Text
-          bg="white"
-          mr="2"
-          ml="2"
-          mb="2"
-          p="2"
-          shadow="md"
-          borderRadius="md"
-          fontSize={{base: "md", md: "2xl"}}
-        >
-          投稿一覧
-        </Text>
-        {posts.length > 0 && (
-          <Box mr="2" ml="2" mb="2">
-            {
-              posts.map(post =>(
-                <MyPostCard key={post.id} post={post}/>
+          <DefaultFlex
+            mb="4"
+          >
+            <DefaultTitleText
+            ml="auto"
+            mr="auto"
+            >
+              投稿一覧
+            </DefaultTitleText>
+          </DefaultFlex>
+          {posts.length > 0 && (
+            <Box mr="2" ml="2" mb="2">
+              {
+                posts.map(post =>(
+                  <MyPostCard key={post.id} post={post}/>
                 ))
               }
-          </Box>
-        )}
+            </Box>
+          )}
           <DefaultPagination 
             count={sumPage}
             onChange={changeCurrentPage}

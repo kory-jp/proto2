@@ -14,7 +14,7 @@ import UsersCard from "../organisms/users/UsersCard";
 import DefaultPagination from "../molecules/DefaultPagination";
 import { push } from "connected-react-router";
 import useReturnTop from "../../hooks/useReturnTop";
-import { DefaultBox, DefaultTitleText, DefaultText } from "../../assets/style/chakraStyles";
+import { DefaultTitleText, DefaultFlex } from "../../assets/style/chakraStyles";
 
 export const SearchResult = () => {
   const {search} = useLocation();
@@ -85,11 +85,11 @@ export const SearchResult = () => {
             </Center>
           ):(
             <>
-              <DefaultBox mb="5">
-                <DefaultText>
+              <DefaultFlex mb="5">
+                <DefaultTitleText mr="auto" ml="auto">
                   「{keyword}」の検索結果
-                </DefaultText>
-              </DefaultBox>
+                </DefaultTitleText>
+              </DefaultFlex>
               {posts.length > 0 && (
                 <Box mr="2" ml="2" mb="2">
                   {
@@ -119,11 +119,11 @@ export const SearchResult = () => {
             </Center>
           ):(
             <>
-              <DefaultBox mb="5">
-                <DefaultTitleText>
+              <DefaultFlex mb="5">
+                <DefaultTitleText ml="auto" mr="auto">
                   「{keyword}」の検索結果
                 </DefaultTitleText>
-              </DefaultBox>
+              </DefaultFlex>
               {users.length > 0 && (
                 <Box mr="2" ml="2" mb="2">
                   {

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import usePagination from "../../../hooks/usePagination";
-import { DefaultBox, DefaultTitleText } from "../../../assets/style/chakraStyles";
+import { DefaultFlex, DefaultTitleText } from "../../../assets/style/chakraStyles";
 import { getMyFollowers } from "../../../reducks/users/operations";
 import FollowLayout from "../../organisms/follow/FollowLayout";
 
@@ -17,11 +17,14 @@ export const Followers = () => {
 
   return(
     <>
-      <DefaultBox mb="5">
-        <DefaultTitleText>
+      <DefaultFlex mb="5">
+        <DefaultTitleText
+          ml="auto"
+          mr="auto"
+        >
           フォロワー一覧
         </DefaultTitleText>
-      </DefaultBox>
+      </DefaultFlex>
     <FollowLayout users={followers}/>
   </>
   )
