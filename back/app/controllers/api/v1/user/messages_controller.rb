@@ -24,7 +24,7 @@ class Api::V1::User::MessagesController < Api::V1::User::Base
             messageObj["icon"] = user_icon
             messageArray.push(messageObj)
           end
-    
+          
           entries = @room.entries
           userArray = []
           entries.each do |entry|
@@ -44,6 +44,11 @@ class Api::V1::User::MessagesController < Api::V1::User::Base
             },
             page_length: page_length
           }
+
+          current_user = User.find(params[:message][:user_id])
+          entry = Entry.where(room_id: @room.id).where.not(user_id: current_user.id)
+          user = User.find(*entry.pluck(:user_id))
+          @message.create_notification_message!(current_user, user)
         end
       end
     end

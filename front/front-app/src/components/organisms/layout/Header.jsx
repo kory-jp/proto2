@@ -5,13 +5,14 @@ import {push} from 'connected-react-router';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useDisclosure, Select } from "@chakra-ui/react"
 import { Link } from '@chakra-ui/react';
+import { useLocation } from 'react-router';
 
 import {MenuDrawer} from '../../molecules/MenuDrawer';
 import { getTags } from '../../../reducks/tags/operations';
 import SearchInputForm from '../../molecules/SearchInputForm';
 import useReturnTop from '../../../hooks/useReturnTop';
 import { nowLoadingAction } from '../../../reducks/loading/actions';
-import { useLocation } from 'react-router';
+import NotificationLink from '../notification/NotificationLink';
 
 export const Header = ()=> {
   const dispatch =  useDispatch();
@@ -102,20 +103,33 @@ export const Header = ()=> {
               toSearchResult={toSearchResult}
             />
           </Flex>
-          <Flex display={{base: "none", md: "flex"}} >
-            <Select placeholder="Tag Search" mr="2" bg="white" onChange={onChangeTagSearch}>
-            {
-             tagOptions.map(tagOption => (
-               <option key={tagOption.id} value={tagOption.value} >{tagOption.label}</option>
-             ))
-           }
-            </Select>
-          </ Flex >  
-          <Flex display={{base: "flex", md: "none"}}>
+          <Flex>
+            <Flex display={{base: "none", md: "flex"}}>
+              <Select placeholder="Tag Search" mr="2" bg="white" onChange={onChangeTagSearch}>
+              {
+                tagOptions.map(tagOption => (
+                  <option key={tagOption.id} value={tagOption.value} >{tagOption.label}</option>
+                  ))
+                }
+              </Select>
+            </Flex>
+            <Flex
+              mt="auto"
+              mb="auto"
+              ml="2"
+              mr="2"
+            >
+              {/* <Link onClick={onOpen}>
+                <NotificationsIcon  style={{color: 'white'}}/>
+              </Link> */}
+              <NotificationLink />
+            </Flex>
+            <Flex display={{base: "flex", md: "none"}}>
             <Link onClick={onOpen}>
-              <MenuIcon />
+              <MenuIcon style={{color: 'white'}}/>
             </Link>
           </Flex>
+          </ Flex >
         </Flex>
       </Flex>
       <MenuDrawer 

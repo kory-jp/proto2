@@ -54,6 +54,12 @@ Rails.application.routes.draw do
         resources :rooms, only: [:index, :create, :show] do
         end
         resources :messages
+        resources :notifications, only: [:index, :destroy] do
+          collection do
+            get :unchecked_notifications
+            delete :destroy_all
+          end
+        end
       end
 
       namespace :admin do

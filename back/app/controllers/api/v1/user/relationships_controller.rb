@@ -15,6 +15,8 @@ class Api::V1::User::RelationshipsController < Api::V1::User::Base
       follow = current_user.active_relationships.build(follower_id: params[:user_id])
       if follow.save
         render json: true
+        user = User.find(params[:user_id])
+        user.create_notification_follow!(current_user)
       end
     end
   end
