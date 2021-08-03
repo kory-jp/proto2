@@ -45,7 +45,12 @@ export const NotificationModal = (props)=> {
                 <Box>
                   {
                     notifications.map(notification => (
-                      <NotificationCard key={notification.id} notification={notification} onClose={onClose} modal={modal}/>
+                      <NotificationCard 
+                        key={notification.id} 
+                        notification={notification} 
+                        onClose={onClose} 
+                        modal={modal}
+                      />
                     ))
                   }
                 </Box>

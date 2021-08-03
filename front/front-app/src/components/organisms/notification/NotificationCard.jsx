@@ -14,6 +14,7 @@ export const NotificationCard = (props) => {
   const dispatach = useDispatch()
   const { id, action, icon, nickname, post_id, room_id, visitor_id, created_at} = notification
 
+  // 通知一覧画面とモーダル画面のうち、モーダル画面上のNotificationCardのみonCloseを実行
   const toUser = useCallback(()=> {
     dispatach(push(`/users/${visitor_id}`))
     returnTop()
@@ -38,6 +39,7 @@ export const NotificationCard = (props) => {
     }
   },[dispatach, onClose, room_id, returnTop, modal])
 
+  // ページネーションの関係上、モーダル画面と通知一覧画面では取得するデータを切り替える
   const onClickDeleteNotification = useCallback(()=> {
     if(modal) {
       dispatach(deleteModalNotification(id))

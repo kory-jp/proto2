@@ -119,9 +119,6 @@ export const Header = ()=> {
               ml="2"
               mr="2"
             >
-              {/* <Link onClick={onOpen}>
-                <NotificationsIcon  style={{color: 'white'}}/>
-              </Link> */}
               <NotificationLink />
             </Flex>
             <Flex display={{base: "flex", md: "none"}}>

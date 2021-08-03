@@ -13,6 +13,7 @@ export const NotificationLink = () => {
   const dispatch = useDispatch()
   const [alert, setAlert] = useState(false)
 
+  // 未確認の通知があるか確認
   const uncheckedNotifications = useCallback((queryPage, setSumPage)=> {
     axios
       .get(
@@ -34,6 +35,7 @@ export const NotificationLink = () => {
     uncheckedNotifications()
   },[uncheckedNotifications])
 
+  // モーダルを閉じつつ、再度、未確認の通知が無いか確認
   const onClickNotifications = useCallback(()=> {
     onOpen()
     dispatch(getModalNotifications())
