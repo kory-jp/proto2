@@ -8,22 +8,7 @@ export const CommentsReducer = (state = initialState.comments, action) => {
         ...state,
         list: [...action.payload],
       };
-    case Actions.NEW_COMMENT:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case Actions.EDIT_COMMENT:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case Actions.UPDATE_COMMENT:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case Actions.DELETE_COMMENT:
+    case Actions.SET_COMMENT:
       return {
         ...state,
         ...action.payload,

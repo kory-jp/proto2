@@ -1,23 +1,7 @@
-export const GET_NOTIFICATIONS = "GET_NOTIFICATIONS";
-export const getNotificationsAction = (notifications) => {
+export const SET_NOTIFICATIONS = "SET_NOTIFICATIONS";
+export const setNotificationsAction = (notifications) => {
   return {
-    type: GET_NOTIFICATIONS,
-    payload: notifications,
-  };
-};
-
-export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
-export const deleteNotificationAction = (notifications) => {
-  return {
-    type: DELETE_NOTIFICATION,
-    payload: notifications,
-  };
-};
-
-export const DELETE_ALL_NOTIFICATIONS = "DELETE_ALL_NOTIFICATIONS";
-export const deleteAllNotificationActions = (notifications) => {
-  return {
-    type: DELETE_ALL_NOTIFICATIONS,
+    type: SET_NOTIFICATIONS,
     payload: notifications,
   };
 };

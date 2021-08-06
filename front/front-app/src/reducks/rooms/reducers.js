@@ -3,17 +3,7 @@ import initialState from "../store/initialState";
 
 export const RoomReducer = (state = initialState.room, action) => {
   switch (action.type) {
-    case Actions.CREATE_ROOM:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case Actions.GET_ROOM:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case Actions.UPDATE_ROOM:
+    case Actions.SET_ROOM:
       return {
         ...state,
         ...action.payload,

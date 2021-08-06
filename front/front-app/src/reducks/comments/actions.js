@@ -6,38 +6,10 @@ export const getCommentsAction = (commentStatus) => {
   };
 };
 
-export const NEW_COMMENT = "NEW_COMMENT";
-export const newCommentAction = (commentStatus) => {
+export const SET_COMMENT = "SET_COMMENT";
+export const setCommentAction = (commentStatus) => {
   return {
-    type: NEW_COMMENT,
-    payload: {
-      ...commentStatus,
-    },
-  };
-};
-
-export const EDIT_COMMENT = "EDIT_COMMENT";
-export const editCommentAction = (commentStatus) => {
-  return {
-    type: EDIT_COMMENT,
-    payload: commentStatus,
-  };
-};
-
-export const UPDATE_COMMENT = "UPDATE_COMMENT";
-export const updateCommentAction = (commentStatus) => {
-  return {
-    type: UPDATE_COMMENT,
-    payload: {
-      ...commentStatus,
-    },
-  };
-};
-
-export const DELETE_COMMENT = "DELETE_COMMENT";
-export const deleteCommentAction = (commentStatus) => {
-  return {
-    type: DELETE_COMMENT,
+    type: SET_COMMENT,
     payload: {
       ...commentStatus,
     },

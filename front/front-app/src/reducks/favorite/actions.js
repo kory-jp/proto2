@@ -1,23 +1,7 @@
-export const CONFIRM_FAVORITED = "CONFIRM_FAVORITED";
-export const confirmFavoritedAction = (favorite) => {
+export const SET_FAVORITE = "SET_FAVORITE";
+export const setFavoriteAction = (favorite) => {
   return {
-    type: "CONFIRM_FAVORITED",
-    payload: favorite,
-  };
-};
-
-export const CREATE_FAVORITE = "CREATE_FAVORITE";
-export const createFavoriteAction = (favorite) => {
-  return {
-    type: "CREATE_FAVORITE",
-    payload: favorite,
-  };
-};
-
-export const DESTROY_FAVORITE = "DESTROY_FAVORITE";
-export const destroyFavoriteAction = (favorite) => {
-  return {
-    type: "DESTROY_FAVORITE",
+    type: SET_FAVORITE,
     payload: favorite,
   };
 };

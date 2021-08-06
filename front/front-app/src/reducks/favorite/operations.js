@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  confirmFavoritedAction,
-  createFavoriteAction,
-  destroyFavoriteAction,
-} from "./actions";
+import { setFavoriteAction } from "./actions";
 
 export const confirmFavorited = (postId) => {
   return async (dispatch) => {
@@ -17,7 +13,7 @@ export const confirmFavorited = (postId) => {
       .then((response) => {
         const status = response.data;
         dispatch(
-          confirmFavoritedAction({
+          setFavoriteAction({
             status: status,
           })
         );
@@ -47,7 +43,7 @@ export const createFavorite = (postId, currentUserId) => {
       .then((response) => {
         const status = response.data;
         dispatch(
-          createFavoriteAction({
+          setFavoriteAction({
             status: status,
           })
         );
@@ -70,7 +66,7 @@ export const destroyFavorite = (postId) => {
       .then((response) => {
         const status = response.data;
         dispatch(
-          destroyFavoriteAction({
+          setFavoriteAction({
             status: status,
           })
         );

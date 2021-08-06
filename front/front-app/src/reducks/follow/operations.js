@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  confirmFollowingAction,
-  createFollowingAction,
-  destroyFollowingAction,
-} from "./actions";
+import { setFollowingAction } from "./actions";
 
 export const confirmFollowing = (userId) => {
   return async (dispatch) => {
@@ -18,7 +14,7 @@ export const confirmFollowing = (userId) => {
       .then((response) => {
         const status = response.data;
         dispatch(
-          confirmFollowingAction({
+          setFollowingAction({
             status: status,
           })
         );
@@ -42,7 +38,7 @@ export const createFollowing = (userId) => {
       .then((response) => {
         const status = response.data;
         dispatch(
-          createFollowingAction({
+          setFollowingAction({
             status: status,
           })
         );
@@ -66,7 +62,7 @@ export const destroyFollowing = (userId) => {
       .then((response) => {
         const status = response.data;
         dispatch(
-          destroyFollowingAction({
+          setFollowingAction({
             status: status,
           })
         );

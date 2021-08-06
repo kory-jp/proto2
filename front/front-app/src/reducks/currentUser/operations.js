@@ -1,12 +1,7 @@
 import axios from "axios";
 import { push } from "connected-react-router";
 import { nowLoadingAction } from "../loading/actions";
-import {
-  logInAction,
-  registrationAction,
-  logOutAction,
-  updateCurrentUserAction,
-} from "./actions";
+import { setCurrentUserAction } from "./actions";
 
 export const registration = (
   userName,
@@ -52,7 +47,7 @@ export const registration = (
         if (response.data) {
           const userData = response.data;
           dispatch(
-            registrationAction({
+            setCurrentUserAction({
               id: userData.id,
               name: userData.name,
               email: userData.email,
@@ -92,7 +87,7 @@ export const logIn = (email, password, showMessage) => {
         if (response.data) {
           const userData = response.data;
           dispatch(
-            logInAction({
+            setCurrentUserAction({
               id: userData.id,
               name: userData.name,
               nickname: userData.nickname,
@@ -126,7 +121,7 @@ export const logOut = (showMessage) => {
       })
       .then((response) => {
         dispatch(
-          logOutAction({
+          setCurrentUserAction({
             id: "",
             name: "",
             email: "",
@@ -154,7 +149,7 @@ export const loggedInStatus = () => {
         if (response.data) {
           const userData = response.data;
           dispatch(
-            logInAction({
+            setCurrentUserAction({
               id: userData.id,
               name: userData.name,
               nickname: userData.nickname,
@@ -211,7 +206,7 @@ export const updateCurrentUser = (userId, formData, showMessage) => {
         const user = response.data;
         if (user) {
           dispatch(
-            updateCurrentUserAction({
+            setCurrentUserAction({
               name: user.name,
               nickname: user.nickname,
               email: user.email,

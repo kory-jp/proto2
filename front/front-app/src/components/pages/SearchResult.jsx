@@ -4,7 +4,7 @@ import { useLocation } from "react-router";
 import { Spinner } from "@chakra-ui/spinner";
 import { Box, Center } from '@chakra-ui/layout';
 import { nowLoadingAction } from "../../reducks/loading/actions";
-import { getPostsAction } from "../../reducks/posts/actions";
+import { getListPostsAction } from "../../reducks/posts/actions";
 import { getUsersAction } from "../../reducks/users/actions";
 import { useCallback, useEffect } from "react";
 import usePagination from "../../hooks/usePagination";
@@ -47,7 +47,7 @@ export const SearchResult = () => {
           const page_length = response.data.page_length;
           setSumPage(page_length);
           if (datas.posts) {
-            dispatch(getPostsAction(datas.posts));
+            dispatch(getListPostsAction(datas.posts));
           } else if (datas.users) {
             dispatch(getUsersAction(datas.users));
           }

@@ -1,39 +1,9 @@
-export const REGISTRATION = "REGISTRATION";
-export const registrationAction = (userStatus) => {
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const setCurrentUserAction = (userStatus) => {
   return {
-    type: REGISTRATION,
+    type: SET_CURRENT_USER,
     payload: {
       ...userStatus,
-    },
-  };
-};
-
-export const LOG_IN = "LOG_IN";
-export const logInAction = (userStatus) => {
-  return {
-    type: LOG_IN,
-    payload: {
-      ...userStatus,
-    },
-  };
-};
-
-export const LOG_OUT = "LOG_OUT";
-export const logOutAction = (usersStatus) => {
-  return {
-    type: LOG_OUT,
-    payload: {
-      ...usersStatus,
-    },
-  };
-};
-
-export const UPDATE_CURRENTUSER = "UPDATE_CURRENTUSER";
-export const updateCurrentUserAction = (usersStatus) => {
-  return {
-    type: UPDATE_CURRENTUSER,
-    payload: {
-      ...usersStatus,
     },
   };
 };

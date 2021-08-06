@@ -1,10 +1,6 @@
 import axios from "axios";
 import { nowLoadingAction } from "../loading/actions";
-import {
-  deleteAllNotificationActions,
-  deleteNotificationAction,
-  getNotificationsAction,
-} from "./actions";
+import { setNotificationsAction } from "./actions";
 
 export const getModalNotifications = () => {
   return async (dispatch) => {
@@ -17,7 +13,7 @@ export const getModalNotifications = () => {
         }
       )
       .then((response) => {
-        dispatch(getNotificationsAction(response.data.notifications));
+        dispatch(setNotificationsAction(response.data.notifications));
       })
       .catch((error) => {
         console.log("error:", error);
@@ -37,7 +33,7 @@ export const getPageNotifications = (setSumPage, queryPage) => {
         }
       )
       .then((response) => {
-        dispatch(getNotificationsAction(response.data.notifications));
+        dispatch(setNotificationsAction(response.data.notifications));
         setSumPage(response.data.page_length);
       })
       .catch((error) => {
@@ -62,7 +58,7 @@ export const deleteModalNotification = (id) => {
         }
       )
       .then((response) => {
-        dispatch(deleteNotificationAction(response.data.notifications));
+        dispatch(setNotificationsAction(response.data.notifications));
       })
       .catch((error) => {
         console.log("error:", error);
@@ -81,7 +77,7 @@ export const deletePageNotification = (id, setSumPage, queryPage) => {
         }
       )
       .then((response) => {
-        dispatch(deleteNotificationAction(response.data.notifications));
+        dispatch(setNotificationsAction(response.data.notifications));
         setSumPage(response.data.page_length);
       })
       .catch((error) => {
@@ -102,7 +98,7 @@ export const deleteAllPageNotification = (setSumPage) => {
         }
       )
       .then((response) => {
-        dispatch(deleteAllNotificationActions([]));
+        dispatch(setNotificationsAction([]));
         setSumPage(1);
       })
       .catch((error) => {
