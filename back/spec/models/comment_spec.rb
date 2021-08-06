@@ -22,5 +22,27 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
+  describe "コメント" do
+    describe "新規投稿" do
+      before do
+        @user = create(:user)
+        @post = create(:post, user: @user)
+      end
+
+      context "コメント本文を入力した場合" do
+        example "成功" do
+          comment = build(:comment, user_id: @user.id, post_id: @post.id)
+          expect(comment).to be_valid
+        end
+      end
+
+      context "コメント本文が未入力の場合" do
+        example "失敗" do
+          comment = build(:comment, user_id: @user.id, post_id: @post.id, comment: nil)
+          comment.valid?
+          expect(comment.errors[:comment]).to include("を入力してください")
+        end
+      end
+    end
+  end
 end

@@ -28,10 +28,13 @@ export const CommentEditModal = (props) => {
       for(let i in commentData) {
         return selectorComment.id === commentData.id
       }
+      return selectorComment
     })
     return defaultValue
   },[commentData, selectorComments])
+
   const [comment, setComment] = useState("")
+
   useEffect(()=> {
     setComment(defaultValues[0].comment)
   },[defaultValues])
@@ -58,6 +61,7 @@ export const CommentEditModal = (props) => {
 
   return(
     <Modal 
+    id="commentEditModal"
     isOpen={isOpen} 
     onClose={onClose} 
     autoFocus={false}

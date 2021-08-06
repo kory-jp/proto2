@@ -3,3 +3,23 @@
 #root div {
   font-family: "Newsreader", "Noto Serif JP", serif;
 }
+
+/* メニュードロワー */
+#chakra-modal-menuDrawer {
+  font-family: "Newsreader", "Noto Serif JP", serif;
+}
+
+/* 通知ドロワー */
+#chakra-modal-notificationModal {
+  font-family: "Newsreader", "Noto Serif JP", serif;
+}
+
+/* コメント新規投稿モーダル */
+#chakra-modal-commentModal {
+  font-family: "Newsreader", "Noto Serif JP", serif;
+}
+
+/* コメント編集モーダル */
+#chakra-modal-commentEditModal {
+  font-family: "Newsreader", "Noto Serif JP", serif;
+}

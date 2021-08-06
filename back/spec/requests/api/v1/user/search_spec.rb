@@ -6,15 +6,6 @@ RSpec.describe "Api::V1::User::Searches", type: :request do
     before do
       @current_user = create(:user)
       @post = create(:post, user: @current_user)
-      # @other_user = create(:user)
-
-      # post "/api/v1/user/login",
-      # params:  @current_user_session_params = {
-      #     user: {
-      #       email: @current_user.email,
-      #       password: @current_user.password,
-      #     }
-      #   }
     end
 
     describe "ユーザー検索" do
