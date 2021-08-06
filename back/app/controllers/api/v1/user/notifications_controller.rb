@@ -13,15 +13,16 @@ class Api::V1::User::NotificationsController < Api::V1::User::Base
     notifications = current_user.passive_notifications.page(params[:page] ||=1).per(10)
     page_length = notifications.page(1).per(10).total_pages
     notifications.where(checked: false).each do |notification|
-      notification.update_attributes(checked: true)
+      notification.update(checked: true)
     end
     notificationsArray = []
     notifications.each do |notification|
       notificationObj = {}
       notificationObj["id"] = notification.id
-      notificationObj["post_id"] = notification.post_id
       notificationObj["visited_id"] = notification.visited_id
       notificationObj["visitor_id"] = notification.visitor_id
+      notificationObj["post_id"] = notification.post_id
+      notificationObj["comment_id"] = notification.comment_id
       notificationObj["room_id"] = notification.room_id
       notificationObj["message_id"] = notification.message_id
       user = User.find_by(id: notification.visitor_id)

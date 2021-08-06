@@ -31,6 +31,7 @@ export const NotificationModal = (props)=> {
     <Modal         
       onClose={onClose} 
       isOpen={isOpen}
+      id="notificationModal"
     >
       <ModalOverlay />
       <ModalContent

@@ -36,7 +36,8 @@ export const CommentInputModal = (props) => {
   },[setComment, comment, currentUserId, dispatch, onClose, postId, showMessage])
 
   return(
-    <Modal 
+    <Modal
+    id="commentModal" 
     isOpen={isOpen} 
     onClose={onClose} 
     autoFocus={false}

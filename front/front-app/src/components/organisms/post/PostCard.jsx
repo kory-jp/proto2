@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { Flex } from '@chakra-ui/layout'
-import { Image } from "@chakra-ui/react"
+import { Image, Wrap, WrapItem } from "@chakra-ui/react"
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router';
 import defaultImage from '../../../assets/img/defaultImage.jpeg'
@@ -57,16 +57,19 @@ export const PostCard = (props)=> {
           {
             tags.length > 0 && (
               <Flex>
+                <Wrap>
                 {
                   tags.map(tag => (
-                    <PrimaryTag
-                      key={tag.id}
-                      onClick={() => toTagIndex(tag)}
-                    >
-                      {tag.label}
-                    </PrimaryTag>
+                    <WrapItem key={tag.id}>
+                      <PrimaryTag
+                        onClick={() => toTagIndex(tag)}
+                      >
+                        {tag.label}
+                      </PrimaryTag>
+                    </WrapItem>
                   ))
                 }
+                </Wrap>
               </Flex>
             )
           }

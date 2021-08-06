@@ -21,5 +21,33 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
+  describe "投稿" do
+    describe "新規投稿" do
+      before do
+        @user = create(:user)
+      end
+      context "タイトルと本文が入力されている場合" do
+        example "成功" do
+          post = build(:post, user_id: @user.id)
+          expect(post).to be_valid
+        end
+      end
+
+      context "タイトルが未入力の場合" do
+        example "失敗" do
+          post = build(:post, user_id: @user.id, title: nil)
+          post.valid?
+          expect(post.errors[:title]).to include("を入力してください")
+        end
+      end
+
+      context "本文が未入力の場合" do
+        example "失敗" do
+          post = build(:post, user_id: @user.id, content: nil)
+          post.valid?
+          expect(post.errors[:content]).to include("を入力してください")
+        end
+      end
+    end
+  end
 end

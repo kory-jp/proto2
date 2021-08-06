@@ -3,6 +3,7 @@ import {Link, Stack } from "@chakra-ui/layout";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {push} from 'connected-react-router';
+import {FormControl} from "@chakra-ui/react"
 
 import {completedLoggedInStatus, logIn} from "../../reducks/currentUser/operations"
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
@@ -37,26 +38,37 @@ export const ReduxLogin = () => {
     <DefaultBox>
       <DefaultText as="h3" textAlign="center" fontWeight="bold">COVID-TAX</DefaultText>
       <Stack spacing="5">
-        <Input
-          id="f4"
-          type="email"
-          name="email"
-          placeholder="メールアドレス"
-          fontSize={{base: "sm", md: "lg"}}
-          required={true}
-          value={email}
-          onChange={inputEmail}
-        />
-        <Input
-          id="f5"
-          type="password"
-          name="password"
-          placeholder="パスワード"
-          fontSize={{base: "sm", md: "lg"}}
-          required={true}
-          value={password}
-          onChange={inputPassword}
-        />
+        <FormControl
+          as="form"
+          id="email"
+        >
+          <Input
+            id="f4"
+            type="email"
+            name="email"
+            placeholder="メールアドレス"
+            fontSize={{base: "sm", md: "lg"}}
+            required={true}
+            value={email}
+            onChange={inputEmail}
+          />
+        </FormControl>
+        <FormControl
+          as="form"
+          id="password"
+        >
+          <Input
+            id="f5"
+            type="password"
+            name="password"
+            placeholder="パスワード"
+            fontSize={{base: "sm", md: "lg"}}
+            required={true}
+            value={password}
+            onChange={inputPassword}
+            autoComplete="off"
+          />
+        </FormControl>
         <PrimaryButton
           type="submit"
           onClick={()=> dispatch(logIn(email, password, showMessage))}

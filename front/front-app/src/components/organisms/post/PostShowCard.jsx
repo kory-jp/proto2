@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { Flex } from '@chakra-ui/layout'
-import { Link } from "@chakra-ui/react"
+import { Link, Wrap, WrapItem } from "@chakra-ui/react"
 import { useDispatch, useSelector } from 'react-redux'
 import { push } from 'connected-react-router'
 import CreateIcon from '@material-ui/icons/Create';
@@ -119,16 +119,21 @@ export const PostShowCard = (props)=> {
           {
             tags? tags.length > 0 && (
               <Flex mt="2" mb="2">
+                <Wrap>
                 {
                   tags.map(tag => (
-                    <PrimaryTag
+                    <WrapItem
                       key={tag.id}
-                      onClick={()=> toTagIndex(tag)}
                     >
-                      {tag.label}
-                    </PrimaryTag>
+                      <PrimaryTag
+                        onClick={()=> toTagIndex(tag)}
+                      >
+                        {tag.label}
+                      </PrimaryTag>
+                    </WrapItem>
                   ))
                 }
+                </Wrap>
               </Flex>
             ): null
           }

@@ -74,9 +74,16 @@ export const MenuDrawer = (props) => {
 
   
   return(
-    <Drawer placement="left" size="xs" onClose={onClose} isOpen={isOpen}>
+    <Drawer 
+    placement="left" 
+    size="xs" 
+    onClose={onClose} 
+    isOpen={isOpen}
+    id="menuDrawer"
+    >
     <DrawerOverlay>
-      <DrawerContent>
+      <DrawerContent
+      >
         <DrawerCloseButton />
         <DrawerHeader fontSize="sm">メニュー</DrawerHeader>
         <DrawerBody
