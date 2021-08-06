@@ -1,14 +1,7 @@
 import axios from "axios";
 import { push } from "connected-react-router";
 import { nowLoadingAction } from "../loading/actions";
-import {
-  deletePostAction,
-  getPostsAction,
-  getUsersPostsAction,
-  newPostAction,
-  showPostAction,
-  updatePostAction,
-} from "./actions";
+import { getListPostsAction, setPostAction } from "./actions";
 
 export const getPosts = (setSumPage, queryPage) => {
   return async (dispatch) => {
@@ -20,7 +13,7 @@ export const getPosts = (setSumPage, queryPage) => {
       .then((response) => {
         const posts = response.data.posts;
         setSumPage(response.data.page_length);
-        dispatch(getPostsAction(posts));
+        dispatch(getListPostsAction(posts));
       })
       .catch((error) => {
         console.log("error res:", error);
@@ -45,7 +38,7 @@ export const getCurrentUserPosts = (currentUserId, queryPage, setSumPage) => {
         const posts = response.data.posts;
         const page_length = response.data.page_length;
         setSumPage(page_length);
-        dispatch(getUsersPostsAction(posts));
+        dispatch(getListPostsAction(posts));
       })
       .catch((error) => {
         console.log("error res:", error);
@@ -70,7 +63,7 @@ export const getUsersPosts = (userId, setSumPage, queryPage) => {
         const posts = response.data.posts;
         const page_length = response.data.page_length;
         setSumPage(page_length);
-        dispatch(getUsersPostsAction(posts));
+        dispatch(getListPostsAction(posts));
       })
       .catch((error) => {
         console.log("error res:", error);
@@ -95,7 +88,7 @@ export const getCurretUserFavoritePosts = (userId, queryPage, setSumPage) => {
         const posts = response.data.posts;
         const page_length = response.data.page_length;
         setSumPage(page_length);
-        dispatch(getUsersPostsAction(posts));
+        dispatch(getListPostsAction(posts));
       })
       .catch((error) => {
         console.log("error res:", error);
@@ -120,7 +113,7 @@ export const getUsersFavoritePosts = (userId, queryPage, setSumPage) => {
         const posts = response.data.posts;
         const page_length = response.data.page_length;
         setSumPage(page_length);
-        dispatch(getUsersPostsAction(posts));
+        dispatch(getListPostsAction(posts));
       })
       .catch((error) => {
         console.log("error res:", error);
@@ -152,7 +145,7 @@ export const searchTagGetPosts = (label, setSumPage, queryPage) => {
         const posts = response.data.posts;
         const page_length = response.data.page_length;
         setSumPage(page_length);
-        dispatch(getUsersPostsAction(posts));
+        dispatch(getListPostsAction(posts));
       })
       .catch((error) => {
         console.log("error res:", error);
@@ -182,7 +175,7 @@ export const newPost = (formData, showMessage) => {
         const post = response.data;
         if (post) {
           dispatch(
-            newPostAction({
+            setPostAction({
               id: post.id,
               user_id: post.user_id,
               title: post.title,
@@ -212,7 +205,7 @@ export const showPost = (postId) => {
       .then((response) => {
         const post = response.data;
         dispatch(
-          showPostAction({
+          setPostAction({
             id: post.id,
             user_id: post.user_id,
             name: post.name,
@@ -254,7 +247,7 @@ export const updatePost = (postId, formData, showMessage) => {
         const post = response.data;
         if (post) {
           dispatch(
-            updatePostAction({
+            setPostAction({
               id: post.id,
               user_id: post.user_id,
               title: post.title,
@@ -282,7 +275,7 @@ export const deletePost = (postId, showMessage) => {
       })
       .then((response) => {
         dispatch(
-          deletePostAction({
+          setPostAction({
             id: "",
             user_id: "",
             title: "",

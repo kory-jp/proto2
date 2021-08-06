@@ -1,12 +1,6 @@
 import axios from "axios";
 import { push } from "connected-react-router";
-import {
-  deleteCommentAction,
-  editCommentAction,
-  getCommentsAction,
-  newCommentAction,
-  updateCommentAction,
-} from "./actions";
+import { getCommentsAction, setCommentAction } from "./actions";
 
 export const getComments = (postId, setSumPage, queryPage) => {
   return async (dispatch) => {
@@ -44,7 +38,7 @@ export const newComment = (showMessage, postId, currentUserId, comment) => {
       .then((response) => {
         const comment = response.data;
         dispatch(
-          newCommentAction({
+          setCommentAction({
             id: comment.id,
             postId: comment.post_id,
             userId: comment.user_id,
@@ -69,7 +63,7 @@ export const editComments = (commentId) => {
       .then((response) => {
         console.log(response);
         const comments = response.data.comments;
-        dispatch(editCommentAction(comments));
+        dispatch(setCommentAction(comments));
       })
       .catch((error) => {
         console.log("error res:", error);
@@ -95,7 +89,7 @@ export const updateComment = (commentData, comment, showMessage, returnTop) => {
         const comment = response.data;
         if (comment) {
           dispatch(
-            updateCommentAction({
+            setCommentAction({
               id: comment.id,
               postId: comment.post_id,
               user_id: comment.user_id,
@@ -123,7 +117,7 @@ export const deleteComment = (commentData, postId, showMessage) => {
       })
       .then((response) => {
         dispatch(
-          deleteCommentAction({
+          setCommentAction({
             id: "",
             post_id: "",
             user_id: "",

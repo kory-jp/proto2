@@ -6,17 +6,7 @@ export const NotificationsReducer = (
   action
 ) => {
   switch (action.type) {
-    case Actions.GET_NOTIFICATIONS:
-      return {
-        ...state,
-        list: [...action.payload],
-      };
-    case Actions.DELETE_NOTIFICATION:
-      return {
-        ...state,
-        list: [...action.payload],
-      };
-    case Actions.DELETE_ALL_NOTIFICATIONS:
+    case Actions.SET_NOTIFICATIONS:
       return {
         ...state,
         list: [...action.payload],

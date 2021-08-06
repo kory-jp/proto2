@@ -1,7 +1,7 @@
 import axios from "axios";
 import { push } from "connected-react-router";
 import { nowLoadingAction } from "../loading/actions";
-import { createRoomAction, getRoomAction, updateRoomAction } from "./actions";
+import { setRoomAction } from "./actions";
 
 export const createRoom = (userId, setSumPage) => {
   return async (dispatch) => {
@@ -18,7 +18,7 @@ export const createRoom = (userId, setSumPage) => {
         }
       )
       .then((response) => {
-        dispatch(createRoomAction(response.data.room));
+        dispatch(setRoomAction(response.data.room));
         setSumPage(response.data.page_length);
         const roomId = response.data.room.id;
         dispatch(push(`/room/${roomId}`));
@@ -41,7 +41,7 @@ export const getRoom = (roomId, setSumPage, queryPage) => {
       )
       .then((response) => {
         if (response.data) {
-          dispatch(getRoomAction(response.data.room));
+          dispatch(setRoomAction(response.data.room));
           setSumPage(response.data.page_length);
         } else {
           dispatch(push("/posts"));
@@ -74,7 +74,7 @@ export const updateRoom = (formData, setSumPage) => {
         }
       )
       .then((response) => {
-        dispatch(updateRoomAction(response.data.room));
+        dispatch(setRoomAction(response.data.room));
         setSumPage(response.data.page_length);
       })
       .catch((error) => {

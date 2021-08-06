@@ -3,17 +3,7 @@ import initialState from "../store/initialState";
 
 export const FollowReducer = (state = initialState.follow, action) => {
   switch (action.type) {
-    case Actions.CONFIRM_FOLLOWING:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case Actions.CREATE_FOLLOWING:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case Actions.DESTROY_FOLLOWING:
+    case Actions.SET_FOLLOWING:
       return {
         ...state,
         ...action.payload,
