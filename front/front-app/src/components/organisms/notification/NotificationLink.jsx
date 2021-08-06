@@ -5,7 +5,7 @@ import NotificationModal from "./NotificationModal";
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { getModalNotifications } from "../../../reducks/notifications/operations";
+import { getNotifications } from "../../../reducks/notifications/operations";
 import { useDispatch, useSelector } from "react-redux";
 
 export const NotificationLink = () => {
@@ -38,7 +38,7 @@ export const NotificationLink = () => {
   // モーダルを閉じつつ、再度、未確認の通知が無いか確認
   const onClickNotifications = useCallback(()=> {
     onOpen()
-    dispatch(getModalNotifications())
+    dispatch(getNotifications())
   },[onOpen, dispatch])
 
   const notifications = useSelector((state)=> state.notifications.list)
