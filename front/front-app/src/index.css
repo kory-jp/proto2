@@ -23,3 +23,8 @@
 #chakra-modal-commentEditModal {
   font-family: "Newsreader", "Noto Serif JP", serif;
 }
+
+/* 削除時のアラート */
+#chakra-modal-deleteAlert {
+  font-family: "Newsreader", "Noto Serif JP", serif;
+}
