@@ -22,6 +22,8 @@ class Api::V1::User::FavoritesController < Api::V1::User::Base
     favorite = user.favorites.build(post_id: params[:post_id])
     if favorite.save
       render json: true
+      post = Post.find(params[:post_id])
+      post.create_notification_favorite!(current_user)
     end
   end
 

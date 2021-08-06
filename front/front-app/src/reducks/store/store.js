@@ -15,6 +15,7 @@ import { TagsReducer } from "../tags/reducers";
 import { FavoriteReducer } from "../favorite/reducers";
 import { FollowReducer } from "../follow/reducers";
 import { RoomReducer } from "../rooms/reducers";
+import { NotificationsReducer } from "../notifications/reducers";
 
 export default function createState(history) {
   return reduxCreateStore(
@@ -29,6 +30,7 @@ export default function createState(history) {
       favorite: FavoriteReducer,
       follow: FollowReducer,
       room: RoomReducer,
+      notifications: NotificationsReducer,
     }),
     applyMiddleware(routerMiddleware(history), thunk)
   );

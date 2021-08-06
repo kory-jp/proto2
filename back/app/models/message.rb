@@ -23,6 +23,21 @@
 class Message < ApplicationRecord
   mount_uploader :image, ImageUploader
   
+  has_many :notifications, dependent: :destroy
   belongs_to :user
   belongs_to :room
+
+  def create_notification_message!(current_user, user)
+    notification = current_user.active_notifications.new(
+      room_id: room_id,
+      visitor_id: current_user.id,
+      visited_id: user.id,
+      message_id: id,
+      action: 'message',
+    )
+    if notification.visitor_id == notification.visited_id
+      notification.checked = true
+    end
+    notification.save if notification.valid?
+  end
 end

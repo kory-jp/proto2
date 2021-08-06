@@ -1,41 +1,39 @@
-Room.create! 
-@room = Room.find(1)
+5.times do |n|
+  current_user = User.find(n + 1)
+  other_user = User.find(n + 2 > 5 ? 1 : n + 2)
+  Room.create!
+  room = Room.find(n + 1)
 
-@room.entries.create! ([
-  {
-    id: 1,
-    user_id: 1,
-    room_id: 1,
-  },
-  {
-    id: 2,
-    user_id: 5,
-    room_id: 1,
-  }
-])
-@room.messages.create! ([
-  {
-    id: 1,
-    user_id: 1,
-    room_id: 1,
-    content: "こんにちはsatoです"
-  },
-  {
-    id: 2,
-    user_id: 5,
-    room_id: 1,
-    content: "初めまして鈴木です"
-  },
-  {
-    id: 3,
-    user_id: 1,
-    room_id: 1,
-    content: "これはsatoのテストメッセージです"
-  },
-  {
-    id: 4,
-    user_id: 5,
-    room_id: 1,
-    content: "鈴木のテストメッセージです"
-  },
-])
+  room.entries.create! ([
+    {
+      user_id: current_user.id,
+      room_id: room.id,
+    },
+    {
+      user_id: other_user.id,
+      room_id: room.id,
+    }
+  ])
+  room.messages.create! ([
+    {
+      user_id: current_user.id,
+      room_id: room.id,
+      content: "こんにちは#{current_user.nickname}です"
+    },
+    {
+      user_id: other_user.id,
+      room_id: room.id,
+      content: "初めまして#{other_user.nickname}です"
+    },
+    {
+      user_id: current_user.id,
+      room_id: room.id,
+      content: "これは#{current_user.nickname}のテストメッセージです"
+    },
+    {
+      user_id: other_user.id,
+      room_id: room.id,
+      content: "#{other_user.nickname}のテストメッセージです"
+    },
+  ])
+end

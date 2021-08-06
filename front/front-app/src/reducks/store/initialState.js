@@ -46,6 +46,10 @@ const initialState = {
       list: [],
     },
   },
+
+  notifications: {
+    list: [],
+  },
 };
 
 export default initialState;

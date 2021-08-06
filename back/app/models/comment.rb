@@ -20,6 +20,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Comment < ApplicationRecord
+  has_many :notifications, dependent: :destroy
   belongs_to :post
 
   validates :comment, presence: true

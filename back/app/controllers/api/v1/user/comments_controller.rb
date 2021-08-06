@@ -28,6 +28,8 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
     comment = Comment.new(comment_params)
     if comment.save
       render json: comment
+      post = comment.post
+      post.create_notification_comment!(current_user, comment.id)
     end
   end
 

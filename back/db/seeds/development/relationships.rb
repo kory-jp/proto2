@@ -1,6 +1,9 @@
-4.times do |n|
+5.times do |n|
+  current_user = User.find(n + 1)
+  other_user = User.find(n + 2 > 5 ? 1 : n + 2)
+
   Relationship.create!(
-    following_id: n + 1,
-    follower_id: n + 2
+    following_id: current_user.id,
+    follower_id: other_user.id,
   )
 end
