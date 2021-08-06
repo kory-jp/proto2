@@ -6,7 +6,7 @@ import defaultUserIcon from "../../../assets/img/defaultUserIcon.jpeg"
 import { useCallback } from "react";
 import { Box, Flex, Link } from "@chakra-ui/react";
 import useReturnTop from "../../../hooks/useReturnTop";
-import { deleteModalNotification, deletePageNotification } from "../../../reducks/notifications/operations";
+import { deleteNotification } from "../../../reducks/notifications/operations";
 
 export const NotificationCard = (props) => {
   const { notification, onClose, modal, setSumPage, queryPage } = props;
@@ -42,9 +42,9 @@ export const NotificationCard = (props) => {
   // ページネーションの関係上、モーダル画面と通知一覧画面では取得するデータを切り替える
   const onClickDeleteNotification = useCallback(()=> {
     if(modal) {
-      dispatach(deleteModalNotification(id))
+      dispatach(deleteNotification(id))
     } else {
-      dispatach(deletePageNotification(id, setSumPage, queryPage))
+      dispatach(deleteNotification(id, setSumPage, queryPage))
     }
   },[dispatach, modal, id, setSumPage, queryPage])
 

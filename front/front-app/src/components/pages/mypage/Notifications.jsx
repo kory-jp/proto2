@@ -6,7 +6,7 @@ import { DefaultFlex, DefaultTitleText } from "../../../assets/style/chakraStyle
 import useLoadingState from "../../../hooks/useLoadingState";
 import usePagination from "../../../hooks/usePagination";
 import useReturnTop from "../../../hooks/useReturnTop";
-import { deleteAllPageNotification, getPageNotifications } from "../../../reducks/notifications/operations";
+import { deleteAllPageNotification, getNotifications } from "../../../reducks/notifications/operations";
 import DeleteButton from "../../atoms/button/DeleteButton";
 import DefaultPagination from "../../molecules/DefaultPagination";
 import NotificationCard from "../../organisms/notification/NotificationCard";
@@ -19,7 +19,7 @@ export const Notifications = () => {
   const modal = false
 
   useEffect(()=> {
-    dispatch(getPageNotifications(setSumPage, queryPage))
+    dispatch(getNotifications(setSumPage, queryPage))
   },[dispatch, setSumPage, queryPage])
 
   const notifications = useSelector((state)=> state.notifications.list)
