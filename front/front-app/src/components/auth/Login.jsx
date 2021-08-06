@@ -71,6 +71,7 @@ export const ReduxLogin = () => {
         </FormControl>
         <PrimaryButton
           type="submit"
+          name="submit"
           onClick={()=> dispatch(logIn(email, password, showMessage))}
           isLoading={loadingState}
           disabled={email === "" || password ===""}

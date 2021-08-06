@@ -1,6 +1,6 @@
 import { Center, Flex, Spinner } from "@chakra-ui/react";
 import { push } from "connected-react-router";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DefaultFlex, DefaultTitleText } from "../../../assets/style/chakraStyles";
 import useLoadingState from "../../../hooks/useLoadingState";
@@ -8,6 +8,7 @@ import usePagination from "../../../hooks/usePagination";
 import useReturnTop from "../../../hooks/useReturnTop";
 import { deleteAllPageNotification, getNotifications } from "../../../reducks/notifications/operations";
 import DeleteButton from "../../atoms/button/DeleteButton";
+import AlertDialogComponent from "../../molecules/AlertDIalog";
 import DefaultPagination from "../../molecules/DefaultPagination";
 import NotificationCard from "../../organisms/notification/NotificationCard";
 
@@ -15,6 +16,7 @@ export const Notifications = () => {
   const dispatch = useDispatch()
   const {sumPage, setSumPage, queryPage} = usePagination()
   const loadingState = useLoadingState()
+  const [isOpen, setIsOpen] = useState(false)
   const returnTop = useReturnTop()
   const modal = false
 
@@ -29,8 +31,13 @@ export const Notifications = () => {
     returnTop()
   },[dispatch, returnTop])
 
+  const onClickOpenAlert = useCallback(()=> {
+    setIsOpen(true)
+  },[])
+
   const onClickdeleteAllNotifications = useCallback(()=> {
     dispatch(deleteAllPageNotification(setSumPage))
+    setIsOpen(false)
   },[dispatch, setSumPage])
 
   return(
@@ -40,7 +47,7 @@ export const Notifications = () => {
         {
           notifications.length > 0 && (
             <DeleteButton
-              onClick={onClickdeleteAllNotifications}
+              onClick={onClickOpenAlert}
             >
               一括削除
             </DeleteButton>
@@ -81,6 +88,12 @@ export const Notifications = () => {
         </>
       )
       }
+      <AlertDialogComponent 
+        isOpen={isOpen} 
+        setIsOpen={setIsOpen} 
+        text="通知一括削除"
+        onClick={onClickdeleteAllNotifications}
+      />
     </>
   )
 }

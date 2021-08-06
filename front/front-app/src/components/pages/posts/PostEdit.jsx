@@ -25,6 +25,8 @@ import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
 import SelectComponent from '../../organisms/layout/SelectComponent';
 import useOptions from '../../../hooks/useOptions';
 import DeleteButton from '../../atoms/button/DeleteButton';
+import AlertDialogComponent from '../../molecules/AlertDIalog';
+import useReturnTop from '../../../hooks/useReturnTop';
 
 export const PostEdit = ()=> {
   const dispatch = useDispatch()
@@ -34,9 +36,11 @@ export const PostEdit = ()=> {
   const [content, setContent] =  useState('');
   const [image, setImage] =  useState();
   const [preview, setPreview] = useState('');
+  const [isOpen, setIsOpen] = useState(false)
   const currentUserId = useGetCurrentUserId()
   const loadingState = useLoadingState()
   const options = useOptions()
+  const returnTop = useReturnTop()
 
   const inputTitle = useCallback((event)=> {
     setTitle(event.target.value)
@@ -125,6 +129,21 @@ export const PostEdit = ()=> {
     setPreview('')
   },[])
 
+  const onClickOpenAlert = useCallback(()=> {
+    setIsOpen(true)
+  },[])
+
+  const onClickUpdatePost = useCallback(()=> {
+    dispatch(updatePost(postId, formData, showMessage))
+    returnTop()
+  },[dispatch, formData, postId, returnTop, showMessage])
+
+  const onClickDeletePost = useCallback(()=> {
+    dispatch(deletePost(postId, showMessage))
+    setIsOpen(false)
+    returnTop()
+  },[dispatch, postId, showMessage, returnTop])
+
   return(
     <>
       {
@@ -197,7 +216,7 @@ export const PostEdit = ()=> {
               }
               <PrimaryButton
                 type="submit"
-                onClick={()=> dispatch(updatePost(postId, formData, showMessage))}
+                onClick={onClickUpdatePost}
                 isLoading={loadingState}
                 disabled={title === "" || content === ""}
                 fontSize={{base: "sm", md: "lg"}}
@@ -207,7 +226,7 @@ export const PostEdit = ()=> {
               <DeleteButton
                 type="submit"
                 isLoading={loadingState}
-                onClick={()=> dispatch(deletePost(postId, showMessage))}
+                onClick={onClickOpenAlert}
               >
                 削除
               </DeleteButton>
@@ -215,6 +234,12 @@ export const PostEdit = ()=> {
           </DefaultBox>
         )
       }
+      <AlertDialogComponent 
+        isOpen={isOpen} 
+        setIsOpen={setIsOpen} 
+        text="投稿削除"
+        onClick={onClickDeletePost}
+      />
     </>
   )
 }
