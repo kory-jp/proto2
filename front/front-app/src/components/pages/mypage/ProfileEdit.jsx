@@ -22,6 +22,8 @@ import { updateCurrentUser } from '../../../reducks/currentUser/operations';
 import { DefaultFlex, DefaultImage } from '../../../assets/style/chakraStyles';
 import useLoadingState from '../../../hooks/useLoadingState';
 import { nowLoadingAction } from '../../../reducks/loading/actions';
+import DeleteButton from '../../atoms/button/DeleteButton';
+import DeleteUserAlertDialog from '../../organisms/layout/DeleteUserAlertDialog';
 
 export const ProfileEdit = ()=> {
   const dispatch = useDispatch()
@@ -35,6 +37,7 @@ export const ProfileEdit = ()=> {
   const [introduction, setIntroduction] =  useState(" ");
   const [image, setImage] =  useState();
   const [preview, setPreview] = useState();
+  const [isOpen, setIsOpen] = useState(false)
 
   const getUserProfile = useCallback((userId) => {
     dispatch(nowLoadingAction(true))
@@ -104,6 +107,10 @@ export const ProfileEdit = ()=> {
   },[userId, name, nickname, email, introduction, image])
 
   const formData = createFormData()
+
+  const onClickAlertOpen = useCallback(()=> {
+    setIsOpen(true)
+  },[])
 
 
   return(
@@ -200,10 +207,17 @@ export const ProfileEdit = ()=> {
                 >
                   編集
                 </PrimaryButton>
+                <DeleteButton onClick={onClickAlertOpen}>
+                  アカウント削除
+                </DeleteButton>
               </Stack>
             </DefaultFlex>
         )
       }
+      <DeleteUserAlertDialog 
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
     </>
   )
 }

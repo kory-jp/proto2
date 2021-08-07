@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_secure_password
   
   has_many :posts, foreign_key: :user_id, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :delete_all
   has_many :favorite_posts, through: :favorites, source: :post
   has_many :active_relationships, class_name: "Relationship", foreign_key: :following_id
