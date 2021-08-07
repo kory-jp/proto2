@@ -9,6 +9,7 @@ import CommentEditModal from "./CommentEditModal";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 import useReturnTop from "../../../hooks/useReturnTop";
+import TextFormat from "../../atoms/text/TextFormat";
 
 export const CommentShowCard = ( props ) => {
   const commentData = props.commentData;
@@ -64,7 +65,7 @@ export const CommentShowCard = ( props ) => {
           <Divider/>
           <Flex mt="4" flexDirection="column">
             <DefaultText>
-              {comment}
+              <TextFormat content={comment}/>
             </DefaultText>
             <Divider mt="6"/>
             <DefaultText mt="2" textAlign="right" >
