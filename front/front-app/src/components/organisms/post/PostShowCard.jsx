@@ -22,6 +22,7 @@ import { useParams } from 'react-router'
 import useLoadingState from '../../../hooks/useLoadingState'
 import BooleanButton from '../../atoms/button/BooleanButton'
 import { nowLoadingAction } from '../../../reducks/loading/actions'
+import TextFormat from '../../atoms/text/TextFormat'
 
 export const PostShowCard = (props)=> {
   const dispatch = useDispatch()
@@ -158,7 +159,9 @@ export const PostShowCard = (props)=> {
         </DefaultFlex>
       </Flex>
       <DefaultFlex mt="2">
-        <DefaultText>{content}</DefaultText>
+        <DefaultText>
+          <TextFormat content={content}/>
+        </DefaultText>
       </DefaultFlex>
     </DefaultFlex>
   )

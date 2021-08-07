@@ -2,6 +2,7 @@ import { Box, Divider, Flex } from "@chakra-ui/react"
 import { DefaultImage, DefaultText, DefaultUserIconImage } from "../../../assets/style/chakraStyles"
 import defaultUserIcon from "../../../assets/img/defaultUserIcon.jpeg"
 import useGetCurrentUserId from "../../../hooks/useGetCurrentUserId"
+import TextFormat from "../../atoms/text/TextFormat"
 
 export const MessageCard = (props) => {
   const {message} = props
@@ -22,13 +23,14 @@ export const MessageCard = (props) => {
           <DefaultUserIconImage 
             src={icon.url? icon.url : defaultUserIcon}
             boxSize={{ base: "20px", md: "30px" }}
-            // onClick={toUserinfoPage}
             cursor="pointer"
           />
         ) : null
       }
       <Box w="100%" pl={{base: "2", md: "4"}} >
-        <DefaultText >{content}</DefaultText>
+        <DefaultText >
+          <TextFormat content={content}/> 
+        </DefaultText>
         {
           image.url ? (
             <DefaultImage 

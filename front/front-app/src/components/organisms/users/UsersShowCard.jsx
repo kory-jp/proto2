@@ -14,6 +14,7 @@ import defaultUserIcon from '../../../assets/img/defaultUserIcon.jpeg'
 import useLoadingState from '../../../hooks/useLoadingState'
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId'
 import EntryButton from '../entry/EntryButton'
+import TextFormat from '../../atoms/text/TextFormat'
 
 export const UsersShowCard = () => {
 
@@ -62,7 +63,10 @@ export const UsersShowCard = () => {
         w={{base: "full", xl: "75%"}}
         m={{base: "auto", md: "2"}}
         >
-          <Flex flexDirection={{base: "column", md: "unset"}}>
+          <Flex 
+            flexDirection={{base: "column", md: "unset"}}
+            w="full"
+          >
             <DefaultTitleText
               as="h2"
               mr="5"
@@ -73,10 +77,11 @@ export const UsersShowCard = () => {
             {
               currentUserId !== id ? (
                 <BooleanButton
+                wr="5"
                 onClick={toggleFollow}
                 colorBoolean={follow}
                 loadingState={loadingState}
-              >
+                >
                 {
                   follow ? (
                     <>
@@ -93,13 +98,14 @@ export const UsersShowCard = () => {
               </BooleanButton>
               ) : null
             }
+            <Flex mr="5"/>
             <EntryButton />
           </Flex>
           <Divider 
             mb="2"
           />
           <DefaultText>
-            {introduction}
+            <TextFormat content={introduction}/>
           </DefaultText>
         </DefaultFlex>
       </Flex>
