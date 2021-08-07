@@ -119,6 +119,16 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
     }
     render json: data
   end
+
+  def destroy
+    if current_user.authenticate(params[:user][:password])
+      current_user.destroy
+      reset_session
+      render json: "ok"
+    else
+      render json: "ng"
+    end
+  end
   
 
   private

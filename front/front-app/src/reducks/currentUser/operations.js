@@ -111,7 +111,6 @@ export const logIn = (email, password, showMessage) => {
       });
   };
 };
-// }
 
 export const logOut = (showMessage) => {
   return async (dispatch, getState) => {
@@ -220,6 +219,41 @@ export const updateCurrentUser = (userId, formData, showMessage) => {
       })
       .catch((error) => {
         console.log("post res:", error);
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
+      });
+  };
+};
+
+export const deleteAccount = (password, showMessage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
+    await axios
+      .post(
+        "http://localhost:3001/api/v1/user/accounts",
+        {
+          user: {
+            password: password,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log(response.data);
+        if (response.data === "ok") {
+          dispatch(setCurrentUserAction([]));
+          showMessage({
+            title: "アカウントの削除に成功しました",
+            status: "success",
+          });
+          dispatch(push("/registration"));
+        } else {
+          showMessage({ title: "パスワードが一致しません", status: "error" });
+        }
+      })
+      .catch((response) => {
+        console.log("ERROR");
       })
       .finally(() => {
         dispatch(nowLoadingAction(false));
