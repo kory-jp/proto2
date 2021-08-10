@@ -5,8 +5,10 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { DefaultFlex, DefaultTitleText } from "../../../assets/style/chakraStyles";
 import useLoadingState from "../../../hooks/useLoadingState";
+import useMessage from "../../../hooks/useMessage";
 import usePagination from "../../../hooks/usePagination";
 import useReturnTop from "../../../hooks/useReturnTop";
+import { loggedInStatus } from "../../../reducks/currentUser/operations";
 import { nowLoadingAction } from "../../../reducks/loading/actions";
 import DefaultPagination from "../../molecules/DefaultPagination";
 import RoomCard from "../../organisms/directMessage/RoomCard";
@@ -14,6 +16,7 @@ import RoomCard from "../../organisms/directMessage/RoomCard";
 export const Rooms = () => {
   const loadingState = useLoadingState()
   const dispatch = useDispatch()
+  const showMessage = useMessage()
   const returnTop = useReturnTop()
   const [rooms, setRooms] = useState({})
   const {sumPage, setSumPage, queryPage} = usePagination()
@@ -48,8 +51,9 @@ export const Rooms = () => {
   },[dispatch])
 
   useEffect(()=> {
+    dispatch(loggedInStatus(showMessage))
     getRoomList(queryPage, setSumPage)
-  },[queryPage, getRoomList, setSumPage])
+  },[queryPage, getRoomList, setSumPage, dispatch, showMessage])
 
   const changeCurrentPage = useCallback((e, page) =>{
     dispatch(push( `http://localhost:3001/api/v1/user/rooms?page=${queryPage}`))

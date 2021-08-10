@@ -13,6 +13,8 @@ import useReturnTop from '../../../hooks/useReturnTop';
 import { useLocation } from 'react-router';
 import { DefaultBox, DefaultTitleText } from '../../../assets/style/chakraStyles';
 import { Divider } from '@chakra-ui/react';
+import useMessage from '../../../hooks/useMessage';
+import { loggedInStatus } from '../../../reducks/currentUser/operations';
 
 export const PostIndex = ()=> {
   const {search} = useLocation()
@@ -21,10 +23,12 @@ export const PostIndex = ()=> {
   const dispatch =  useDispatch();
   const {sumPage, setSumPage, queryPage} = usePagination()
   const loadingState = useLoadingState()
+  const showMessage = useMessage()
   
   useEffect(()=> {
+    dispatch(loggedInStatus(showMessage))
     dispatch(searchTagGetPosts(label, setSumPage, queryPage))
-  },[label, queryPage, setSumPage, dispatch])
+  },[label, queryPage, setSumPage, dispatch, showMessage])
   const posts = useSelector((state)=> state.posts.list)
   
   const returnTop = useReturnTop()

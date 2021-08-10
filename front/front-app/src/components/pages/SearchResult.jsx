@@ -15,9 +15,12 @@ import DefaultPagination from "../molecules/DefaultPagination";
 import { push } from "connected-react-router";
 import useReturnTop from "../../hooks/useReturnTop";
 import { DefaultTitleText, DefaultFlex } from "../../assets/style/chakraStyles";
+import useMessage from "../../hooks/useMessage";
+import { loggedInStatus } from "../../reducks/currentUser/operations";
 
 export const SearchResult = () => {
   const {search} = useLocation();
+  const showMessage = useMessage()
   const query = new URLSearchParams(search);
   const model = query.get("model")
   const keyword = query.get("keyword")
@@ -64,8 +67,9 @@ export const SearchResult = () => {
   },[keyword, model, setSumPage]);
 
   useEffect(()=> {
+    dispatch(loggedInStatus(showMessage))
     dispatch(SearchKeywordGetResults())
-  },[dispatch, SearchKeywordGetResults])
+  },[dispatch, SearchKeywordGetResults, showMessage])
 
   const posts = useSelector((state)=> state.posts.list)
   const users = useSelector((state)=> state.users.list)

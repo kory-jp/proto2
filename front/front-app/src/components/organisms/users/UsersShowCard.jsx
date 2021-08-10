@@ -15,6 +15,8 @@ import useLoadingState from '../../../hooks/useLoadingState'
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId'
 import EntryButton from '../entry/EntryButton'
 import TextFormat from '../../atoms/text/TextFormat'
+import useMessage from '../../../hooks/useMessage'
+import { loggedInStatus } from '../../../reducks/currentUser/operations'
 
 export const UsersShowCard = () => {
 
@@ -23,11 +25,13 @@ export const UsersShowCard = () => {
   const currentUserId = useGetCurrentUserId()
   const dispatch = useDispatch()
   const loadingState = useLoadingState()
+  const showMessage = useMessage()
 
   useEffect(()=> {
+    dispatch(loggedInStatus(showMessage))
     dispatch(showUsers(userId))
     dispatch(confirmFollowing(userId))
-  },[dispatch, userId])
+  },[dispatch, userId, showMessage])
   
   const users =  useSelector((state)=> state.users)
   const { nickname, introduction, userIcon} = users

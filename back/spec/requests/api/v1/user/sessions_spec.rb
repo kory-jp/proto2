@@ -57,5 +57,37 @@ RSpec.describe "Api::V1::User::Sessions", type: :request do
         expect(response).to have_http_status(:ok)
       end
     end
+
+    describe "アクセス制限" do
+      before do
+        @current_user = create(:user)
+        post "/api/v1/user/login",
+        params:  @current_user_session_params = {
+            user: {
+              email: @current_user.email,
+              password: @current_user.password,
+            }
+          };
+      end
+      context "60分操作がない場合" do
+        example "ユーザー情報取得" do
+          travel_to 60.minutes.after do
+            get "/api/v1/user/logged_in"
+            res = JSON.parse(response.body)
+            expect(res["id"]).to eq(@current_user.id)
+          end
+        end
+      end
+
+      context "61分操作がない場合" do
+        example "セッションタイムアウト" do
+          travel_to 61.minutes.after do
+            get "/api/v1/user/logged_in"
+            res = JSON.parse(response.body)
+            expect(res["message"]).to eq("セッションタイムアウト")
+          end
+        end
+      end
+    end
   end
 end

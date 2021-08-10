@@ -18,7 +18,7 @@ import { Center } from '@chakra-ui/layout';
 
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import useMessage from '../../../hooks/useMessage';
-import { updateCurrentUser } from '../../../reducks/currentUser/operations';
+import { loggedInStatus, updateCurrentUser } from '../../../reducks/currentUser/operations';
 import { DefaultFlex, DefaultImage } from '../../../assets/style/chakraStyles';
 import useLoadingState from '../../../hooks/useLoadingState';
 import { nowLoadingAction } from '../../../reducks/loading/actions';
@@ -63,8 +63,9 @@ export const ProfileEdit = ()=> {
   },[dispatch, setName, setNickname, setEmail, setIntroduction, setPreview])
 
   useEffect(()=> {
+    dispatch(loggedInStatus(showMessage))
     getUserProfile(userId)
-  },[userId, getUserProfile])
+  },[dispatch, userId, getUserProfile, showMessage])
 
   const inputName = useCallback((event)=> {
     setName(event.target.value)

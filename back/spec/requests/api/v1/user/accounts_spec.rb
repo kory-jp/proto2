@@ -102,19 +102,47 @@ RSpec.describe "Api::V1::User::Accounts", type: :request do
             }
           }
         end
-        example "必要項目が入力されている場合、正しく値が更新される" do
-          @current_user_params_hash[:user].merge!(email: "test@example.com")
-          patch "#{ACCOUNTS_URL}", params: @current_user_params_hash
-          res = JSON.parse(response.body)
-          expect(res["email"]).to eq("test@example.com")
-          expect(response).to have_http_status(:ok)
+        context "必須項目が入力されている場合" do
+          example "更新成功" do
+            @current_user_params_hash[:user].merge!(email: "test@example.com")
+            patch "#{ACCOUNTS_URL}", params: @current_user_params_hash
+            res = JSON.parse(response.body)
+            expect(res["email"]).to eq("test@example.com")
+            expect(response).to have_http_status(:ok)
+          end
         end
 
-        example "必要項目が未入力の場合、更新されない(レスポンスを受け取れない)" do
-          @current_user_params_hash[:user].merge!(email: "")
-          patch "#{ACCOUNTS_URL}", params: @current_user_params_hash
-          expect(response.body).to eq ""
-          expect(response).to have_http_status(204)
+        context "必須項目が空欄の場合" do
+          example "更新されない(レスポンスを受け取れない)" do
+            @current_user_params_hash[:user].merge!(email: "")
+            patch "#{ACCOUNTS_URL}", params: @current_user_params_hash
+            expect(response.body).to eq ""
+            expect(response).to have_http_status(204)
+          end
+        end
+      end
+    end
+
+    describe "アカウント削除" do
+      before do
+        @current_user_delete_params_hash = {
+          user: {
+            password: @current_user.password
+          }
+        }
+      end
+      context "認証用のパスワードが未入力の場合" do
+        example "アカウント削除失敗" do
+          @current_user_delete_params_hash[:user].merge!(password: "")
+          post "#{ACCOUNTS_URL}", params: @current_user_delete_params_hash
+          expect(response.body).to eq("ng")
+        end
+      end
+
+      context "正しい認証用のパスワードが入力されている場合" do
+        example "アカウント削除成功" do
+          post "#{ACCOUNTS_URL}", params: @current_user_delete_params_hash
+          expect(response.body).to eq("ok")
         end
       end
     end
