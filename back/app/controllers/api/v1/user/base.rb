@@ -14,5 +14,6 @@ class Api::V1::User::Base < ApplicationController
 
   def login!
     session[:user_id] = @user.id
+    session[:last_access_time] = Time.current
   end
 end

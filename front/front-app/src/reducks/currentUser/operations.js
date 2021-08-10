@@ -135,17 +135,20 @@ export const logOut = (showMessage) => {
       });
   };
 };
-// }
 
 // ログインをしている場合はユーザー情報を返し、未ログインの場合はログインページに飛ばす
-export const loggedInStatus = () => {
+export const loggedInStatus = (showMessage) => {
   return async (dispatch) => {
     await axios
       .get("http://localhost:3001/api/v1/user/logged_in", {
         withCredentials: true,
       })
       .then((response) => {
-        if (response.data) {
+        if (response.data.message) {
+          showMessage({ title: response.data.message, status: "error" });
+          dispatch(setCurrentUserAction([]));
+          dispatch(push("/"));
+        } else {
           const userData = response.data;
           dispatch(
             setCurrentUserAction({
@@ -158,8 +161,6 @@ export const loggedInStatus = () => {
               password: userData.password_digest,
             })
           );
-        } else {
-          dispatch(push("/"));
         }
       })
       .catch((error) => {
@@ -176,7 +177,7 @@ export const completedLoggedInStatus = () => {
         withCredentials: true,
       })
       .then((response) => {
-        if (response.data) {
+        if (response.data.id) {
           dispatch(push("/posts"));
         }
       })

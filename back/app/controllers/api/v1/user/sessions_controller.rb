@@ -1,5 +1,4 @@
 class Api::V1::User::SessionsController < Api::V1::User::Base
-  # skip_before_action :authenticate_user!
   
   def login
     @user = User.find_by(email: session_params[:email])
@@ -15,10 +14,20 @@ class Api::V1::User::SessionsController < Api::V1::User::Base
       $current_user = nil
     end
   end
+  
+  TIMEOUT = 60.minutes
 
   def logged_in?
     if current_user
-      render json: current_user
+      if session[:last_access_time] >= TIMEOUT.ago
+        session[:last_access_time] = Time.current
+        render json: current_user
+      else
+        reset_session
+        render json: {message: "セッションタイムアウト"}
+      end
+    else
+      render json: {message: "ログインしてください"}
     end
   end
 

@@ -25,8 +25,8 @@ export const Router = () => {
     <Switch>
       <Route  exact path={"/"} component={LoginPage} />
       <Route path={"/registration"} component={RegistrationPage} />
-      <Auth>
-        <DefaultLayout>
+      <DefaultLayout>
+        <Auth>
           <Route exact path={"/posts"} component={PostIndex} /> 
           <Route exact path={"/posts/tag"} component={PostTagSearchIndex} /> 
           <Route path={"/posts/new"} component={PostNew} />
@@ -42,8 +42,8 @@ export const Router = () => {
           <Route path={"/searchResult"} component={SearchResult} />
           <Route path={"/room/:id"} component={Room} />
           <Route path={"/users/:id"} component={UsersInfo} />
-        </DefaultLayout>
-      </Auth>
+        </Auth>
+      </DefaultLayout>
     </Switch>
   )
 }

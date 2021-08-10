@@ -4,8 +4,10 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DefaultFlex, DefaultTitleText } from "../../../assets/style/chakraStyles";
 import useLoadingState from "../../../hooks/useLoadingState";
+import useMessage from "../../../hooks/useMessage";
 import usePagination from "../../../hooks/usePagination";
 import useReturnTop from "../../../hooks/useReturnTop";
+import { loggedInStatus } from "../../../reducks/currentUser/operations";
 import { deleteAllPageNotification, getNotifications } from "../../../reducks/notifications/operations";
 import DeleteButton from "../../atoms/button/DeleteButton";
 import AlertDialogComponent from "../../molecules/AlertDIalog";
@@ -17,12 +19,14 @@ export const Notifications = () => {
   const {sumPage, setSumPage, queryPage} = usePagination()
   const loadingState = useLoadingState()
   const [isOpen, setIsOpen] = useState(false)
+  const showMessage = useMessage()
   const returnTop = useReturnTop()
   const modal = false
 
   useEffect(()=> {
+    dispatch(loggedInStatus(showMessage))
     dispatch(getNotifications(setSumPage, queryPage))
-  },[dispatch, setSumPage, queryPage])
+  },[dispatch, setSumPage, queryPage, showMessage])
 
   const notifications = useSelector((state)=> state.notifications.list)
 

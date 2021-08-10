@@ -10,16 +10,20 @@ import useLoadingState from '../../../hooks/useLoadingState';
 import usePagination from '../../../hooks/usePagination';
 import DefaultPagination from '../../molecules/DefaultPagination';
 import useReturnTop from '../../../hooks/useReturnTop';
+import useMessage from '../../../hooks/useMessage';
+import { loggedInStatus } from '../../../reducks/currentUser/operations';
 
 export const PostIndex = ()=> {
   const dispatch =  useDispatch();
   const {sumPage, setSumPage, queryPage} = usePagination()
   const posts = useSelector((state)=> state.posts.list)
   const loadingState = useLoadingState()
+  const showMessage = useMessage()
   
   useEffect(()=> {
+    dispatch(loggedInStatus(showMessage))
     dispatch(getPosts(setSumPage, queryPage))
-  },[queryPage, setSumPage, dispatch])
+  },[queryPage, setSumPage, dispatch, showMessage])
   
   const returnTop = useReturnTop()
   

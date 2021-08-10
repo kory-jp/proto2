@@ -27,6 +27,7 @@ import useOptions from '../../../hooks/useOptions';
 import DeleteButton from '../../atoms/button/DeleteButton';
 import AlertDialogComponent from '../../molecules/AlertDIalog';
 import useReturnTop from '../../../hooks/useReturnTop';
+import { loggedInStatus } from '../../../reducks/currentUser/operations';
 
 export const PostEdit = ()=> {
   const dispatch = useDispatch()
@@ -41,6 +42,7 @@ export const PostEdit = ()=> {
   const loadingState = useLoadingState()
   const options = useOptions()
   const returnTop = useReturnTop()
+  const showMessage = useMessage()
 
   const inputTitle = useCallback((event)=> {
     setTitle(event.target.value)
@@ -103,9 +105,10 @@ export const PostEdit = ()=> {
   },[dispatch])
 
   useEffect(()=> {
+    dispatch(loggedInStatus(showMessage))
     editAuth(postId)
     getPostStatus(postId)
-  },[dispatch, editAuth, getPostStatus, postId])
+  },[dispatch, editAuth, getPostStatus, postId, showMessage])
 
   const createFormData = useCallback(()=> {
     const formData = new FormData();
@@ -122,7 +125,6 @@ export const PostEdit = ()=> {
     return formData
   },[currentUserId, title, tags, content, image])
   const formData = createFormData();
-  const showMessage = useMessage()
 
   const onClickCancelImage = useCallback(()=> {
     setImage(undefined)

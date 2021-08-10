@@ -12,16 +12,20 @@ import usePagination from '../../../hooks/usePagination';
 import DefaultPagination from '../../molecules/DefaultPagination';
 import useReturnTop from '../../../hooks/useReturnTop';
 import { DefaultFlex, DefaultTitleText } from '../../../assets/style/chakraStyles';
+import useMessage from '../../../hooks/useMessage';
+import { loggedInStatus } from '../../../reducks/currentUser/operations';
 
 export const FavoritePosts = () => {
   const currentUserId = useParams()
   const dispatch = useDispatch()
+  const showMessage = useMessage()
   const loadingState = useLoadingState()
   const { sumPage, setSumPage, queryPage} = usePagination()
 
   useEffect(()=> {
+    dispatch(loggedInStatus(showMessage))
     dispatch(getCurretUserFavoritePosts(currentUserId, queryPage, setSumPage))
-  },[dispatch, currentUserId, queryPage, setSumPage])
+  },[dispatch, currentUserId, queryPage, setSumPage, showMessage])
 
   const posts = useSelector((state)=> state.posts.list)
   const returnTop = useReturnTop()

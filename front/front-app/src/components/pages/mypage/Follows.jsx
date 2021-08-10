@@ -4,14 +4,18 @@ import usePagination from "../../../hooks/usePagination";
 import { DefaultFlex, DefaultTitleText } from "../../../assets/style/chakraStyles";
 import { getMyFollows } from "../../../reducks/users/operations";
 import FollowLayout from "../../organisms/follow/FollowLayout";
+import useMessage from "../../../hooks/useMessage";
+import { loggedInStatus } from "../../../reducks/currentUser/operations";
 
 export const Follows = () => {
   const dispatch = useDispatch()
   const { setSumPage, queryPage } = usePagination()
+  const showMessage = useMessage()
 
   useEffect(()=> {
+    dispatch(loggedInStatus(showMessage))
     dispatch(getMyFollows(queryPage, setSumPage))
-  },[dispatch, queryPage, setSumPage])
+  },[dispatch, queryPage, setSumPage, showMessage])
 
   const follows = useSelector(state => state.users.list)
 
