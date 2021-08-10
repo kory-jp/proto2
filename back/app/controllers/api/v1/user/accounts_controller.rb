@@ -80,6 +80,17 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
     end
   end
 
+  def password
+    if current_user.authenticate(params[:user][:previous_password])
+      if current_user.update(user_password_params)
+        user = current_user
+        render json: user
+      end
+    else
+      render json: {message: "現在のパスワードに誤りがあります"}
+    end
+  end
+
   def follows
     users = current_user.followings
     page_length = users.page(1).per(10).total_pages
@@ -135,5 +146,9 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
   
   def user_params
     params.require(:user).permit(:id, :name, :email, :nickname, :introduction, :image)
+  end
+
+  def user_password_params
+    params.require(:user).permit(:password, :password_confirmation)
   end
 end

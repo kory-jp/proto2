@@ -19,12 +19,12 @@ export const registration = (
       password === "" ||
       passwordConfirmation === ""
     ) {
-      alert("必須項目が未入力です");
+      showMessage({ title: "必須項目が未入力です", status: "error" });
       return false;
     }
 
     if (password !== passwordConfirmation) {
-      alert("パスワードが一致していません");
+      showMessage({ title: "パスワードが一致しておりません", status: "error" });
       return false;
     }
     dispatch(nowLoadingAction(true));
@@ -227,6 +227,56 @@ export const updateCurrentUser = (userId, formData, showMessage) => {
   };
 };
 
+// パスワード変更
+export const changePassword = (
+  showMessage,
+  previousPassword,
+  password,
+  passwordConfirmation
+) => {
+  return async (dispatch) => {
+    if (password !== passwordConfirmation) {
+      showMessage({
+        title: "パスワードと確認用パスワードが一致しておりません",
+        status: "error",
+      });
+      return false;
+    }
+    dispatch(nowLoadingAction(true));
+    await axios
+      .post(
+        "http://localhost:3001/api/v1/user/accounts/password",
+        {
+          user: {
+            previous_password: previousPassword,
+            password: password,
+            password_confirmation: passwordConfirmation,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        if (response.data.message) {
+          showMessage({ title: response.data.message, status: "error" });
+        } else {
+          dispatch(setCurrentUserAction(response.data));
+          showMessage({
+            title: "パスワードの変更に成功しました",
+            status: "success",
+          });
+          dispatch(push("/posts"));
+        }
+      })
+      .catch((response) => {
+        console.log("ERROR");
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
+      });
+  };
+};
+
+// アカウント削除
 export const deleteAccount = (password, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
@@ -241,7 +291,6 @@ export const deleteAccount = (password, showMessage) => {
         { withCredentials: true }
       )
       .then((response) => {
-        console.log(response.data);
         if (response.data === "ok") {
           dispatch(setCurrentUserAction([]));
           showMessage({

@@ -19,6 +19,7 @@ import SearchResult from '../components/pages/SearchResult'
 import Room from '../components/pages/Room'
 import Rooms from '../components/pages/mypage/Rooms'
 import Notifications from '../components/pages/mypage/Notifications'
+import PasswordEdit from '../components/pages/mypage/PasswordEdit'
 
 export const Router = () => {
   return(
@@ -33,6 +34,7 @@ export const Router = () => {
           <Route path={"/posts/show/:id"} component={PostShow} />
           <Route path={"/posts/edit/:id"} component={PostEdit} />
           <Route path={"/mypage/:id/edit"} component={ProfileEdit} />
+          <Route path={"/mypage/:id/password"} component={PasswordEdit} />
           <Route path={"/mypage/:id/posts"} component={MyPosts} />
           <Route path={"/mypage/:id/follows"} component={Follows} />
           <Route path={"/mypage/:id/followers"} component={Followers} />

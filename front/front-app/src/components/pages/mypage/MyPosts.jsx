@@ -35,6 +35,16 @@ export const MyPosts = () => {
   }
   return(
     <>
+      <DefaultFlex
+        mb="4"
+      >
+        <DefaultTitleText
+          ml="auto"
+          mr="auto"
+        >
+          投稿一覧
+        </DefaultTitleText>
+      </DefaultFlex>
     { loadingState? (
       <Center  h="100vh" w={{base: "50vh", md: "100vh"}}>
         <Spinner/>
@@ -42,16 +52,6 @@ export const MyPosts = () => {
     ): (
       <>
         <Box>
-          <DefaultFlex
-            mb="4"
-          >
-            <DefaultTitleText
-            ml="auto"
-            mr="auto"
-            >
-              投稿一覧
-            </DefaultTitleText>
-          </DefaultFlex>
           {posts.length > 0 && (
             <Box mr="2" ml="2" mb="2">
               {

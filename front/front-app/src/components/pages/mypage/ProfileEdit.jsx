@@ -8,6 +8,7 @@ import {
   Input,
   Textarea,
   Button,
+  Link,
 } from "@chakra-ui/react"
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -19,7 +20,7 @@ import { Center } from '@chakra-ui/layout';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import useMessage from '../../../hooks/useMessage';
 import { loggedInStatus, updateCurrentUser } from '../../../reducks/currentUser/operations';
-import { DefaultFlex, DefaultImage } from '../../../assets/style/chakraStyles';
+import { DefaultFlex, DefaultImage, DefaultTitleText } from '../../../assets/style/chakraStyles';
 import useLoadingState from '../../../hooks/useLoadingState';
 import { nowLoadingAction } from '../../../reducks/loading/actions';
 import DeleteButton from '../../atoms/button/DeleteButton';
@@ -113,9 +114,17 @@ export const ProfileEdit = ()=> {
     setIsOpen(true)
   },[])
 
+  const toPasswordEdit = useCallback(()=> {
+    dispatch(push(`/mypage/${userId.id}/password`))
+  },[dispatch, userId.id])
+
 
   return(
     <>
+      <DefaultFlex mb="4" justifyContent="space-between">
+        <DefaultTitleText>個人情報修正</DefaultTitleText>
+        <Link onClick={toPasswordEdit} fontSize={{base: "xs", md: "md"}}>パスワード変更</Link>
+      </DefaultFlex>
       {
         loadingState? (
           <Center  h="100vh" w={{base: "50vh", md: "100vh"}}>
