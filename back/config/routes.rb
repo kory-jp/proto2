@@ -14,6 +14,7 @@ Rails.application.routes.draw do
           end
           collection do
             patch :update
+            post :password
             post :destroy
             resource :relationships, only: [:create] do
               post :following_by

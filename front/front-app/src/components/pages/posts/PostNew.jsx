@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import {newPost} from '../../../reducks/posts/operations'
 import useMessage from '../../../hooks/useMessage';
 import useLoadingState from '../../../hooks/useLoadingState';
-import { DefaultBox, DefaultImage } from '../../../assets/style/chakraStyles'
+import { DefaultBox, DefaultFlex, DefaultImage, DefaultTitleText } from '../../../assets/style/chakraStyles'
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
 import { getTags } from '../../../reducks/tags/operations';
 import SelectComponent from '../../organisms/layout/SelectComponent';
@@ -82,78 +82,83 @@ export const PostNew = ()=> {
 
 
   return(
-    <DefaultBox>
-      <Stack>
-        <FormControl id="title">
-          <FormLabel fontSize={{base: "sm", md: "lg"}}>タイトル</FormLabel>
-          <Input 
-            type="title"
-            name="title"
-            placeholder="タイトルを入力してください"
-            fontSize={{base: "sm", md: "lg"}}
-            required={true}
-            value={title}
-            onChange={inputTitle}
-          />
-        </FormControl>
-        <FormControl id="tag">
-          <FormLabel fontSize={{base: "sm", md: "lg"}}>タグ</FormLabel>
-          <SelectComponent 
-            onChange={selectTags}
-            options={options} 
-          />
-        </FormControl>
-        <FormControl id="content">
-          <FormLabel fontSize={{base: "sm", md: "lg"}}>本文</FormLabel>
-          <Textarea
-            type="content"
-            name="content"
-            rows="10"
-            placeholder="本文を入力してください"
-            fontSize={{base: "sm", md: "lg"}}
-            required={true}
-            value={content}
-            onChange={inputContent}
-          />
-        </FormControl>
-        <FormControl id="image">
-          <FormLabel>
-            <AddAPhotoIcon />
-          </FormLabel>
-          <Input
-            type="file"
-            name="image"
-            accept="image/*, .jpg, .jpeg, .png"
-            multiple={true}
-            onChange={inputImage}
-            display="none"
-          />
-        </FormControl>
-        {
-          preview ?
-          <Box>
-            <Button
-              onClick={onClickCancelImage}
-            >
-              <CancelIcon />
-            </Button>
-            <DefaultImage 
-              src={preview}
-              alt="preview img"
+    <>
+      <DefaultFlex mb="4">
+        <DefaultTitleText ml="auto" mr="auto">新規投稿画面</DefaultTitleText>
+      </DefaultFlex>
+      <DefaultBox>
+        <Stack>
+          <FormControl id="title">
+            <FormLabel fontSize={{base: "sm", md: "lg"}}>タイトル</FormLabel>
+            <Input 
+              type="title"
+              name="title"
+              placeholder="タイトルを入力してください"
+              fontSize={{base: "sm", md: "lg"}}
+              required={true}
+              value={title}
+              onChange={inputTitle}
             />
-          </Box> : null
-        }
-        <PrimaryButton
-          type="submit"
-          onClick={()=> dispatch(newPost(formData, showMessage))}
-          isLoading={loadingState}
-          disabled={title==="" || content===""}
-          fontSize={{base: "sm", md: "lg"}}
-        >
-          投稿
-        </PrimaryButton>
-      </Stack>
-    </DefaultBox>
+          </FormControl>
+          <FormControl id="tag">
+            <FormLabel fontSize={{base: "sm", md: "lg"}}>タグ</FormLabel>
+            <SelectComponent 
+              onChange={selectTags}
+              options={options} 
+            />
+          </FormControl>
+          <FormControl id="content">
+            <FormLabel fontSize={{base: "sm", md: "lg"}}>本文</FormLabel>
+            <Textarea
+              type="content"
+              name="content"
+              rows="10"
+              placeholder="本文を入力してください"
+              fontSize={{base: "sm", md: "lg"}}
+              required={true}
+              value={content}
+              onChange={inputContent}
+            />
+          </FormControl>
+          <FormControl id="image">
+            <FormLabel>
+              <AddAPhotoIcon />
+            </FormLabel>
+            <Input
+              type="file"
+              name="image"
+              accept="image/*, .jpg, .jpeg, .png"
+              multiple={true}
+              onChange={inputImage}
+              display="none"
+            />
+          </FormControl>
+          {
+            preview ?
+            <Box>
+              <Button
+                onClick={onClickCancelImage}
+              >
+                <CancelIcon />
+              </Button>
+              <DefaultImage 
+                src={preview}
+                alt="preview img"
+              />
+            </Box> : null
+          }
+          <PrimaryButton
+            type="submit"
+            onClick={()=> dispatch(newPost(formData, showMessage))}
+            isLoading={loadingState}
+            disabled={title==="" || content===""}
+            fontSize={{base: "sm", md: "lg"}}
+          >
+            投稿
+          </PrimaryButton>
+        </Stack>
+      </DefaultBox>
+    </>
   )
 }
 

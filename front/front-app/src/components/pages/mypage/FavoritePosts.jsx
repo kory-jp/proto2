@@ -35,6 +35,16 @@ export const FavoritePosts = () => {
   }
   return(
     <>
+      <DefaultFlex
+        mb="4"
+      >
+        <DefaultTitleText
+          ml="auto"
+          mr="auto"
+        >
+          高評価記事一覧
+        </DefaultTitleText>
+      </DefaultFlex>
     { loadingState? (
       <Center  h="100vh" w={{base: "50vh", md: "100vh"}}>
         <Spinner/>
@@ -42,16 +52,6 @@ export const FavoritePosts = () => {
     ): (
       <>
         <Box>
-          <DefaultFlex
-            mb="4"
-          >
-            <DefaultTitleText
-              ml="auto"
-              mr="auto"
-            >
-              高評価記事一覧
-            </DefaultTitleText>
-          </DefaultFlex>
         {posts.length > 0 && (
           <Box mr="2" ml="2" mb="2">
             {
