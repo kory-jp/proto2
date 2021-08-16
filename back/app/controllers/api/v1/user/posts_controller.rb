@@ -1,70 +1,13 @@
 class Api::V1::User::PostsController < Api::V1::User::Base
   
   def index
-    posts = Post.page(params[:page] ||=1).per(10).order(created_at: "DESC")
-    page_length = Post.page(1).per(10).total_pages
-    postsArray = []
-    posts.each do |post|
-      postObj = {}
-      postObj["id"] = post.id
-      postObj["user_id"] = post.user_id
-      postObj["title"] = post.title
-      postObj["content"] = post.content
-      postObj["image"] = post.image
-      postObj["created_at"] = post.created_at.strftime('%Y/%m/%d')
-      tagArray = []
-      tags = post.tags
-      tags.each do |tag|
-        tagObj = {}
-        tagObj["id"] = tag.id
-        tagObj["value"] = tag.value
-        tagObj["label"] = tag.label
-        tagArray.push(tagObj)
-      end
-      postObj["tags"] = tagArray
-      user = User.find_by(id: post.user_id)
-      user_id = user.id
-      user_name = user.name
-      postObj["name"] = user_name
-      user_nickname = user.nickname
-      postObj["nickname"] = user_nickname
-      postsArray.push(postObj)
-    end
-    data = {
-      'posts': postsArray,
-      'page_length': page_length
-    }
-    render json: data
+    @posts = Post.page(params[:page] ||=1).per(10).order(created_at: "DESC")
+    render 'index', formats: :json, handlers: 'jbuilder'
   end
 
   def show
-    post = Post.find(params[:id])
-    postObj = {}
-    postObj["id"] = post.id
-    postObj["user_id"] = post.user_id
-    postObj["title"] = post.title
-    postObj["content"] = post.content
-    postObj["image"] = post.image
-    postObj["created_at"] = post.created_at.strftime('%Y/%m/%d')
-    tagArray = []
-    tags = post.tags
-    tags.each do |tag|
-      tagObj = {}
-      tagObj["id"] = tag.id
-      tagObj["value"] = tag.value
-      tagObj["label"] = tag.label
-      tagArray.push(tagObj)
-    end
-    postObj["tags"] = tagArray
-    user = User.find_by(id: post.user_id)
-    user_name = user.name
-    postObj["name"] = user_name
-    user_nickname = user.nickname
-    postObj["nickname"] = user_nickname
-    user_icon = user.image
-    postObj["user_icon"] = user_icon
-    render json: postObj
-
+    @post = Post.find(params[:id])
+    render 'show', formats: :json, handlers: 'jbuilder'
   end
 
   def create

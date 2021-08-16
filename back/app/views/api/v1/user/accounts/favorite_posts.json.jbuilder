@@ -19,4 +19,4 @@ json.posts do
   end
 end
 
-json.page_length @page_length
+json.page_length @posts.total_pages

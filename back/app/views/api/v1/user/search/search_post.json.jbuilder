@@ -14,6 +14,9 @@ json.posts do
         json.label(tag.label)
       end
     end
+    user = User.find_by(id: post.user_id)
+    json.name(user.name)
+    json.nickname(user.nickname)
   end
 end
 

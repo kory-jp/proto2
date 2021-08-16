@@ -2,14 +2,12 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
 
   def myposts
     @posts = current_user.posts.page(params[:page] ||=1).per(10).order(created_at: "DESC")
-    @page_length = @posts.page(1).per(10).total_pages
     render 'myposts', formats: :json, handlers: 'jbuilder'
   end
 
   def favorite_posts
     favorite_posts = current_user.favorite_posts
     @posts = favorite_posts.page(params[:page] ||=1).per(10).order(created_at: "DESC")
-    @page_length = @posts.page(1).per(10).total_pages
     render 'favorite_posts', formats: :json, handlers: 'jbuilder'
   end
 
@@ -39,14 +37,12 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
   end
 
   def follows
-    @users = current_user.followings
-    @page_length = @users.page(1).per(10).total_pages
+    @users = current_user.followings.page(1).per(10)
     render 'follows', formats: :json, handlers: 'jbuilder'
   end
 
   def followers
-    @users = current_user.followers
-    @page_length = @users.page(1).per(10).total_pages
+    @users = current_user.followers.page(1).per(10)
     render 'followers', formats: :json, handlers: 'jbuilder'
   end
 

@@ -29,12 +29,12 @@ export const SearchResult = () => {
   const returnTop = useReturnTop()
   const {sumPage, setSumPage, queryPage} = usePagination()
 
-  const SearchKeywordGetResults = useCallback(() => {
+  const SearchKeywordGetResults = useCallback((queryPage) => {
     return async (dispatch) => {
       dispatch(nowLoadingAction(true));
       axios
         .post(
-          "http://localhost:3001/api/v1/user/search",
+          `http://localhost:3001/api/v1/user/search/?page=${queryPage}`,
           {
             search: {
               model: model,
@@ -68,8 +68,8 @@ export const SearchResult = () => {
 
   useEffect(()=> {
     dispatch(loggedInStatus(showMessage))
-    dispatch(SearchKeywordGetResults())
-  },[dispatch, SearchKeywordGetResults, showMessage])
+    dispatch(SearchKeywordGetResults(queryPage))
+  },[dispatch, SearchKeywordGetResults, showMessage, queryPage])
 
   const posts = useSelector((state)=> state.posts.list)
   const users = useSelector((state)=> state.users.list)

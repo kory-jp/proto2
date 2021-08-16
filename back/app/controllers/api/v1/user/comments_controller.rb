@@ -1,27 +1,8 @@
 class Api::V1::User::CommentsController < Api::V1::User::Base
   def comments_index
     post = Post.find(params[:id])
-    comments = post.comments.page(params[:page] ||=1).per(10)
-    page_length = comments.page(1).per(10).total_pages
-    commentsArray = []
-    comments.each do |comment|
-      commentObj = {}
-      commentObj["id"] = comment.id
-      commentObj["post_id"] = comment.post_id
-      commentObj["user_id"] = comment.user_id
-      user = User.find_by(id: comment.user_id)
-      commentObj["name"] = user.name
-      commentObj["nickname"] = user.nickname
-      commentObj["icon"] = user.image
-      commentObj["comment"] = comment.comment
-      commentObj["created_at"] = comment.created_at.strftime('%Y/%m/%d')
-      commentsArray.push(commentObj)
-    end
-    data = {
-      'comments': commentsArray,
-      'page_length': page_length
-    }
-    render json: data
+    @comments = post.comments.page(params[:page] ||=1).per(10)
+    render 'comments_index', formats: :json, handlers: 'jbuilder'
   end
 
   def create
