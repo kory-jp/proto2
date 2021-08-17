@@ -195,7 +195,7 @@ export const newPost = (formData, showMessage) => {
   };
 };
 
-export const showPost = (postId) => {
+export const showPost = (postId, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
     axios
@@ -203,21 +203,27 @@ export const showPost = (postId) => {
         withCredentials: true,
       })
       .then((response) => {
-        const post = response.data;
-        dispatch(
-          setPostAction({
-            id: post.id,
-            user_id: post.user_id,
-            name: post.name,
-            nickname: post.nickname,
-            userIcon: post.user_icon.url,
-            title: post.title,
-            content: post.content,
-            image: post.image.url,
-            created_at: post.created_at,
-            tags: post.tags,
-          })
-        );
+        if (!response.data.message) {
+          const post = response.data;
+          dispatch(
+            setPostAction({
+              id: post.id,
+              user_id: post.user_id,
+              name: post.name,
+              nickname: post.nickname,
+              userIcon: post.user_icon.url,
+              title: post.title,
+              content: post.content,
+              image: post.image.url,
+              created_at: post.created_at,
+              tags: post.tags,
+            })
+          );
+        } else {
+          const res = response.data;
+          showMessage({ title: res.message, status: res.status });
+          dispatch(push("/posts"));
+        }
       })
       .catch((error) => {
         console.log("error:", error);

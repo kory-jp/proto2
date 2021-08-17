@@ -10,10 +10,14 @@ export const getComments = (postId, setSumPage, queryPage) => {
         { withCredentials: true }
       )
       .then((response) => {
-        const comments = response.data.comments;
-        const page_length = response.data.page_length;
-        dispatch(getCommentsAction(comments));
-        setSumPage(page_length);
+        if (!response.data.message) {
+          const comments = response.data.comments;
+          const page_length = response.data.page_length;
+          dispatch(getCommentsAction(comments));
+          setSumPage(page_length);
+        } else {
+          dispatch(push("/posts"));
+        }
       })
       .catch((error) => {
         console.log("error res:", error);
