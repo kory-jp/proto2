@@ -29,7 +29,7 @@ RSpec.describe "Api::V1::User::Entries", type: :request do
             id: @other_user.id
           } 
           res = JSON.parse(response.body)
-          expect(res["entries"]["isRoom"]).to eq(true)
+          expect(res["entries"]["is_room"]).to eq(true)
           expect(res["entries"]["room_id"]).to eq(@room.id)
           expect(response).to have_http_status(:ok)
         end
@@ -45,7 +45,7 @@ RSpec.describe "Api::V1::User::Entries", type: :request do
             id: @another_user.id
           } 
           res = JSON.parse(response.body)
-          expect(res["entries"]["isRoom"]).to eq(false)
+          expect(res["entries"]["is_room"]).to eq(false)
           expect(response).to have_http_status(:ok)
         end
       end
