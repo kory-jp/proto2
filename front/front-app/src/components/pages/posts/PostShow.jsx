@@ -21,8 +21,8 @@ export const PostShow = ()=> {
 
   useEffect(()=> {
     dispatch(loggedInStatus(showMessage))
-    dispatch(showPost(postId))
-    dispatch(getComments(postId, setSumPage, queryPage))
+    dispatch(showPost(postId, showMessage))
+    dispatch(getComments(postId, setSumPage, queryPage, showMessage))
     dispatch(confirmFavorited(postId))
   },[postId, dispatch, queryPage, setSumPage, showMessage])
 

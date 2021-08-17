@@ -1,4 +1,5 @@
 import axios from "axios";
+import { push } from "connected-react-router";
 import { setFavoriteAction } from "./actions";
 
 export const confirmFavorited = (postId) => {
@@ -11,12 +12,16 @@ export const confirmFavorited = (postId) => {
         }
       )
       .then((response) => {
-        const status = response.data;
-        dispatch(
-          setFavoriteAction({
-            status: status,
-          })
-        );
+        if (!response.data.message) {
+          const status = response.data;
+          dispatch(
+            setFavoriteAction({
+              status: status,
+            })
+          );
+        } else {
+          dispatch(push("/posts"));
+        }
       })
       .catch((error) => {
         console.log("error res:", error);
