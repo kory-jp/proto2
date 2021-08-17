@@ -167,13 +167,17 @@ RSpec.describe "Api::V1::User::Posts", type: :request do
     describe "削除" do
       context "削除権限がある場合" do
         example "削除に成功" do
-          expect(delete "#{POST_URL}#{@post.id}").to eq(200)
+          expect(delete "#{POST_URL}#{@post.id}")
+          res = JSON.parse(response.body)
+          expect(res["status"]).to eq(200)
         end
       end
 
       context "削除権限がない場合" do
         example "削除に失敗" do
-          expect(delete "#{POST_URL}#{@other_post.id}").to eq(400)
+          expect(delete "#{POST_URL}#{@other_post.id}")
+          res = JSON.parse(response.body)
+          expect(res["status"]).to eq(400)
         end
       end
     end

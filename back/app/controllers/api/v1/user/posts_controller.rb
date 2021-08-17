@@ -35,7 +35,7 @@ class Api::V1::User::PostsController < Api::V1::User::Base
     if post.save
       render json: post
     else
-      render status: 400
+      render html: {status: 400}
     end
   end
 
@@ -43,10 +43,10 @@ class Api::V1::User::PostsController < Api::V1::User::Base
     post = Post.find(params[:id]) 
     if current_user.id === post.user_id
       if post.destroy
-        render status: 200
+        render json: {status: 200}
       end
     else
-      render status: 400
+      render json: {status: 400}
     end
   end
 

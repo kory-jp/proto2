@@ -6,7 +6,7 @@ class Api::V1::User::RegistrationsController < Api::V1::User::Base
       login!
       render json: @user
     else
-      render status: 400
+      render json: {status: 400}
     end
   end
 

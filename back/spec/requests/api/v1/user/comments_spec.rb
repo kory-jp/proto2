@@ -95,14 +95,16 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
       context "作成者が削除を行う場合" do
         example "成功" do
           delete "#{COMMENT_URL}#{@current_user_comment.id}"
-          expect(response.status).to eq(200)
+          res = JSON.parse(response.body)
+          expect(res["status"]).to eq(200)
         end
       end
 
       context "作成者以外が削除を行う場合" do
         example "失敗" do
           delete "#{COMMENT_URL}#{@other_user_comment.id}"
-          expect(response.status).to eq(400)
+          res = JSON.parse(response.body)
+          expect(res["status"]).to eq(400)
         end
       end
     end

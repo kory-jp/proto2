@@ -63,7 +63,7 @@ RSpec.describe "Api::V1::User::Rooms", type: :request do
         end
       end
 
-      context "パラメータにユーザーIDが含まれいない場合" do
+      context "パラメータにユーザーIDが含まれていない場合" do
         example "失敗(値を返さない)" do
           post "/api/v1/user/rooms",
           params: room_params_hash = {
@@ -71,7 +71,8 @@ RSpec.describe "Api::V1::User::Rooms", type: :request do
               user_id: ""
             }
           }
-          expect(response).to have_http_status(204)
+          res = JSON.parse(response.body)
+          expect(res["status"]).to eq(400)
         end
       end
 
@@ -83,7 +84,8 @@ RSpec.describe "Api::V1::User::Rooms", type: :request do
               user_id: @current_user.id
             }
           }
-          expect(response).to have_http_status(204)
+          res = JSON.parse(response.body)
+          expect(res["status"]).to eq(400)
         end
       end
     end

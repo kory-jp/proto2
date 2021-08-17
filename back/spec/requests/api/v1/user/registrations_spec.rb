@@ -37,7 +37,8 @@ RSpec.describe "Api::V1::User::Registrations", type: :request do
       example "メールアドレスが未入力の場合、失敗" do
         @user_registration_params[:user][:email] = nil
         post "/api/v1/user/signup", params: @user_registration_params
-        expect(response.status).to eq(400)
+        res = JSON.parse(response.body)
+        expect(res["status"]).to eq(400)
       end
 
       example "メールアドレスが重複している場合、失敗" do
@@ -51,7 +52,8 @@ RSpec.describe "Api::V1::User::Registrations", type: :request do
           }
         }
         post "/api/v1/user/signup", params: @other_user_registration_params
-        expect(response.status).to eq(400)
+        res = JSON.parse(response.body)
+        expect(res["status"]).to eq(400)
       end
     end
   end

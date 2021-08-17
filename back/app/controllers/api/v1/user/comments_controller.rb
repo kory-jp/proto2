@@ -33,9 +33,9 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
     comment = Comment.find(params[:id])
     if current_user.id == comment.user_id
       comment.destroy
-      render status: 200
+      render  json: {status: 200}
     else
-      render status: 400
+      render json: {status: 400}
     end
   end
 

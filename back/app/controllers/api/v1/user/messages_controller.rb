@@ -14,6 +14,8 @@ class Api::V1::User::MessagesController < Api::V1::User::Base
           @message.create_notification_message!(current_user, user)
         end
       end
+    else
+      render json: {status: 400}
     end
   end
 end
