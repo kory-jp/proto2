@@ -7,4 +7,4 @@ json.followers do
     json.image(user.image)
   end
 end
-json.page_length @page_length
+json.page_length @users.total_pages

@@ -1,7 +1,7 @@
 class Api::V1::User::RoomsController < Api::V1::User::Base
   def index
     @entries = current_user.entries.page(params[:page] ||=1).per(10).order(created_at: "DESC")
-    render 'index', formats: :json, handlers: 'jbuilder'
+    render 'index', handlers: 'jbuilder'
   end
 
   def create
@@ -13,7 +13,7 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
         if current_user_entry.save
           if users_entry.save
             @entries = @room.entries
-            render 'create', formats: :json, handlers: 'jbuilder'
+            render 'create', handlers: 'jbuilder'
           end
         end
       end
@@ -24,7 +24,7 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
     @room = Room.find(params[:id])
     if Entry.where(user_id: current_user.id, room_id: @room.id).present?
       @messages = @room.messages.page(params[:page] ||=1).per(10).order("created_at ASC")
-      render 'show', formats: :json, handlers: 'jbuilder'
+      render 'show', handlers: 'jbuilder'
     end
   end
 

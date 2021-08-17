@@ -6,7 +6,7 @@ class Api::V1::User::MessagesController < Api::V1::User::Base
         if @message.save
           @room = Room.find(params[:message][:room_id])
           @messages = @room.messages.page(params[:page] ||=1).per(10).order("created_at ASC")
-          render 'create', formats: :json, handlers: 'jbuilder'
+          render 'create', handlers: 'jbuilder'
 
           current_user = User.find(params[:message][:user_id])
           entry = Entry.where(room_id: @room.id).where.not(user_id: current_user.id)

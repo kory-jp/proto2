@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  namespace :api do
+  namespace :api, {format: 'json'} do
     namespace :v1 do
       namespace :user do
         post '/signup', to: "registrations#signup"
