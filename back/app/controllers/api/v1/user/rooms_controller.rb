@@ -23,10 +23,7 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
   def show
     @room = Room.find(params[:id])
     if Entry.where(user_id: current_user.id, room_id: @room.id).present?
-      @messages = @room.messages.page(params[:page] ||=1).per(10).order("created_at DESC").reverse
-      # "@messages.total_pages"=>ActionView::Template::Error(undefined method `total_pages' for)が発生
-      messagePage = Message.where(room_id: params[:id])
-      @page_length = messagePage.page(1).per(10).total_pages
+      @messages = @room.messages.page(params[:page] ||=1).per(10).order("created_at ASC")
       render 'show', formats: :json, handlers: 'jbuilder'
     end
   end

@@ -5,10 +5,7 @@ class Api::V1::User::MessagesController < Api::V1::User::Base
         @message = Message.create(params.require(:message).permit(:user_id, :room_id, :content, :image))
         if @message.save
           @room = Room.find(params[:message][:room_id])
-          @messages = @room.messages.page(params[:page] ||=1).per(10).order("created_at DESC").reverse
-          # "@messages.total_pages"=>ActionView::Template::Error(undefined method `total_pages' for)が発生
-          messagePage = Message.where(room_id: params[:message][:room_id])
-          @page_length = messagePage.page(1).per(10).total_pages
+          @messages = @room.messages.page(params[:page] ||=1).per(10).order("created_at ASC")
           render 'create', formats: :json, handlers: 'jbuilder'
 
           current_user = User.find(params[:message][:user_id])

@@ -24,6 +24,5 @@ json.room do
       json.icon(user.image)
     end
   end
-  # "@messages.total_pages"=>ActionView::Template::Error(undefined method `total_pages' for)が発生
-  json.page_length @page_length
+  json.page_length @messages.total_pages
 end
