@@ -2,6 +2,8 @@ json.posts do
   json.array! @posts do |post|
     json.id(post.id)
     json.user_id(post.user_id)
+    user = User.find_by(id: post.user_id)
+    json.nickname(user.nickname)
     json.title(post.title)
     json.content(post.content)
     json.image(post.image)
