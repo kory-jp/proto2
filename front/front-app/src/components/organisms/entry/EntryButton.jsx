@@ -27,7 +27,7 @@ export const EntryButton = () => {
         }
       )
       .then((response) => {
-        const res = response.data.entries.isRoom
+        const res = response.data.entries.is_room
         if (res) {
           setIsRoom(res)
           setRoomId(response.data.entries.room_id)

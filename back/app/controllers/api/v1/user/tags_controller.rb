@@ -1,7 +1,7 @@
 class Api::V1::User::TagsController < Api::V1::User::Base
   def index
-  tags = Tag.all
-  render json: tags
+    tags = Tag.all
+    render json: tags
   end
 
   def show
