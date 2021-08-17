@@ -2,13 +2,13 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
 
   def myposts
     @posts = current_user.posts.page(params[:page] ||=1).per(10).order(created_at: "DESC")
-    render 'myposts', formats: :json, handlers: 'jbuilder'
+    render 'myposts', handlers: 'jbuilder'
   end
 
   def favorite_posts
     favorite_posts = current_user.favorite_posts
     @posts = favorite_posts.page(params[:page] ||=1).per(10).order(created_at: "DESC")
-    render 'favorite_posts', formats: :json, handlers: 'jbuilder'
+    render 'favorite_posts', handlers: 'jbuilder'
   end
 
   def edit
@@ -38,12 +38,12 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
 
   def follows
     @users = current_user.followings.page(1).per(10)
-    render 'follows', formats: :json, handlers: 'jbuilder'
+    render 'follows', handlers: 'jbuilder'
   end
 
   def followers
     @users = current_user.followers.page(1).per(10)
-    render 'followers', formats: :json, handlers: 'jbuilder'
+    render 'followers', handlers: 'jbuilder'
   end
 
   def destroy

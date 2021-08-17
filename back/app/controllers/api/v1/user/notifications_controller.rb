@@ -14,7 +14,7 @@ class Api::V1::User::NotificationsController < Api::V1::User::Base
     @notifications.where(checked: false).each do |notification|
       notification.update(checked: true)
     end
-    render 'index', formats: :json, handlers: 'jbuilder'
+    render 'index', handlers: 'jbuilder'
   end
 
   def destroy
@@ -22,7 +22,7 @@ class Api::V1::User::NotificationsController < Api::V1::User::Base
     notification.destroy
 
     @notifications = current_user.passive_notifications.page(params[:page] ||=1).per(10)
-    render 'index', formats: :json, handlers: 'jbuilder'
+    render 'index', handlers: 'jbuilder'
   end
 
   def destroy_all

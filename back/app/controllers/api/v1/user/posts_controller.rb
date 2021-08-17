@@ -2,12 +2,12 @@ class Api::V1::User::PostsController < Api::V1::User::Base
   
   def index
     @posts = Post.page(params[:page] ||=1).per(10).order(created_at: "DESC")
-    render 'index', formats: :json, handlers: 'jbuilder'
+    render 'index', handlers: 'jbuilder'
   end
 
   def show
     @post = Post.find(params[:id])
-    render 'show', formats: :json, handlers: 'jbuilder'
+    render 'show', handlers: 'jbuilder'
   end
 
   def create

@@ -7,5 +7,4 @@ json.follows do
     json.image(user.image)
   end
 end
-#@users.total_pages=> ActionView::Template::Error (undefined method `total_pages' )
-json.page_length @page_length
+json.page_length @users.total_pages
