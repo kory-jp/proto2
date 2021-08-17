@@ -8,27 +8,27 @@ class Api::V1::User::EntriesController < Api::V1::User::Base
       current_user_entries.each do |current_user_entry|
         user_entries.each do |user_entry|
           if current_user_entry.room_id == user_entry.room_id
-            @isRoom = true
+            @is_room = true
             render json: {
               entries: {
-                isRoom: true,
+                is_room: true,
                 room_id: current_user_entry.room_id,
               }
             }
           end
         end
       end
-      unless @isRoom
+      unless @is_room
         render json: {
           entries: {
-            isRoom: false,
+            is_room: false,
           }
         }
       end
     else
       render json: {
         entries: {
-          isRoom: false,
+          is_room: false,
         }
       }
     end
