@@ -6,7 +6,7 @@ export const getComments = (postId, setSumPage, queryPage) => {
   return async (dispatch) => {
     axios
       .get(
-        `http://localhost:3001/api/v1/user/comments/${postId.id}/comments_index?page=${queryPage}`,
+        `http://localhost:3001/api/v1/user/posts/${postId.id}/comments?page=${queryPage}`,
         { withCredentials: true }
       )
       .then((response) => {
@@ -29,7 +29,7 @@ export const newComment = (showMessage, postId, currentUserId, comment) => {
   return async (dispatch) => {
     await axios
       .post(
-        "http://localhost:3001/api/v1/user/comments",
+        `http://localhost:3001/api/v1/user/posts/${postId.id}/comments`,
         {
           comment: {
             post_id: postId,
@@ -65,7 +65,6 @@ export const editComments = (commentId) => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response);
         const comments = response.data.comments;
         dispatch(setCommentAction(comments));
       })
