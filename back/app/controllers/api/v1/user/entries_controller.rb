@@ -2,6 +2,7 @@ class Api::V1::User::EntriesController < Api::V1::User::Base
 
   def check
     user = User.find(params[:id])
+    is_room = false
     current_user_entries = Entry.where(user_id: current_user.id)
     user_entries = Entry.where(user_id: user.id)
     unless user.id == current_user.id
