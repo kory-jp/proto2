@@ -52,8 +52,8 @@ export const createFollowing = (userId) => {
 export const destroyFollowing = (userId) => {
   return async (dispatch) => {
     axios
-      .patch(
-        "http://localhost:3001/api/v1/user/accounts/relationships",
+      .delete(
+        `http://localhost:3001/api/v1/user/accounts/relationships?user_id=${userId.id}`,
         { user_id: userId.id },
         {
           withCredentials: true,

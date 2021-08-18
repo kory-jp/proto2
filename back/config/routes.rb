@@ -18,7 +18,7 @@ Rails.application.routes.draw do
             post :destroy
             resource :relationships, only: [:create] do
               post :following_by
-              patch :destroy
+              delete :destroy
             end
             get :follows
             get :followers
@@ -41,12 +41,13 @@ Rails.application.routes.draw do
               get :favorited_by
             end
           end
-        end
-        resources :comments, only: [:create, :edit, :update, :destroy] do
-          member do
-            get :comments_index
+          resource :comments, only: [:create]  do
+            member do
+              get :index
+            end
           end
         end
+        resources :comments, only: [ :edit, :update, :destroy] 
         resources :tags, only: [:index, :show] do
           collection do
             post :search

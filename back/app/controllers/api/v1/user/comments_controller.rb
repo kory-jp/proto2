@@ -1,6 +1,7 @@
 class Api::V1::User::CommentsController < Api::V1::User::Base
-  def comments_index
-    post = Post.find(params[:id])
+  # def comments_index
+  def index
+    post = Post.find(params[:post_id])
     @comments = post.comments.page(params[:page] ||=1).per(10)
     render 'comments_index', handlers: 'jbuilder'
   end

@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Comments", type: :request do
   describe "コメント" do
+    POST_URL = "/api/v1/user/posts/"
     COMMENT_URL = "/api/v1/user/comments/"
     before do
       @current_user = create(:user)
@@ -22,7 +23,7 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
 
     describe "コメント所得" do
       example "コメントを最大10件所得" do
-        get "#{COMMENT_URL}#{@post.id}/comments_index"
+        get "#{POST_URL}#{@post.id}/comments"
         res = JSON.parse(response.body)
         expect(res["comments"].length).to eq 10
         expect(res["comments"][0].keys).to eq ["id", "post_id", "user_id", "name", "nickname", "icon", "comment", "created_at"]
@@ -42,7 +43,7 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
       end
       context "必須項目が入力された場合" do
         example "成功(登録データを受け取れる)" do
-          post "#{COMMENT_URL}", params: @comment_params_hash
+          post "#{POST_URL}#{@post.id}/comments", params: @comment_params_hash
            res = JSON.parse(response.body)
            expect(res["post_id"]).to eq(@post.id)
            expect(res["user_id"]).to eq(@current_user.id)
@@ -53,7 +54,7 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
 
       context "必須項目が未入力の場合" do
         example "失敗(データを受け取れない)" do
-          post "#{COMMENT_URL}",
+          post "#{POST_URL}#{@post.id}/comments",
             params: @comment_params_hash = {
               comment: {
                 comment: ""
