@@ -20,7 +20,7 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
   
   def update
     if current_user.update(user_params)
-      render json: @current_user
+      render json: current_user
     end
   end
 
