@@ -120,14 +120,18 @@ export const PostEdit = ()=> {
       formData.append('post[tag_ids][]', tagId)
     }
     formData.append('post[content]', content)
-    if (image) formData.append('post[image]', image)
+    if (image) {
+      formData.append('user[image]', image)
+    } else if(image === null) {
+      formData.append('user[image]', "")
+    }
 
     return formData
   },[currentUserId, title, tags, content, image])
   const formData = createFormData();
 
   const onClickCancelImage = useCallback(()=> {
-    setImage(undefined)
+    setImage(null)
     setPreview('')
   },[])
 

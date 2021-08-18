@@ -103,7 +103,11 @@ export const ProfileEdit = ()=> {
     formData.append('user[nickname]', nickname)
     formData.append('user[email]', email)
     formData.append('user[introduction]', introduction)
-    if (image) formData.append('user[image]', image)
+    if (image) {
+      formData.append('user[image]', image)
+    } else if(image === null) {
+      formData.append('user[image]', null)
+    }
 
     return formData
   },[userId, name, nickname, email, introduction, image])
@@ -112,6 +116,11 @@ export const ProfileEdit = ()=> {
 
   const onClickAlertOpen = useCallback(()=> {
     setIsOpen(true)
+  },[])
+
+  const onClickCancelImage = useCallback(()=> {
+    setImage(null)
+    setPreview('')
   },[])
 
   const toPasswordEdit = useCallback(()=> {
@@ -198,7 +207,7 @@ export const ProfileEdit = ()=> {
                 preview ?
                 <Box>
                   <Button
-                    onClick={()=> setPreview('')}
+                    onClick={onClickCancelImage}
                   >
                     <CancelIcon />
                   </Button>
