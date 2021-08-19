@@ -25,12 +25,15 @@ import useLoadingState from '../../../hooks/useLoadingState';
 import { nowLoadingAction } from '../../../reducks/loading/actions';
 import DeleteButton from '../../atoms/button/DeleteButton';
 import DeleteUserAlertDialog from '../../organisms/layout/DeleteUserAlertDialog';
+import useReturnTop from '../../../hooks/useReturnTop';
+import { initialUsersAction } from '../../../reducks/users/actions';
 
 export const ProfileEdit = ()=> {
   const dispatch = useDispatch()
   const showMessage = useMessage()
   const userId = useParams()
   const loadingState = useLoadingState()
+  const returnTop = useReturnTop()
 
   const [name, setName] =  useState('');
   const [nickname, setNickname] =  useState(" ");
@@ -122,6 +125,12 @@ export const ProfileEdit = ()=> {
     setImage(null)
     setPreview('')
   },[])
+
+  const onClickUpdateCurrentUser = useCallback(()=> {
+    dispatch(updateCurrentUser(formData, showMessage))
+    returnTop()
+    dispatch(initialUsersAction({}))
+  },[dispatch,formData, returnTop, showMessage])
 
   const toPasswordEdit = useCallback(()=> {
     dispatch(push(`/mypage/${userId.id}/password`))
@@ -219,7 +228,7 @@ export const ProfileEdit = ()=> {
               }
                 <PrimaryButton
                   type="submit"
-                  onClick={()=> dispatch(updateCurrentUser(userId, formData, showMessage))}
+                  onClick={onClickUpdateCurrentUser}
                   isLoading = {loadingState}
                   disabled = {name === "" || email === ""}
                   fontSize={{base: "sm", md: "lg"}}

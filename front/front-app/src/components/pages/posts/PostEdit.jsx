@@ -68,7 +68,6 @@ export const PostEdit = ()=> {
     previewImage(event)
   }, [setImage, previewImage])
 
-
   // 編集権限者か確認、権限者でない場合はTOPページへリダレクト
   const editAuth = useCallback((postId) => {
     axios
@@ -121,9 +120,9 @@ export const PostEdit = ()=> {
     }
     formData.append('post[content]', content)
     if (image) {
-      formData.append('user[image]', image)
+      formData.append('post[image]', image)
     } else if(image === null) {
-      formData.append('user[image]', "")
+      formData.append('post[image]', null)
     }
 
     return formData

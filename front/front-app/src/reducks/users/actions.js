@@ -15,3 +15,13 @@ export const showUsersAction = (usersStatus) => {
     },
   };
 };
+
+export const INITIAL_USERS = "INITIAL_USERS";
+export const initialUsersAction = (usersStatus) => {
+  return {
+    type: INITIAL_USERS,
+    payload: {
+      ...usersStatus,
+    },
+  };
+};
