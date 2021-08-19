@@ -11,7 +11,7 @@ class Api::V1::User::SessionsController < Api::V1::User::Base
   def logout
     if current_user
       reset_session
-      $current_user = nil
+      @current_user = nil
     end
   end
   
