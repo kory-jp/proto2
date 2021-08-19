@@ -188,7 +188,7 @@ export const completedLoggedInStatus = () => {
 };
 
 // 個人情報訂正
-export const updateCurrentUser = (userId, formData, showMessage) => {
+export const updateCurrentUser = (formData, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
     axios

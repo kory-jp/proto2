@@ -14,6 +14,10 @@ export const UsersReducers = (state = initialState.users, action) => {
         ...state,
         ...action.payload,
       };
+    case Actions.INITIAL_USERS:
+      return {
+        ...action.payload,
+      };
     default:
       return state;
   }
