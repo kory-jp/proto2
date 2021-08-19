@@ -192,16 +192,9 @@ export const updateCurrentUser = (userId, formData, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
     axios
-      .patch(
-        "http://localhost:3001/api/v1/user/accounts",
-        formData,
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        },
-        { withCredentials: true }
-      )
+      .patch("http://localhost:3001/api/v1/user/accounts", formData, {
+        withCredentials: true,
+      })
       .then((response) => {
         const user = response.data;
         if (user) {
@@ -211,7 +204,7 @@ export const updateCurrentUser = (userId, formData, showMessage) => {
               nickname: user.nickname,
               email: user.email,
               introduction: user.introduction,
-              image: user.image,
+              image: user.image.url,
             })
           );
           showMessage({ title: "個人情報を修正しました", status: "success" });

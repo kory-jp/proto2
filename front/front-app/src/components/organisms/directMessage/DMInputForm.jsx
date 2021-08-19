@@ -17,7 +17,7 @@ import { updateRoom } from "../../../reducks/rooms/operations";
 
 
 export const DMInputForm = (props) => {
-  const {roomId, currentUserId, setSumPage} = props
+  const {roomId, setSumPage} = props
   const [content, setContent] =  useState('');
   const [image, setImage] =  useState();
   const loadingState = useLoadingState(false)
@@ -42,13 +42,12 @@ export const DMInputForm = (props) => {
   const createFormData = useCallback(()=> {
     const formData = new FormData();
 
-    formData.append('message[user_id]', currentUserId)
     formData.append('message[room_id]', roomId)
     formData.append('message[content]', content)
     if (image) formData.append('message[image]', image)
 
     return formData
-  },[currentUserId, roomId, content, image])
+  },[roomId, content, image])
   const formData = createFormData();
 
   const onClickCancelImage = useCallback(()=> {

@@ -54,7 +54,6 @@ export const destroyFollowing = (userId) => {
     axios
       .delete(
         `http://localhost:3001/api/v1/user/accounts/relationships?user_id=${userId.id}`,
-        { user_id: userId.id },
         {
           withCredentials: true,
         }

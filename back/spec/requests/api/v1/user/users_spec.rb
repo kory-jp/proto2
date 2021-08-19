@@ -37,15 +37,14 @@ RSpec.describe "Api::V1::User::Users", type: :request do
         before do
         # 高評価記事テストデータ1件作成
           post "/api/v1/user/posts/#{@post.id}/favorites",
-            params: @other_user_favorite_params = {
+            params: favorite_params = {
               favorites: {
-                user_id: @other_user.id,
                 post_id: @post.id,
               }
             };
         end
         example "高評価記事一覧を1件取得" do
-          get "#{USERS_URL}#{@other_user.id}/favorite_posts"
+          get "#{USERS_URL}#{@current_user.id}/favorite_posts"
           res = JSON.parse(response.body)
           expect(res["posts"].length).to eq 1
           expect(res["posts"][0].keys).to eq ["id", "user_id", "nickname", "title", "content", "image", "created_at", "tags",]
