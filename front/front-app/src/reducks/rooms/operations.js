@@ -61,18 +61,9 @@ export const getRoom = (roomId, setSumPage, queryPage) => {
 export const updateRoom = (formData, setSumPage) => {
   return async (dispatch) => {
     axios
-      .post(
-        "http://localhost:3001/api/v1/user/messages",
-        formData,
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        },
-        {
-          withCredentials: true,
-        }
-      )
+      .post("http://localhost:3001/api/v1/user/messages", formData, {
+        withCredentials: true,
+      })
       .then((response) => {
         dispatch(setRoomAction(response.data.room));
         setSumPage(response.data.page_length);

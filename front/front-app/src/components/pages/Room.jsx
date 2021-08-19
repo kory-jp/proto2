@@ -26,7 +26,7 @@ export const Room = () => {
   return(
     <>
       <DMShowArea room={room} currentUserId={currentUserId} sumPage={sumPage} queryPage={queryPage}/>
-      <DMInputForm roomId={room.id} currentUserId={currentUserId} setSumPage={setSumPage} queryPage={queryPage}/>
+      <DMInputForm roomId={room.id} setSumPage={setSumPage} queryPage={queryPage}/>
     </>
   )
 }
