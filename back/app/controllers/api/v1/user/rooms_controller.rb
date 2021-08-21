@@ -1,6 +1,7 @@
 class Api::V1::User::RoomsController < Api::V1::User::Base
   def index
-    @entries = current_user.entries.page(params[:page] ||=1).per(10).order(created_at: "DESC")
+    # @entries = current_user.entries.page(params[:page] ||=1).per(10).order(created_at: "DESC")
+    @rooms = Room.eager_load(:entries, :messages).where(entries: Entry.where(user_id: current_user.id))
     render 'index', handlers: 'jbuilder'
   end
 
@@ -13,7 +14,7 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
         if @room.save
           if current_user_entry.save
             if users_entry.save
-              @entries = @room.entries
+              @entries = @room.entries.eager_load(:user)
               render 'create', handlers: 'jbuilder'
             end
           end

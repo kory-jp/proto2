@@ -9,11 +9,10 @@ class Api::V1::User::NotificationsController < Api::V1::User::Base
     end
   end
 
+  # 通知は最大10件抽出させ、その中で未確認が含まれている場合は確認済みに変更してから、抽出分をフロントエンドへAPI通信を実行する
   def index
-    @notifications = current_user.passive_notifications.page(params[:page] ||=1).per(10)
-    @notifications.where(checked: false).each do |notification|
-      notification.update(checked: true)
-    end
+    @notifications = Notification.eager_load(:visitor).where(visited_id:current_user.id).page(params[:page] ||=1).per(10)
+    Notification.where(id: @notifications.reject{|n| n.checked}.map{|n| n.id}).update_all(checked: true)
     render 'index', handlers: 'jbuilder'
   end
 

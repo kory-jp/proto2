@@ -1,12 +1,12 @@
 class Api::V1::User::PostsController < Api::V1::User::Base
   
   def index
-    @posts = Post.page(params[:page] ||=1).per(10).order(created_at: "DESC")
+    @posts = Post.eager_load(:user, :tags).page(params[:page] ||=1).per(10).order(created_at: "DESC")
     render 'index', handlers: 'jbuilder'
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.eager_load(:user, :tags).find(params[:id])
     render 'show', handlers: 'jbuilder'
   end
 

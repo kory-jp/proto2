@@ -12,7 +12,6 @@ json.tags do
     json.label(tag.label)
   end
 end
-user = User.find_by(id: @post.user_id)
-json.name(user.name)
-json.nickname(user.nickname)
-json.user_icon(user.image)
+json.name(@post.user.name)
+json.nickname(@post.user.nickname)
+json.user_icon(@post.user.image)
