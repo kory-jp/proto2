@@ -30,7 +30,8 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
   def show
     @room = Room.find(params[:id])
     if Entry.where(user_id: current_user.id, room_id: @room.id).present?
-      @messages = @room.messages.page(params[:page] ||=1).per(10).order("created_at ASC")
+      @messages = @room.messages.eager_load(:user).page(params[:page] ||=1).per(10).order("messages.created_at DESC")
+      @entries = Entry.eager_load(:user).where(room_id: @room.id)
       render 'show', handlers: 'jbuilder'
     end
   end

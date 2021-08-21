@@ -21,5 +21,5 @@ json.room do
       json.icon(entry.user.image)
     end
   end
-  json.page_length @messages.total_pages
 end
+json.page_length @messages.total_pages
