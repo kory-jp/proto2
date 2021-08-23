@@ -15,7 +15,7 @@ json.posts do
       end
     end
     json.name(post.user.name)
-    json.nickname(user.nickname)
+    json.nickname(post.user.nickname)
   end
 end
 

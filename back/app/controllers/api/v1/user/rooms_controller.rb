@@ -1,7 +1,6 @@
 class Api::V1::User::RoomsController < Api::V1::User::Base
   def index
-    # @entries = current_user.entries.page(params[:page] ||=1).per(10).order(created_at: "DESC")
-    @rooms = Room.eager_load(:entries, :messages).where(entries: Entry.where(user_id: current_user.id))
+    @rooms = Room.eager_load(:entries).where(entries: Entry.where(user_id: current_user.id))
     render 'index', handlers: 'jbuilder'
   end
 

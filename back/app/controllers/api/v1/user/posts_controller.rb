@@ -1,7 +1,7 @@
 class Api::V1::User::PostsController < Api::V1::User::Base
   
   def index
-    @posts = Post.eager_load(:user, :tags).page(params[:page] ||=1).per(10).order(created_at: "DESC")
+    @posts = Post.eager_load(:user, :tags, :post_tag_relations).page(params[:page] ||=1).per(10).order(created_at: "DESC")
     render 'index', handlers: 'jbuilder'
   end
 

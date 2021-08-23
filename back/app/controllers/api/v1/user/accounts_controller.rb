@@ -1,7 +1,7 @@
 class Api::V1::User::AccountsController < Api::V1::User::Base
 
   def myposts
-    @posts = current_user.posts.eager_load(:tags).page(params[:page] ||=1).per(10).order(created_at: "DESC")
+    @posts = current_user.posts.eager_load(:tags, :post_tag_relations).page(params[:page] ||=1).per(10).order(created_at: "DESC")
     render 'myposts', handlers: 'jbuilder'
   end
 

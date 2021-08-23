@@ -17,7 +17,7 @@ class Api::V1::User::SearchController < Api::V1::User::Base
       keywords.each do |keyword|
         result_posts = result_posts.or(Post.where("title LIKE ?", "%#{keyword}%").or(Post.where("content LIKE ?", "%#{keyword}%")))
       end
-      @posts = result_posts.eager_load(:user, :tags).page(params[:page] ||=1).per(10).order(created_at: "DESC")
+      @posts = result_posts.eager_load(:user, :tags, :post_tag_relations).page(params[:page] ||=1).per(10).order(created_at: "DESC")
       render 'search_post', handlers: 'jbuilder'
     end
   end
