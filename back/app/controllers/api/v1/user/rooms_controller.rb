@@ -1,6 +1,11 @@
 class Api::V1::User::RoomsController < Api::V1::User::Base
+
+  # ルーム情報とユーザー情報(ログインユーザーと対話相手のユーザー)、最新のメッセージ1件をルームごとに取得して一覧表示
   def index
-    @rooms = Room.eager_load(:entries).where(entries: Entry.where(user_id: current_user.id))
+    rooms = Entry.where(user_id: current_user.id).page(params[:page] ||=1).per(10)
+    room_ids = rooms.pluck(:room_id).uniq
+    @rooms = Room.includes(entries: [:user]).where(id: room_ids).to_a
+    @total_pages = rooms.total_pages
     render 'index', handlers: 'jbuilder'
   end
 
