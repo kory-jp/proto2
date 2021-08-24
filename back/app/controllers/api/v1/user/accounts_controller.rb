@@ -1,13 +1,12 @@
 class Api::V1::User::AccountsController < Api::V1::User::Base
 
   def myposts
-    @posts = current_user.posts.page(params[:page] ||=1).per(10).order(created_at: "DESC")
+    @posts = current_user.posts.eager_load(:tags, :post_tag_relations).page(params[:page] ||=1).per(10).order(created_at: "DESC")
     render 'myposts', handlers: 'jbuilder'
   end
 
   def favorite_posts
-    favorite_posts = current_user.favorite_posts
-    @posts = favorite_posts.page(params[:page] ||=1).per(10).order(created_at: "DESC")
+    @posts = current_user.favorite_posts.eager_load(:user, :tags ).page(params[:page] ||=1).per(10).order(created_at: "DESC")
     render 'favorite_posts', handlers: 'jbuilder'
   end
 

@@ -5,7 +5,8 @@ class Api::V1::User::MessagesController < Api::V1::User::Base
         @message = Message.create(params.require(:message).permit(:room_id, :content, :image).merge(user_id: current_user.id))
         if @message.save
           @room = Room.find(params[:message][:room_id])
-          @messages = @room.messages.page(params[:page] ||=1).per(10).order("created_at ASC")
+          @entries = @room.entries.eager_load(:user)
+          @messages = @room.messages.eager_load(:user).order("messages.created_at DESC").page(params[:page] ||=1).per(10)
           render 'create', handlers: 'jbuilder'
 
           entry = Entry.where(room_id: @room.id).where.not(user_id: current_user.id)

@@ -26,7 +26,7 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
         get "#{POST_URL}#{@post.id}/comments"
         res = JSON.parse(response.body)
         expect(res["comments"].length).to eq 10
-        expect(res["comments"][0].keys).to eq ["id", "post_id", "user_id", "name", "nickname", "icon", "comment", "created_at"]
+        expect(res["comments"][0].keys).to eq ["id", "post_id", "user_id", "nickname", "icon", "comment", "created_at"]
         expect(response).to have_http_status(:ok)
       end
     end

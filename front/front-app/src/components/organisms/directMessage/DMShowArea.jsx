@@ -14,7 +14,7 @@ export const DMShowArea = (props) => {
   const returnTop = useReturnTop()
   const dispatch = useDispatch()
   const loadingState = useLoadingState()
-  const messages = room.messages
+  const messages = Array.from(room.messages).reverse()
   const users = room.users
 
   const toUserInfoPage = useCallback((user)=> {

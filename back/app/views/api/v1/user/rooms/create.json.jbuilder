@@ -3,10 +3,9 @@ json.room do
   json.messages([])
   json.users do
     json.array! @entries do |entry|
-      user = User.find_by(id: entry.user_id)  
-      json.id(user.id)
-      json.nickname(user.nickname)
-      json.icon(user.image)
+      json.id(entry.user.id)
+      json.nickname(entry.user.nickname)
+      json.icon(entry.user.image)
     end
   end
 end

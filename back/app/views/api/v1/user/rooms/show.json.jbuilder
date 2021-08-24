@@ -8,19 +8,16 @@ json.room do
       json.content(message.content)
       json.image(message.image)
       json.created_at(message.created_at.strftime('%Y/%m/%d %H:%M'))
-      user = User.find_by(id: message.user_id)
-      json.nickname(user.nickname)
-      json.icon(user.image)
+      json.nickname(message.user.nickname)
+      json.icon(message.user.image)
     end
   end
 
-  entries = @room.entries
   json.users do
-    json.array! entries do |entry|
-      user = User.find_by(id: entry.user_id)
-      json.id(user.id)
-      json.nickname(user.nickname)
-      json.icon(user.image)
+    json.array! @entries do |entry|
+      json.id(entry.user.id)
+      json.nickname(entry.user.nickname)
+      json.icon(entry.user.image)
     end
   end
 end

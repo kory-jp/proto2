@@ -29,7 +29,7 @@ RSpec.describe "Api::V1::User::Messages", type: :request do
           }
         }
         res = JSON.parse(response.body)
-        expect(res["room"].keys).to eq ["id", "messages", "users", "page_length"]
+        expect(res["room"].keys).to eq ["id", "messages", "users"]
         expect(res["room"]["id"]).to eq(@room.id)
         expect(res["room"]["messages"][0]["user_id"]).to eq(@current_user.id)
         expect(res["room"]["messages"][0]["room_id"]).to eq(@room.id)
