@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box, Stack } from "@chakra-ui/layout";
 import {
   FormControl,
@@ -16,7 +16,6 @@ import useMessage from '../../../hooks/useMessage';
 import useLoadingState from '../../../hooks/useLoadingState';
 import { DefaultBox, DefaultFlex, DefaultImage, DefaultTitleText } from '../../../assets/style/chakraStyles'
 import useGetCurrentUserId from '../../../hooks/useGetCurrentUserId';
-import { getTags } from '../../../reducks/tags/operations';
 import SelectComponent from '../../organisms/layout/SelectComponent';
 import useOptions from '../../../hooks/useOptions';
 
@@ -31,10 +30,6 @@ export const PostNew = ()=> {
   const loadingState = useLoadingState()
   const showMessage = useMessage()
   const options = useOptions()
-
-  useEffect(()=> {
-    dispatch(getTags())
-  },[dispatch])
 
   const inputTitle = useCallback((event)=> {
     setTitle(event.target.value)

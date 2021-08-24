@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Flex, Text } from '@chakra-ui/layout'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {push} from 'connected-react-router';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useDisclosure, Select } from "@chakra-ui/react"
@@ -8,9 +8,9 @@ import { Link } from '@chakra-ui/react';
 import { useLocation } from 'react-router';
 
 import {MenuDrawer} from '../../molecules/MenuDrawer';
-import { getTags } from '../../../reducks/tags/operations';
 import SearchInputForm from '../../molecules/SearchInputForm';
 import useReturnTop from '../../../hooks/useReturnTop';
+import useOptions from '../../../hooks/useOptions';
 import { nowLoadingAction } from '../../../reducks/loading/actions';
 import NotificationLink from '../notification/NotificationLink';
 
@@ -25,6 +25,7 @@ export const Header = ()=> {
   const nowKeyword = query.get("keyword")
   const nowModel = query.get("model")
   const [model, setModel] = useState('post')
+  const options = useOptions()
 
   const onChangeKeyword = useCallback((event)=> {
     setKeyword(event.target.value)
@@ -33,11 +34,6 @@ export const Header = ()=> {
   const onChangeModel = useCallback((event) => {
     setModel(event.target.value)
   },[setModel])
-
-  useEffect(()=> {
-    dispatch(getTags())
-  },[dispatch])
-  const tagOptions = useSelector((state)=> state.tags.list)
 
   const onChangeTagSearch = useCallback((event)=> {
     const tagValue = event.target.value
@@ -107,8 +103,8 @@ export const Header = ()=> {
             <Flex display={{base: "none", md: "flex"}}>
               <Select placeholder="Tag Search" mr="2" bg="white" onChange={onChangeTagSearch}>
               {
-                tagOptions.map(tagOption => (
-                  <option key={tagOption.id} value={tagOption.value} >{tagOption.label}</option>
+                options.map(option => (
+                  <option key={option.id} value={option.value} >{option.label}</option>
                   ))
                 }
               </Select>

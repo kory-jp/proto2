@@ -38,7 +38,7 @@ export const registration = (
             nickname: userNickname,
             email: email,
             password: password,
-            passwordConfirmation: passwordConfirmation,
+            password_confirmation: passwordConfirmation,
           },
         },
         { withCredentials: true }
@@ -50,8 +50,8 @@ export const registration = (
             setCurrentUserAction({
               id: userData.id,
               name: userData.name,
+              nickname: userData.nickname,
               email: userData.email,
-              password: userData.password_digest,
             })
           );
           showMessage({ title: "新規登録しました", status: "success" });
@@ -94,7 +94,6 @@ export const logIn = (email, password, showMessage) => {
               email: userData.email,
               introduction: userData.introduction,
               image: userData.image,
-              password: userData.password_digest,
             })
           );
           showMessage({ title: "ログインしました", status: "success" });

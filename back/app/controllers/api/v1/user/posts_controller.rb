@@ -11,9 +11,9 @@ class Api::V1::User::PostsController < Api::V1::User::Base
   end
 
   def create
-    post = Post.new(post_params)
-    if post.save!
-      render json: post
+    @post = Post.new(post_params)
+    if @post.save!
+      render 'create', handlers: 'jbuilder'
     end
   end
 
@@ -27,15 +27,15 @@ class Api::V1::User::PostsController < Api::V1::User::Base
   end
 
   def update
-    post = Post.find(params[:id])
+    @post = Post.find(params[:id])
     if post_params[:tag_ids] === nil
-      post.tags = []
+      @post.tags = []
     end
-    post.update!(post_params)
-    if post.save
-      render json: post
+    @post.update!(post_params)
+    if @post.save
+      render 'update', handlers: 'jbuilder'
     else
-      render html: {status: 400}
+      render json: {status: 400}
     end
   end
 

@@ -6,25 +6,21 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
   end
 
   def create
-    comment = Comment.new(comment_params)
-    if comment.save
-      render json: comment
-      post = comment.post
-      post.create_notification_comment!(current_user, comment.id)
+    @comment = Comment.new(comment_params)
+    if @comment.save
+      render 'create', handlers: 'jbuilder'
+      post = @comment.post
+      post.create_notification_comment!(current_user, @comment.id)
     end
   end
 
-  def edit
-    comment = Comment.find(params[:id])
-    render json: comment
-  end
-
   def update
-    comment = Comment.find(params[:id])
-    if comment.user_id == current_user.id
-      comment.update(comment_params)
-      if comment.save
-        render json: comment
+    @comment = Comment.find(params[:id])
+    if @comment.user_id == current_user.id
+      @comment.update(comment_params)
+      if @comment.save
+        # render json: comment
+        render 'update', handlers: 'jbuilder'
       end
     end
   end
