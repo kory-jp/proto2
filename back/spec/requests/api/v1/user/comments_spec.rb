@@ -47,7 +47,7 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
            res = JSON.parse(response.body)
            expect(res["post_id"]).to eq(@post.id)
            expect(res["user_id"]).to eq(@current_user.id)
-           expect(res["comment"]).to eq("テストコメント")
+           expect(res["comments"]).to eq("テストコメント")
            expect(response).to have_http_status(:ok)
         end
       end
@@ -60,7 +60,8 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
                 comment: ""
               }
             }
-          expect(response.body).to eq("")
+          res = JSON.parse(response.body)
+          expect(res["message"]).to eq("入力項目に誤りがあります")
         end
       end
     end
@@ -79,7 +80,7 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
            res = JSON.parse(response.body)
            expect(res["post_id"]).to eq(@post.id)
            expect(res["user_id"]).to eq(@current_user.id)
-           expect(res["comment"]).to eq("テストコメント更新")
+           expect(res["comments"]).to eq("テストコメント更新")
            expect(response).to have_http_status(:ok)
         end
       end
@@ -87,7 +88,8 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
       context "作成者でないユーザーが編集を行う場合" do
         example "失敗(データを受け取れない)" do
           patch "#{COMMENT_URL}#{@other_user_comment.id}", params: @edit_comment_params_hash
-          expect(response.body).to eq("")
+          res = JSON.parse(response.body)
+          expect(res["message"]).to eq("編集権限がありません")
         end
       end
     end

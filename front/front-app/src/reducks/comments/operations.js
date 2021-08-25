@@ -40,17 +40,21 @@ export const newComment = (showMessage, postId, currentUserId, comment) => {
         { withCredentials: true }
       )
       .then((response) => {
-        const comment = response.data;
-        dispatch(
-          setCommentAction({
-            id: comment.id,
-            postId: comment.post_id,
-            userId: comment.user_id,
-            comments: comment.comments,
-          })
-        );
-        showMessage({ title: "コメント投稿しました", status: "success" });
-        dispatch(push(`/posts/show/${postId}`));
+        if (response.data.message) {
+          showMessage({ title: response.data.message, status: "error" });
+        } else {
+          const comment = response.data;
+          dispatch(
+            setCommentAction({
+              id: comment.id,
+              postId: comment.post_id,
+              userId: comment.user_id,
+              comments: comment.comments,
+            })
+          );
+          showMessage({ title: "コメント投稿しました", status: "success" });
+          dispatch(push(`/posts/show/${postId}`));
+        }
       })
       .catch(() => {
         dispatch(console.log("error"));
@@ -73,8 +77,10 @@ export const updateComment = (commentData, comment, showMessage, returnTop) => {
         { withCredentials: true }
       )
       .then((response) => {
-        const comment = response.data;
-        if (comment) {
+        if (response.data.message) {
+          showMessage({ title: response.data.message, status: "error" });
+        } else {
+          const comment = response.data;
           dispatch(
             setCommentAction({
               id: comment.id,
@@ -86,8 +92,6 @@ export const updateComment = (commentData, comment, showMessage, returnTop) => {
           showMessage({ title: "編集完了しました", status: "success" });
           dispatch(push(`/posts/show/${commentData.post_id}`));
           returnTop();
-        } else {
-          showMessage({ title: "編集に失敗しました", status: "error" });
         }
       })
       .catch((error) => {

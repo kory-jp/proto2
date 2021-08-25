@@ -8,7 +8,7 @@ RSpec.describe "Api::V1::User::Sessions", type: :request do
         expect(user.authenticate("password")).to be_truthy
       end
 
-      example "謝ったパスワードならfalseを返す" do
+      example "誤ったパスワードならfalseを返す" do
         user = build(:user)
         expect(user.authenticate("pass")).to be_falsey
       end
@@ -36,8 +36,8 @@ RSpec.describe "Api::V1::User::Sessions", type: :request do
         end
       end
 
-      context "謝った情報を入力" do
-        example "謝ったメールアドレスを入力した場合、ログイン失敗" do
+      context "誤った情報を入力" do
+        example "誤ったメールアドレスを入力した場合、ログイン失敗" do
           post "/api/v1/user/login", 
           params: @user_session_params = {
             user: {
@@ -45,7 +45,8 @@ RSpec.describe "Api::V1::User::Sessions", type: :request do
               password: " ",
             }
           }
-          expect(response.status).not_to eq(200)
+          res = JSON.parse(response.body)
+          expect(res["message"]).to eq("ログインに失敗しました")
         end
       end
 

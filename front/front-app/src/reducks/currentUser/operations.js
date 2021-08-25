@@ -84,7 +84,9 @@ export const logIn = (email, password, showMessage) => {
         { withCredentials: true }
       )
       .then((response) => {
-        if (response.data) {
+        if (response.data.message) {
+          showMessage({ title: response.data.message, status: "error" });
+        } else {
           const userData = response.data;
           dispatch(
             setCurrentUserAction({
@@ -98,8 +100,6 @@ export const logIn = (email, password, showMessage) => {
           );
           showMessage({ title: "ログインしました", status: "success" });
           dispatch(push("/posts"));
-        } else {
-          showMessage({ title: "ユーザーが見つかりません", status: "error" });
         }
       })
       .catch((response) => {
@@ -195,8 +195,10 @@ export const updateCurrentUser = (formData, showMessage) => {
         withCredentials: true,
       })
       .then((response) => {
-        const user = response.data;
-        if (user) {
+        if (response.data.message) {
+          showMessage({ title: response.data.message, status: "error" });
+        } else {
+          const user = response.data;
           dispatch(
             setCurrentUserAction({
               name: user.name,
@@ -208,7 +210,7 @@ export const updateCurrentUser = (formData, showMessage) => {
           );
           showMessage({ title: "個人情報を修正しました", status: "success" });
           dispatch(push("/posts"));
-        } else showMessage({ title: "更新に失敗しました", status: "error" });
+        }
       })
       .catch((error) => {
         console.log("post res:", error);

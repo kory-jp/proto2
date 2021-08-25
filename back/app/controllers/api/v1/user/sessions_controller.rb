@@ -5,6 +5,8 @@ class Api::V1::User::SessionsController < Api::V1::User::Base
     if @user && @user.authenticate(session_params[:password])
       login!
       render 'login', handlers: 'jbuilder'
+    else
+      render json: {message: "ログインに失敗しました"}
     end
   end
 
