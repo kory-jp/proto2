@@ -4,7 +4,7 @@ class Api::V1::User::SessionsController < Api::V1::User::Base
     @user = User.find_by(email: session_params[:email])
     if @user && @user.authenticate(session_params[:password])
       login!
-      render json: @user
+      render 'login', handlers: 'jbuilder'
     end
   end
 

@@ -58,22 +58,6 @@ export const newComment = (showMessage, postId, currentUserId, comment) => {
   };
 };
 
-export const editComments = (commentId) => {
-  return async (dispatch) => {
-    axios
-      .get(`http://localhost:3001/api/v1/user/comments/${commentId}/edit`, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        const comments = response.data.comments;
-        dispatch(setCommentAction(comments));
-      })
-      .catch((error) => {
-        console.log("error res:", error);
-      });
-  };
-};
-
 export const updateComment = (commentData, comment, showMessage, returnTop) => {
   return async (dispatch) => {
     axios

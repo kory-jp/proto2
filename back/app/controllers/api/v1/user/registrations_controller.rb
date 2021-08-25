@@ -4,7 +4,7 @@ class Api::V1::User::RegistrationsController < Api::V1::User::Base
     @user = User.new(registrations_params)
     if @user.save
       login!
-      render json: @user
+      render 'signup', handlers: 'jbuilder'
     else
       render json: {status: 400}
     end

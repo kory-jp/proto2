@@ -1,0 +1,6 @@
+json.id(current_user.id)
+json.name(current_user.name)
+json.nickname(current_user.nickname)
+json.email(current_user.email)
+json.introduction(current_user.introduction)
+json.image(current_user.image)

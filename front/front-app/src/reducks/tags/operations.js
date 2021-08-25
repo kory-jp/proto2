@@ -9,7 +9,7 @@ export const getTags = () => {
         withCredentials: true,
       })
       .then((response) => {
-        const tags = response.data;
+        const tags = response.data.tags;
         dispatch(getTagsAction(tags));
       })
       .catch((error) => {

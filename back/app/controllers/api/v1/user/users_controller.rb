@@ -1,7 +1,7 @@
 class Api::V1::User::UsersController < Api::V1::User::Base
   def show
-    user = User.find(params[:id])
-    render json: user
+    @user = User.find(params[:id])
+    render 'show', handlers: 'jbuilder'
   end
 
   def posts

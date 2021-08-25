@@ -11,23 +11,22 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
   end
 
   def edit
-    user = User.find(params[:id])
-    if user === current_user
-      render json: user
+    @user = User.find(params[:id])
+    if @user === current_user
+      render 'edit', handlers: 'jbuilder'
     end
   end
   
   def update
     if current_user.update(user_params)
-      render json: current_user
+      render 'update', handlers: 'jbuilder'
     end
   end
 
   def password
     if current_user.authenticate(params[:user][:previous_password])
       if current_user.update(user_password_params)
-        user = current_user
-        render json: user
+        render 'password', handlers: 'jbuilder'
       end
     else
       render json: {message: "現在のパスワードに誤りがあります"}

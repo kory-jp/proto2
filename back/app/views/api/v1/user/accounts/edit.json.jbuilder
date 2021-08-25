@@ -1,0 +1,5 @@
+json.name(@user.name)
+json.nickname(@user.nickname)
+json.email(@user.email)
+json.introduction(@user.introduction)
+json.image(@user.image)
