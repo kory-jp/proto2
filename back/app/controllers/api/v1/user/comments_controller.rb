@@ -11,6 +11,8 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
       render 'create', handlers: 'jbuilder'
       post = @comment.post
       post.create_notification_comment!(current_user, @comment.id)
+    else
+      render json: {message: "入力項目に誤りがあります"}
     end
   end
 
@@ -19,9 +21,10 @@ class Api::V1::User::CommentsController < Api::V1::User::Base
     if @comment.user_id == current_user.id
       @comment.update(comment_params)
       if @comment.save
-        # render json: comment
         render 'update', handlers: 'jbuilder'
       end
+    else
+      render json: {message: "編集権限がありません"}
     end
   end
 

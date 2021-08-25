@@ -49,22 +49,23 @@ export const ProfileEdit = ()=> {
     .get(`http://localhost:3001/api/v1/user/accounts/${userId.id}/edit`,
     {withCredentials: true} 
       ).then(response => {
-        const {name, nickname, email, introduction, image} = response.data
-        if (response.data) {
+        if(response.data.message){
+          showMessage({title: response.data.message, status: "error"})
+          dispatch(push('/posts'))
+        } else {
+          const {name, nickname, email, introduction, image} = response.data
           setName(name)
           setNickname(nickname === null? "" : nickname)
           setEmail(email)
           setIntroduction(introduction === null? "" : introduction)
           setPreview(image.url)
-        } else {
-          dispatch(push('/posts'))
         }
       }).catch(error => {
         console.log("error:", error)
       }).finally(()=> {
         dispatch(nowLoadingAction(false))
       })
-  },[dispatch, setName, setNickname, setEmail, setIntroduction, setPreview])
+  },[dispatch, setName, setNickname, setEmail, setIntroduction, setPreview, showMessage])
 
   useEffect(()=> {
     dispatch(loggedInStatus(showMessage))

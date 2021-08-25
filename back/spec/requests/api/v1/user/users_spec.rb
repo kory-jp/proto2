@@ -21,7 +21,7 @@ RSpec.describe "Api::V1::User::Users", type: :request do
       example "ユーザープロフィール情報取得" do
         get "#{USERS_URL}#{@other_user.id}"
         res = JSON.parse(response.body)
-        expect(res.keys).to eq ["id", "email", "name", "nickname", "password_digest", "suspended", "introduction", "image", "created_at", "updated_at"]
+        expect(res.keys).to eq ["id", "name", "nickname", "introduction", "image"]
         expect(response).to have_http_status(:ok)
       end
 

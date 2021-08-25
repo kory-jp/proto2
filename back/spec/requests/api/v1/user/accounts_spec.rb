@@ -79,14 +79,14 @@ RSpec.describe "Api::V1::User::Accounts", type: :request do
         example "ログインユーザーと操作ユーザーが同一であれば、現在のユーザー情報を取得できる" do
           get "#{ACCOUNTS_URL}#{@current_user.id}/edit"
           res = JSON.parse(response.body)
-          expect(res.keys).to eq ["id", "email", "name", "nickname", "password_digest", "suspended", "introduction", "image", "created_at", "updated_at"]
+          expect(res.keys).to eq ["name", "nickname", "email", "introduction", "image"]
           expect(response).to have_http_status(:ok)
         end
 
         example "同一でないユーザーの場合、現在のユーザー情報を取得できない" do
           get "#{ACCOUNTS_URL}#{user.id}/edit"
-          expect(response.body).to eq ""
-          expect(response).to have_http_status(204)
+          res = JSON.parse(response.body)
+          expect(res["message"]).to eq "正しいアカウントでログインしてください"
         end
       end
 
@@ -116,8 +116,8 @@ RSpec.describe "Api::V1::User::Accounts", type: :request do
           example "更新されない(レスポンスを受け取れない)" do
             @current_user_params_hash[:user].merge!(email: "")
             patch "#{ACCOUNTS_URL}", params: @current_user_params_hash
-            expect(response.body).to eq ""
-            expect(response).to have_http_status(204)
+            res = JSON.parse(response.body)
+            expect(res["message"]).to eq "入力項目に誤りがあります"
           end
         end
       end

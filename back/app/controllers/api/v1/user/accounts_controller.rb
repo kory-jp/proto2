@@ -14,12 +14,16 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
     @user = User.find(params[:id])
     if @user === current_user
       render 'edit', handlers: 'jbuilder'
+    else
+      render json: {message: "正しいアカウントでログインしてください"}
     end
   end
   
   def update
     if current_user.update(user_params)
       render 'update', handlers: 'jbuilder'
+    else
+      render json: {message: "入力項目に誤りがあります"}
     end
   end
 
