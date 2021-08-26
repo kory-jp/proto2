@@ -39,11 +39,11 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
       context "必須項目が入力された場合" do
         example "成功(登録データを受け取れる)" do
           subject
-           res = JSON.parse(response.body)
-           expect(res["post_id"]).to eq(@post.id)
-           expect(res["user_id"]).to eq(@current_user.id)
-           expect(res["comments"]).to eq("テストコメント")
-           expect(response).to have_http_status(:ok)
+          res = JSON.parse(response.body)
+          expect(res["post_id"]).to eq(@post.id)
+          expect(res["user_id"]).to eq(@current_user.id)
+          expect(res["comments"]).to eq("テストコメント")
+          expect(response).to have_http_status(:ok)
         end
       end
 
@@ -74,11 +74,11 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
         let(:edit_comment_id) {@current_user_comment.id}
         example "成功(更新データを受け取れる)" do
           subject
-           res = JSON.parse(response.body)
-           expect(res["post_id"]).to eq(@post.id)
-           expect(res["user_id"]).to eq(@current_user.id)
-           expect(res["comments"]).to eq("テストコメント更新")
-           expect(response).to have_http_status(:ok)
+          res = JSON.parse(response.body)
+          expect(res["post_id"]).to eq(@post.id)
+          expect(res["user_id"]).to eq(@current_user.id)
+          expect(res["comments"]).to eq("テストコメント更新")
+          expect(response).to have_http_status(:ok)
         end
       end
 
