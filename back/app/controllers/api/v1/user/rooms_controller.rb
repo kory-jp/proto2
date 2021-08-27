@@ -10,7 +10,7 @@ class Api::V1::User::RoomsController < Api::V1::User::Base
   end
 
   def create
-    if params[:room][:user_id] != ""
+    if params[:room][:user_id] != nil
       @room = Room.create
       current_user_entry = Entry.create(:room_id => @room.id, :user_id => current_user.id)
       users_entry = Entry.create(params.require(:room).permit(:user_id, :room_id).merge(:room_id => @room.id))

@@ -10,18 +10,13 @@ RSpec.describe "Api::V1::User::Rooms", type: :request do
       @current_user_entry = create(:entry, user: @current_user, room: @room)
       @other_user_entry = create(:entry, user: @other_user, room: @room)
       @message = create(:message, user: @current_user, room: @room)
-      post "/api/v1/user/login",
-      params:  @current_user_session_params = {
-          user: {
-            email: @current_user.email,
-            password: @current_user.password,
-          }
-        };
+      login(@current_user)
     end
 
     describe "一覧取得" do
-      example "id, user_id, nickname, icon, messageを含んだルーム情報を最大10件取得" do
-        get "#{ROOM_URL}"
+      subject { get "#{ROOM_URL}"}
+      it "id, user_id, nickname, icon, messageを含んだルーム情報を最大10件取得" do
+        subject
         res = JSON.parse(response.body)
         expect(res["rooms"].length).to eq 1
         expect(res["rooms"][0].keys).to eq ["id", "user_id", "nickname", "icon", "message", "created_at"]
@@ -33,8 +28,9 @@ RSpec.describe "Api::V1::User::Rooms", type: :request do
     end
 
     describe "詳細表示" do
-      example "詳細情報取得" do
-        get "#{ROOM_URL}#{@room.id}"
+      subject { get "#{ROOM_URL}#{@room.id}"}
+      it "詳細情報取得" do
+        subject
         res = JSON.parse(response.body)
         expect(res["room"].keys).to eq ["id", "messages", "users"]
         expect(res["room"]["id"]).to eq(@room.id)
@@ -48,42 +44,41 @@ RSpec.describe "Api::V1::User::Rooms", type: :request do
     end
 
     describe "新規ルーム作成" do
-      before do
-        @another_user = create(:user)
-      end
+      subject { post "/api/v1/user/rooms", params: room_params_hash}
+      let(:room_params_hash) {{
+        room: {
+          user_id: another_user.id 
+        }
+      }}
+      let(:another_user){create(:user)}
       context "パラメータにユーザーIDが含まれている場合" do
-        example "成功" do
-          post "/api/v1/user/rooms",
-          params: room_params_hash = {
-            room: {
-              user_id: @another_user.id 
-            }
-          }
+        it "成功" do
+          subject
           expect(response).to have_http_status(:ok)
         end
       end
 
       context "パラメータにユーザーIDが含まれていない場合" do
-        example "失敗(値を返さない)" do
-          post "/api/v1/user/rooms",
-          params: room_params_hash = {
-            room: {
-              user_id: ""
-            }
+        let(:room_params_hash){{
+          room: {
+            user_id: nil
           }
+        }}
+        it "失敗(値を返さない)" do
+          subject
           res = JSON.parse(response.body)
           expect(res["status"]).to eq(400)
         end
       end
 
       context "パラメータのIDがログインしているユーザーと同一の場合" do
-        example "失敗(値を返さない)" do
-          post "/api/v1/user/rooms",
-          params: room_params_hash = {
-            room: {
-              user_id: @current_user.id
-            }
+        let(:room_params_hash){{
+          room: {
+            user_id: @current_user.id
           }
+        }}
+        it "失敗(値を返さない)" do
+          subject
           res = JSON.parse(response.body)
           expect(res["status"]).to eq(400)
         end
