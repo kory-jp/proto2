@@ -4,7 +4,7 @@ RSpec.describe "Api::V1::User::Accounts", type: :request do
   describe "アカウント" do
     before do
       @current_user = create(:user)
-      @other_user = create(:user)
+      @other_user = create(:user, password: "other_user_password")
       @following_user = create(:user)
       @post = create(:post, user: @current_user)
       login(@current_user)
@@ -123,6 +123,56 @@ RSpec.describe "Api::V1::User::Accounts", type: :request do
             res = JSON.parse(response.body)
             expect(res["message"]).to eq "入力項目に誤りがあります"
           end
+        end
+      end
+    end
+
+    describe "パスワード" do
+      subject {post password_api_v1_user_accounts_path, params: password_params_hash}
+      let(:password_params_hash) {{
+        user: {
+          previous_password: @current_user.password,
+          password: "change_password",
+          password_confirmation: "change_password"
+        }
+      }}
+      context "現在のパスワード、変更後パスワード、確認用変更後パスワードが適切な場合" do
+        it "変更成功" do
+          subject
+          res = JSON.parse(response.body)
+          expect(res["id"]).to eq(@current_user.id)
+          expect(User.find(@current_user.id).authenticate("change_password")).to be_truthy
+          expect(response).to have_http_status(:ok)
+        end
+      end
+
+      context "入力された現在のパスワードが間違っている場合" do
+        let(:password_params_hash) {{
+          user: {
+            previous_password: @other_user.password
+          }
+        }}
+        it "変更失敗" do
+          subject
+          res = JSON.parse(response.body)
+          expect(res["message"]).to eq("現在のパスワードに誤りがあります")
+          expect(User.find(@current_user.id).authenticate("change_password")).to be_falsy
+        end
+      end
+
+      context "変更後パスワードと確認用変更後パスワードが一致しない場合" do
+        let(:password_params_hash) {{
+          user: {
+            previous_password: @current_user.password,
+            password: "change_password",
+            password_confirmation: "not_change_password"
+          }
+        }}
+        it "変更失敗" do
+          subject
+          res = JSON.parse(response.body)
+          expect(res["message"]).to eq("入力されたパスワードと確認用パスワードが一致しません")
+          expect(User.find(@current_user.id).authenticate("change_password")).to be_falsy
         end
       end
     end
