@@ -2,14 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Searches", type: :request do
   describe "検索" do
-    SEARCH_URL = "/api/v1/user/search"
     before do
       @current_user = create(:user)
       @post = create(:post, user: @current_user)
     end
 
     describe "ユーザー検索" do
-      subject{post "#{SEARCH_URL}", params: search_user_params_hash}
+      subject { post api_v1_user_search_url, params: search_user_params_hash}
       let(:search_user_params_hash) {{
         search: {
           model: 'user',
@@ -41,7 +40,7 @@ RSpec.describe "Api::V1::User::Searches", type: :request do
     end
 
     describe "投稿検索" do
-      subject {post "#{SEARCH_URL}", params: search_post_params_hash}
+      subject { post api_v1_user_search_url, params: search_post_params_hash}
       let(:search_post_params_hash) {{
         search: {
           model: 'post',

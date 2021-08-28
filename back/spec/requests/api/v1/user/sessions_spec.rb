@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Sessions", type: :request do
   describe "ログイン" do
-    LOGIN_URL = "/api/v1/user/login"
-    LOGGED_IN_URL = "/api/v1/user/logged_in"
     before do
       @current_user = create(:user)
     end
@@ -25,7 +23,7 @@ RSpec.describe "Api::V1::User::Sessions", type: :request do
     end
 
     describe "ログイン" do
-      subject {post "#{LOGIN_URL}", params: login_params}
+      subject { post api_v1_user_login_url, params: login_params}
       let(:login_params) {{
         user: {
           email: @current_user.email,
@@ -55,7 +53,7 @@ RSpec.describe "Api::V1::User::Sessions", type: :request do
     end
 
     describe "ユーザー情報取得" do
-      subject {get "/api/v1/user/logged_in"}
+      subject { get api_v1_user_logged_in_url}
       before do
         login(@current_user)
       end
@@ -70,14 +68,13 @@ RSpec.describe "Api::V1::User::Sessions", type: :request do
     end
 
     describe "アクセス制限" do
-      subject {get "/api/v1/user/logged_in"}
+      subject { get api_v1_user_logged_in_url}
       before do
         login(@current_user)
       end
       context "60分操作がない場合" do
         it "ユーザー情報取得" do
           travel_to 60.minutes.after do
-            # get "/api/v1/user/logged_in"
             subject
             res = JSON.parse(response.body)
             expect(res["id"]).to eq(@current_user.id)

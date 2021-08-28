@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Comments", type: :request do
   describe "コメント" do
-    POST_COMMNETS_URL = "/api/v1/user/posts/"
-    COMMENT_URL = "/api/v1/user/comments/"
     before do
       @current_user = create(:user)
       @post = create(:post, user: @current_user)
@@ -15,7 +13,7 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
     end
 
     describe "コメント取得" do
-      subject { get "#{POST_COMMNETS_URL}#{@post.id}/comments" }
+      subject { get api_v1_user_post_comments_url(@post.id) }
       it "コメントを最大10件所得" do
         subject
         res = JSON.parse(response.body)
@@ -26,7 +24,7 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
     end
 
     describe "コメント新規投稿" do
-      subject { post "#{POST_COMMNETS_URL}#{@post.id}/comments", params: comment_params_hash}
+      subject { post api_v1_user_post_comments_url(@post.id, params: comment_params_hash)}
       let(:comment_params_hash){{comment: {
         user_id: @current_user.id,
         post_id: @post.id,
@@ -54,7 +52,7 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
     end
 
     describe "コメント編集" do
-      subject { patch "#{COMMENT_URL}#{edit_comment_id}", params: edit_comment_params_hash}
+      subject { patch api_v1_user_comment_url(edit_comment_id), params: edit_comment_params_hash}
       let(:edit_comment_params_hash) {{
         comment: {
           comment: "テストコメント更新"
@@ -83,7 +81,7 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
     end
 
     describe "コメント削除" do
-      subject { delete "#{COMMENT_URL}#{delete_comment_id}"}
+      subject { delete api_v1_user_comment_url(delete_comment_id)}
       context "作成者が削除を行う場合" do
         let(:delete_comment_id) {@current_user_comment.id}
         it "成功" do

@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Posts", type: :request do
   describe "記事" do
-    POST_URL = "/api/v1/user/posts/"
     before do
       @current_user = create(:user)
       @current_user_post = create(:post, user: @current_user)
@@ -14,7 +13,7 @@ RSpec.describe "Api::V1::User::Posts", type: :request do
 
     describe "記事取得" do
       describe "一覧取得" do
-        subject { get "#{POST_URL}"}
+        subject { get api_v1_user_posts_url}
         it  "記事内容、ユーザー情報、タグ情報を含んだ記事データを最大10件づつ取得" do
           subject
           res = JSON.parse(response.body)
@@ -25,7 +24,7 @@ RSpec.describe "Api::V1::User::Posts", type: :request do
       end
 
       describe "詳細取得" do
-        subject { get "#{POST_URL}#{@current_user_post.id}"}
+        subject { get api_v1_user_post_url(@current_user_post.id)}
         it  "記事内容、ユーザー情報、タグ情報を含んだ記事データを1件取得" do
           subject
           res = JSON.parse(response.body)
@@ -36,7 +35,7 @@ RSpec.describe "Api::V1::User::Posts", type: :request do
     end
 
     describe "新規投稿" do
-      subject { post "#{POST_URL}", params: post_params_hash}
+      subject { post api_v1_user_posts_url, params: post_params_hash}
       let(:post_params_hash){{
         post: {
           title: "テスト", 
@@ -83,7 +82,7 @@ RSpec.describe "Api::V1::User::Posts", type: :request do
 
     describe "更新" do
       describe "権限確認" do
-        subject {get "#{POST_URL}/#{users_post_id}/auth"}
+        subject { get auth_api_v1_user_post_url(users_post_id)}
         context "作成者が自分の記事を編集しようとする場合" do
           let(:users_post_id) {@current_user_post.id}
           it  "'true'を受け取る" do
@@ -106,7 +105,7 @@ RSpec.describe "Api::V1::User::Posts", type: :request do
       end
 
       describe "編集内容保存" do
-        subject { patch "#{POST_URL}#{@current_user_post.id}", params: update_post_params_hash}
+        subject { patch api_v1_user_post_url(@current_user_post.id), params: update_post_params_hash}
         let(:update_post_params_hash) {{
           post: {
             title: "更新テスト", 
@@ -152,7 +151,7 @@ RSpec.describe "Api::V1::User::Posts", type: :request do
     end
 
     describe "削除" do
-      subject {delete "#{POST_URL}#{users_post_id}"}
+      subject { delete api_v1_user_post_url(users_post_id)}
       context "削除権限がある場合" do
         let(:users_post_id) {@current_user_post.id}
         it  "削除に成功" do

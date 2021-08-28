@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Notifications", type: :request do
   describe "通知" do
-    NOTIFICATION_URL = "/api/v1/user/notifications/"
     before do
       @current_user = create(:user)
       @other_user = create(:user)
@@ -20,7 +19,7 @@ RSpec.describe "Api::V1::User::Notifications", type: :request do
     end
 
     describe "未確認の通知確認" do
-      subject { get "#{NOTIFICATION_URL}unchecked_notifications"}
+      subject { get unchecked_notifications_api_v1_user_notifications_url}
       context "未確認の通知がある場合" do
         it  "trueを返す" do
           subject
@@ -31,7 +30,7 @@ RSpec.describe "Api::V1::User::Notifications", type: :request do
 
       context "通知を全て確認している場合" do
         before do
-          get "#{NOTIFICATION_URL}"
+          get api_v1_user_notifications_url
         end
         it  "falseを返す" do
           subject
@@ -42,7 +41,7 @@ RSpec.describe "Api::V1::User::Notifications", type: :request do
     end
 
     describe "通知一覧取得" do
-      subject { get "#{NOTIFICATION_URL}"}
+      subject { get api_v1_user_notifications_url}
       it  "成功" do
         subject
         res = JSON.parse(response.body)

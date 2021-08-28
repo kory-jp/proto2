@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Accounts", type: :request do
   describe "アカウント" do
-    ACCOUNTS_URL = "/api/v1/user/accounts/"
     before do
       @current_user = create(:user)
       @other_user = create(:user)
@@ -14,19 +13,19 @@ RSpec.describe "Api::V1::User::Accounts", type: :request do
     describe "アカウント情報取得" do
       before do
         # 高評価記事テストデータ作成
-        post "/api/v1/user/posts/#{@post.id}/favorites", params: current_user_favorite_params = {
+        post api_v1_user_post_favorites_url(@post.id), params: current_user_favorite_params = {
           favorites: {
             user_id: @current_user.id,
             post_id: @post.id,
           }
         };
 
-        post "#{ACCOUNTS_URL}/relationships", params: current_user_following_params = {
+        post api_v1_user_relationships_url, params: current_user_following_params = {
           user_id: @following_user.id,
         };
       end
       describe "投稿記事" do
-        subject { get "#{ACCOUNTS_URL}#{@current_user.id}/myposts"}
+        subject { get myposts_api_v1_user_account_url(@current_user.id)}
         before do
           create_list(:post, 4, user: @current_user)
         end
@@ -41,7 +40,7 @@ RSpec.describe "Api::V1::User::Accounts", type: :request do
       end
 
       describe "高評価記事" do
-        subject {get "#{ACCOUNTS_URL}#{@current_user.id}/favorite_posts"}
+        subject {get favorite_posts_api_v1_user_account_url(@current_user.id)}
         it "current_userの高評価記事一覧を取得できる" do
           subject
           res = JSON.parse(response.body)
@@ -53,7 +52,7 @@ RSpec.describe "Api::V1::User::Accounts", type: :request do
       end
 
       describe "フォロー" do
-        subject { get "#{ACCOUNTS_URL}follows"}
+        subject { get follows_api_v1_user_accounts_url}
         it "current_userのフォローユーザー一覧を取得できる" do
           subject
           res = JSON.parse(response.body)
@@ -68,7 +67,7 @@ RSpec.describe "Api::V1::User::Accounts", type: :request do
 
     describe "アカウント情報更新" do
       describe "編集権限確認" do
-        subject { get "#{ACCOUNTS_URL}#{edit_account_id}/edit"}
+        subject { get edit_api_v1_user_account_url(edit_account_id)}
         context "正しいアカウントからアクセスした場合" do
           let(:edit_account_id) {@current_user.id}
           it "現在のユーザー情報を取得できる" do
@@ -90,7 +89,7 @@ RSpec.describe "Api::V1::User::Accounts", type: :request do
       end
 
       describe "編集操作" do
-        subject { patch "#{ACCOUNTS_URL}", params: update_params_hash}
+        subject { patch api_v1_user_accounts_url, params: update_params_hash}
         let(:update_params_hash) {{
           user: {
             name: @current_user.name,
@@ -129,7 +128,7 @@ RSpec.describe "Api::V1::User::Accounts", type: :request do
     end
 
     describe "アカウント削除" do
-      subject { post "#{ACCOUNTS_URL}", params: current_user_delete_params_hash}
+      subject { post api_v1_user_accounts_url, params: current_user_delete_params_hash}
       let(:current_user_delete_params_hash) {{
         user: {
           password: @current_user.password

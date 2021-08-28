@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Rooms", type: :request do
   describe "ルーム" do
-    ROOM_URL = "/api/v1/user/rooms/"
     before do
       @current_user = create(:user)
       @other_user = create(:user)
@@ -14,7 +13,7 @@ RSpec.describe "Api::V1::User::Rooms", type: :request do
     end
 
     describe "一覧取得" do
-      subject { get "#{ROOM_URL}"}
+      subject { get api_v1_user_rooms_url}
       it "id, user_id, nickname, icon, messageを含んだルーム情報を最大10件取得" do
         subject
         res = JSON.parse(response.body)
@@ -28,7 +27,7 @@ RSpec.describe "Api::V1::User::Rooms", type: :request do
     end
 
     describe "詳細表示" do
-      subject { get "#{ROOM_URL}#{@room.id}"}
+      subject { get api_v1_user_room_url(@room.id)}
       it "詳細情報取得" do
         subject
         res = JSON.parse(response.body)
@@ -44,7 +43,7 @@ RSpec.describe "Api::V1::User::Rooms", type: :request do
     end
 
     describe "新規ルーム作成" do
-      subject { post "/api/v1/user/rooms", params: room_params_hash}
+      subject { post api_v1_user_rooms_url, params: room_params_hash}
       let(:room_params_hash) {{
         room: {
           user_id: another_user.id 

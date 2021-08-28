@@ -17,7 +17,7 @@ RSpec.describe "Api::V1::User::Registrations", type: :request do
   end
 
   describe "新規登録" do
-    subject {post "/api/v1/user/signup", params: user_registration_params}
+    subject { post api_v1_user_signup_url, params: user_registration_params}
     let(:user_registration_params) {{
       user: {
         name: "山田太郎",

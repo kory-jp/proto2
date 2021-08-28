@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Messages", type: :request do
   describe "メッセージ" do
-    MESSAGE_URL = "/api/v1/user/messages/"
     before do
       @current_user = create(:user)
       @other_user = create(:user)
@@ -13,7 +12,7 @@ RSpec.describe "Api::V1::User::Messages", type: :request do
     end
 
     describe "メッセージ保存" do
-      subject { post "#{MESSAGE_URL}", params: message_params_hash}
+      subject { post api_v1_user_messages_url, params: message_params_hash}
       let(:message_params_hash) {{
         message: {
           user_id: @current_user.id,
