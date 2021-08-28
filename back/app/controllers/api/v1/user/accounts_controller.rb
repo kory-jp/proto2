@@ -31,6 +31,8 @@ class Api::V1::User::AccountsController < Api::V1::User::Base
     if current_user.authenticate(params[:user][:previous_password])
       if current_user.update(user_password_params)
         render 'password', handlers: 'jbuilder'
+      else
+        render json: {message: "入力されたパスワードと確認用パスワードが一致しません"}
       end
     else
       render json: {message: "現在のパスワードに誤りがあります"}
