@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Notifications", type: :request do
   describe "通知" do
-    NOTIFICATION_URL = "/api/v1/user/notifications/"
     before do
       @current_user = create(:user)
       @other_user = create(:user)
@@ -16,28 +15,25 @@ RSpec.describe "Api::V1::User::Notifications", type: :request do
                               action: 'comment',
                               checked: 0,
                             )
-      post "/api/v1/user/login",
-      params:  @current_user_session_params = {
-          user: {
-            email: @current_user.email,
-            password: @current_user.password,
-          }
-        };
+      login(@current_user)
     end
 
     describe "未確認の通知確認" do
+      subject { get unchecked_notifications_api_v1_user_notifications_url}
       context "未確認の通知がある場合" do
-        example "trueを返す" do
-          get "#{NOTIFICATION_URL}unchecked_notifications"
+        it  "trueを返す" do
+          subject
           res = JSON.parse(response.body)
           expect(res).to eq(true)
         end
       end
 
       context "通知を全て確認している場合" do
-        example "falseを返す" do
-          get "#{NOTIFICATION_URL}"
-          get "#{NOTIFICATION_URL}unchecked_notifications"
+        before do
+          get api_v1_user_notifications_url
+        end
+        it  "falseを返す" do
+          subject
           res = JSON.parse(response.body)
           expect(res).to eq(false)
         end
@@ -45,8 +41,9 @@ RSpec.describe "Api::V1::User::Notifications", type: :request do
     end
 
     describe "通知一覧取得" do
-      example "成功" do
-        get "#{NOTIFICATION_URL}"
+      subject { get api_v1_user_notifications_url}
+      it  "成功" do
+        subject
         res = JSON.parse(response.body)
         expect(res["notifications"][0].keys).to eq ["id", 
                                                     "visited_id", 

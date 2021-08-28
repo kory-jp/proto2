@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Comments", type: :request do
   describe "コメント" do
-    POST_URL = "/api/v1/user/posts/"
-    COMMENT_URL = "/api/v1/user/comments/"
     before do
       @current_user = create(:user)
       @post = create(:post, user: @current_user)
@@ -11,19 +9,13 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
       create_list(:comment, 11, user_id: @current_user.id, post_id: @post.id)
       @other_user = create(:user)
       @other_user_comment = create(:comment, user_id: @other_user.id, post_id: @post.id)
-
-      post "/api/v1/user/login",
-      params:  @current_user_session_params = {
-          user: {
-            email: @current_user.email,
-            password: @current_user.password,
-          }
-        }
+      login(@current_user)
     end
 
-    describe "コメント所得" do
-      example "コメントを最大10件所得" do
-        get "#{POST_URL}#{@post.id}/comments"
+    describe "コメント取得" do
+      subject { get api_v1_user_post_comments_url(@post.id) }
+      it "コメントを最大10件所得" do
+        subject
         res = JSON.parse(response.body)
         expect(res["comments"].length).to eq 10
         expect(res["comments"][0].keys).to eq ["id", "post_id", "user_id", "nickname", "icon", "comment", "created_at"]
@@ -32,34 +24,27 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
     end
 
     describe "コメント新規投稿" do
-      before do
-        @comment_params_hash = {
-          comment: {
-            user_id: @current_user.id,
-            post_id: @post.id,
-            comment: "テストコメント"
-          }
-        }
-      end
+      subject { post api_v1_user_post_comments_url(@post.id, params: comment_params_hash)}
+      let(:comment_params_hash){{comment: {
+        user_id: @current_user.id,
+        post_id: @post.id,
+        comment: "テストコメント"
+      }}}
       context "必須項目が入力された場合" do
-        example "成功(登録データを受け取れる)" do
-          post "#{POST_URL}#{@post.id}/comments", params: @comment_params_hash
-           res = JSON.parse(response.body)
-           expect(res["post_id"]).to eq(@post.id)
-           expect(res["user_id"]).to eq(@current_user.id)
-           expect(res["comments"]).to eq("テストコメント")
-           expect(response).to have_http_status(:ok)
+        it "成功(登録データを受け取れる)" do
+          subject
+          res = JSON.parse(response.body)
+          expect(res["post_id"]).to eq(@post.id)
+          expect(res["user_id"]).to eq(@current_user.id)
+          expect(res["comments"]).to eq("テストコメント")
+          expect(response).to have_http_status(:ok)
         end
       end
 
       context "必須項目が未入力の場合" do
-        example "失敗(データを受け取れない)" do
-          post "#{POST_URL}#{@post.id}/comments",
-            params: @comment_params_hash = {
-              comment: {
-                comment: ""
-              }
-            }
+        let(:comment_params_hash){{comment: {comment: ""}}}
+        it "失敗(データを受け取れない)" do
+          subject
           res = JSON.parse(response.body)
           expect(res["message"]).to eq("入力項目に誤りがあります")
         end
@@ -67,27 +52,28 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
     end
 
     describe "コメント編集" do
-      before do
-        @edit_comment_params_hash = {
-          comment: {
-            comment: "テストコメント更新"
-          }
+      subject { patch api_v1_user_comment_url(edit_comment_id), params: edit_comment_params_hash}
+      let(:edit_comment_params_hash) {{
+        comment: {
+          comment: "テストコメント更新"
         }
-      end
+      }}
       context "作成者が編集を行う場合" do
-        example "成功(更新データを受け取れる)" do
-          patch "#{COMMENT_URL}#{@current_user_comment.id}", params: @edit_comment_params_hash
-           res = JSON.parse(response.body)
-           expect(res["post_id"]).to eq(@post.id)
-           expect(res["user_id"]).to eq(@current_user.id)
-           expect(res["comments"]).to eq("テストコメント更新")
-           expect(response).to have_http_status(:ok)
+        let(:edit_comment_id) {@current_user_comment.id}
+        it "成功(更新データを受け取れる)" do
+          subject
+          res = JSON.parse(response.body)
+          expect(res["post_id"]).to eq(@post.id)
+          expect(res["user_id"]).to eq(@current_user.id)
+          expect(res["comments"]).to eq("テストコメント更新")
+          expect(response).to have_http_status(:ok)
         end
       end
 
       context "作成者でないユーザーが編集を行う場合" do
-        example "失敗(データを受け取れない)" do
-          patch "#{COMMENT_URL}#{@other_user_comment.id}", params: @edit_comment_params_hash
+        let(:edit_comment_id) {@other_user_comment.id}
+        it "失敗(データを受け取れない)" do
+          subject
           res = JSON.parse(response.body)
           expect(res["message"]).to eq("編集権限がありません")
         end
@@ -95,17 +81,20 @@ RSpec.describe "Api::V1::User::Comments", type: :request do
     end
 
     describe "コメント削除" do
+      subject { delete api_v1_user_comment_url(delete_comment_id)}
       context "作成者が削除を行う場合" do
-        example "成功" do
-          delete "#{COMMENT_URL}#{@current_user_comment.id}"
+        let(:delete_comment_id) {@current_user_comment.id}
+        it "成功" do
+          subject
           res = JSON.parse(response.body)
           expect(res["status"]).to eq(200)
         end
       end
 
       context "作成者以外が削除を行う場合" do
-        example "失敗" do
-          delete "#{COMMENT_URL}#{@other_user_comment.id}"
+        let(:delete_comment_id) { @other_user_comment.id}
+        it "失敗" do
+          subject
           res = JSON.parse(response.body)
           expect(res["status"]).to eq(400)
         end

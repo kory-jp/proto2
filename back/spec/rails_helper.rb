@@ -21,6 +21,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   config.include FactoryBot::Syntax::Methods
   config.include ActiveSupport::Testing::TimeHelpers
+  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
   if Bullet.enable?
     config.before(:each) do

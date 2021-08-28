@@ -2,78 +2,80 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::User::Sessions", type: :request do
   describe "ログイン" do
+    before do
+      @current_user = create(:user)
+    end
     describe "パスワード" do
-      example "正しいパスワードならtrueを返す" do
+      it "正しいパスワードならtrueを返す" do
         user = build(:user)
         expect(user.authenticate("password")).to be_truthy
       end
 
-      example "誤ったパスワードならfalseを返す" do
+      it "誤ったパスワードならfalseを返す" do
         user = build(:user)
         expect(user.authenticate("pass")).to be_falsey
       end
 
-      example "パスワード未設定ならfalseを返す" do
+      it "パスワード未設定ならfalseを返す" do
         user = build(:user)
         expect(user.authenticate(nil)).to be_falsey
       end
     end
 
-    describe "ログインアクション" do
-      before do
-        @user = create(:user)
-        @user_session_params = {
-          user: {
-            email: @user.email,
-            password: @user.password
-          }
+    describe "ログイン" do
+      subject { post api_v1_user_login_url, params: login_params}
+      let(:login_params) {{
+        user: {
+          email: @current_user.email,
+          password: @current_user.password
         }
-      end
+      }}
       context "正しい情報を入力" do
-        example "正しいメールアドレスとパスワードの場合、ログイン成功" do
-          post "/api/v1/user/login", params: @user_session_params
+        it "正しいメールアドレスとパスワードの場合、ログイン成功" do
+          subject
           expect(response.status).to eq(200)
         end
       end
 
       context "誤った情報を入力" do
-        example "誤ったメールアドレスを入力した場合、ログイン失敗" do
-          post "/api/v1/user/login", 
-          params: @user_session_params = {
-            user: {
-              email: @user.email,
-              password: " ",
-            }
+        let(:login_params) {{
+          user: {
+            email: @current_user.email,
+            password: nil,
           }
+        }}
+        it "誤ったメールアドレスを入力した場合、ログイン失敗" do
+          subject
           res = JSON.parse(response.body)
           expect(res["message"]).to eq("ログインに失敗しました")
         end
       end
+    end
 
-      example "ログインが成功していればユーザー情報を取得できる" do
-        post "/api/v1/user/login", params: @user_session_params
-        get "/api/v1/user/logged_in"
-        res = JSON.parse(response.body)
-        expect(res.keys).to eq ["id", "email", "name", "nickname", "password_digest", "suspended", "introduction", "image", "created_at", "updated_at"]
-        expect(response).to have_http_status(:ok)
+    describe "ユーザー情報取得" do
+      subject { get api_v1_user_logged_in_url}
+      before do
+        login(@current_user)
+      end
+      context "ログインに成功している場合" do
+        it "ユーザー情報の取得" do
+          subject
+          res = JSON.parse(response.body)
+          expect(res.keys).to eq ["id", "email", "name", "nickname", "password_digest", "suspended", "introduction", "image", "created_at", "updated_at"]
+          expect(response).to have_http_status(:ok)
+        end
       end
     end
 
     describe "アクセス制限" do
+      subject { get api_v1_user_logged_in_url}
       before do
-        @current_user = create(:user)
-        post "/api/v1/user/login",
-        params:  @current_user_session_params = {
-            user: {
-              email: @current_user.email,
-              password: @current_user.password,
-            }
-          };
+        login(@current_user)
       end
       context "60分操作がない場合" do
-        example "ユーザー情報取得" do
+        it "ユーザー情報取得" do
           travel_to 60.minutes.after do
-            get "/api/v1/user/logged_in"
+            subject
             res = JSON.parse(response.body)
             expect(res["id"]).to eq(@current_user.id)
           end
@@ -81,9 +83,9 @@ RSpec.describe "Api::V1::User::Sessions", type: :request do
       end
 
       context "61分操作がない場合" do
-        example "セッションタイムアウト" do
+        it "セッションタイムアウト" do
           travel_to 61.minutes.after do
-            get "/api/v1/user/logged_in"
+            subject
             res = JSON.parse(response.body)
             expect(res["message"]).to eq("セッションタイムアウト")
           end
