@@ -5,9 +5,10 @@ import { setRoomAction } from "./actions";
 
 export const createRoom = (userId, setSumPage) => {
   return async (dispatch) => {
+    const apiURL = process.env.REACT_APP_USERS_API_URL + "rooms";
     axios
       .post(
-        "http://localhost:3001/api/v1/user/rooms",
+        apiURL,
         {
           room: {
             user_id: userId.id,
@@ -32,13 +33,13 @@ export const createRoom = (userId, setSumPage) => {
 export const getRoom = (roomId, setSumPage, queryPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `rooms/${roomId.id}/?page=${queryPage}`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/rooms/${roomId.id}/?page=${queryPage}`,
-        {
-          withCredentials: true,
-        }
-      )
+      .get(apiURL, {
+        withCredentials: true,
+      })
       .then((response) => {
         if (response.data) {
           dispatch(setRoomAction(response.data.room));
@@ -60,14 +61,12 @@ export const getRoom = (roomId, setSumPage, queryPage) => {
 
 export const updateRoom = (formData, setSumPage, queryPage) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL + `messages/?page=${queryPage}`;
     axios
-      .post(
-        `http://localhost:3001/api/v1/user/messages/?page=${queryPage}`,
-        formData,
-        {
-          withCredentials: true,
-        }
-      )
+      .post(apiURL, formData, {
+        withCredentials: true,
+      })
       .then((response) => {
         dispatch(setRoomAction(response.data.room));
         setSumPage(response.data.page_length);

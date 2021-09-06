@@ -45,8 +45,11 @@ export const ProfileEdit = ()=> {
 
   const getUserProfile = useCallback((userId) => {
     dispatch(nowLoadingAction(true))
+    const apiURL =
+    process.env.REACT_APP_USERS_API_URL +
+    `accounts/${userId.id}/edit`;
     axios
-    .get(`http://localhost:3001/api/v1/user/accounts/${userId.id}/edit`,
+    .get(apiURL,
     {withCredentials: true} 
       ).then(response => {
         if(response.data.message){

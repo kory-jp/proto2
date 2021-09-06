@@ -18,9 +18,12 @@ export const EntryButton = () => {
   
   // 既存のルームがあるか確認
   const checkIsRoom = useCallback(()=> {
+    const apiURL =
+    process.env.REACT_APP_USERS_API_URL +
+    "entries/check";
     axios
       .post(
-        "http://localhost:3001/api/v1/user/entries/check",
+        apiURL,
         userId,
         {
           withCredentials: true,

@@ -6,8 +6,10 @@ import { getListPostsAction, setPostAction } from "./actions";
 export const getPosts = (setSumPage, queryPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL + `posts/?page=${queryPage}`;
     axios
-      .get(`http://localhost:3001/api/v1/user/posts/?page=${queryPage}`, {
+      .get(apiURL, {
         withCredentials: true,
       })
       .then((response) => {
@@ -29,11 +31,11 @@ export const getPosts = (setSumPage, queryPage) => {
 export const getCurrentUserPosts = (currentUserId, queryPage, setSumPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `accounts/${currentUserId.id}/myposts/?page=${queryPage}`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/accounts/${currentUserId.id}/myposts/?page=${queryPage}`,
-        { withCredentials: true }
-      )
+      .get(apiURL, { withCredentials: true })
       .then((response) => {
         const posts = response.data.posts;
         const page_length = response.data.page_length;
@@ -54,11 +56,11 @@ export const getCurrentUserPosts = (currentUserId, queryPage, setSumPage) => {
 export const getUsersPosts = (userId, setSumPage, queryPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `users/${userId.id}/posts/?page=${queryPage}`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/users/${userId.id}/posts/?page=${queryPage}`,
-        { withCredentials: true }
-      )
+      .get(apiURL, { withCredentials: true })
       .then((response) => {
         const posts = response.data.posts;
         const page_length = response.data.page_length;
@@ -79,11 +81,11 @@ export const getUsersPosts = (userId, setSumPage, queryPage) => {
 export const getCurretUserFavoritePosts = (userId, queryPage, setSumPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `accounts/${userId.id}/favorite_posts/?page=${queryPage}`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/accounts/${userId.id}/favorite_posts/?page=${queryPage}`,
-        { withCredentials: true }
-      )
+      .get(apiURL, { withCredentials: true })
       .then((response) => {
         const posts = response.data.posts;
         const page_length = response.data.page_length;
@@ -104,11 +106,11 @@ export const getCurretUserFavoritePosts = (userId, queryPage, setSumPage) => {
 export const getUsersFavoritePosts = (userId, queryPage, setSumPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `users/${userId.id}/favorite_posts/?page=${queryPage}`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/users/${userId.id}/favorite_posts/?page=${queryPage}`,
-        { withCredentials: true }
-      )
+      .get(apiURL, { withCredentials: true })
       .then((response) => {
         const posts = response.data.posts;
         const page_length = response.data.page_length;
@@ -129,9 +131,11 @@ export const getUsersFavoritePosts = (userId, queryPage, setSumPage) => {
 export const searchTagGetPosts = (label, setSumPage, queryPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL + `tags/search/?page=${queryPage}`;
     axios
       .post(
-        `http://localhost:3001/api/v1/user/tags/search/?page=${queryPage}`,
+        apiURL,
         {
           tag: {
             label: label,
@@ -160,9 +164,10 @@ export const searchTagGetPosts = (label, setSumPage, queryPage) => {
 
 export const newPost = (formData, showMessage) => {
   return async (dispatch) => {
+    const apiURL = process.env.REACT_APP_USERS_API_URL + "posts";
     axios
       .post(
-        "http://localhost:3001/api/v1/user/posts",
+        apiURL,
         formData,
         {
           headers: {
@@ -198,8 +203,9 @@ export const newPost = (formData, showMessage) => {
 export const showPost = (postId, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL = process.env.REACT_APP_USERS_API_URL + `posts/${postId.id}`;
     axios
-      .get(`http://localhost:3001/api/v1/user/posts/${postId.id}`, {
+      .get(apiURL, {
         withCredentials: true,
       })
       .then((response) => {
@@ -238,9 +244,10 @@ export const showPost = (postId, showMessage) => {
 
 export const updatePost = (postId, formData, showMessage) => {
   return async (dispatch) => {
+    const apiURL = process.env.REACT_APP_USERS_API_URL + `posts/${postId.id}`;
     axios
       .patch(
-        `http://localhost:3001/api/v1/user/posts/${postId.id}`,
+        apiURL,
         formData,
         {
           headers: {
@@ -275,8 +282,9 @@ export const updatePost = (postId, formData, showMessage) => {
 
 export const deletePost = (postId, showMessage) => {
   return async (dispatch) => {
+    const apiURL = process.env.REACT_APP_USERS_API_URL + `posts/${postId.id}`;
     axios
-      .delete(`http://localhost:3001/api/v1/user/posts/${postId.id}`, {
+      .delete(apiURL, {
         withCredentials: true,
       })
       .then((response) => {

@@ -3,9 +3,12 @@ import { setFollowingAction } from "./actions";
 
 export const confirmFollowing = (userId) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      "accounts/relationships/following_by";
     axios
       .post(
-        "http://localhost:3001/api/v1/user/accounts/relationships/following_by",
+        apiURL,
         { user_id: userId.id },
         {
           withCredentials: true,
@@ -27,9 +30,11 @@ export const confirmFollowing = (userId) => {
 
 export const createFollowing = (userId) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL + "accounts/relationships";
     axios
       .post(
-        "http://localhost:3001/api/v1/user/accounts/relationships",
+        apiURL,
         { user_id: userId.id },
         {
           withCredentials: true,
@@ -51,13 +56,13 @@ export const createFollowing = (userId) => {
 
 export const destroyFollowing = (userId) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `accounts/relationships?user_id=${userId.id}`;
     axios
-      .delete(
-        `http://localhost:3001/api/v1/user/accounts/relationships?user_id=${userId.id}`,
-        {
-          withCredentials: true,
-        }
-      )
+      .delete(apiURL, {
+        withCredentials: true,
+      })
       .then((response) => {
         const status = response.data;
         dispatch(

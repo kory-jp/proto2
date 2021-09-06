@@ -70,8 +70,11 @@ export const PostEdit = ()=> {
 
   // 編集権限者か確認、権限者でない場合はTOPページへリダレクト
   const editAuth = useCallback((postId) => {
+    const apiURL =
+    process.env.REACT_APP_USERS_API_URL +
+    `posts/${postId.id}/auth`;
     axios
-      .get(`http://localhost:3001/api/v1/user/posts/${postId.id}/auth`,
+      .get(apiURL,
       {withCredentials: true} 
       ).then(response => {
         const auth = response.data
@@ -87,8 +90,11 @@ export const PostEdit = ()=> {
   // 編集前データを取得
   const getPostStatus = useCallback((postId) => {
     dispatch(nowLoadingAction(true))
+    const apiURL =
+    process.env.REACT_APP_USERS_API_URL +
+    `posts/${postId.id}`;
     axios
-      .get(`http://localhost:3001/api/v1/user/posts/${postId.id}`,
+      .get(apiURL,
       {withCredentials: true} 
       ).then(response => {
         const data = response.data
