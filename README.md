@@ -29,7 +29,7 @@ cd front/front-app
 npm install
 ```
 
-環境変数の設定
+環境変数設定
 
 ```
 `front-app`フォルダ下に新規ファイル作成
