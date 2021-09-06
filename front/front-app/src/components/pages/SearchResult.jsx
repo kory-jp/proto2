@@ -32,9 +32,12 @@ export const SearchResult = () => {
   const SearchKeywordGetResults = useCallback((queryPage) => {
     return async (dispatch) => {
       dispatch(nowLoadingAction(true));
+      const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `search/?page=${queryPage}`;
       axios
         .post(
-          `http://localhost:3001/api/v1/user/search/?page=${queryPage}`,
+          apiURL,
           {
             search: {
               model: model,

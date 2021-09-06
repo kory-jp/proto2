@@ -28,10 +28,11 @@ export const registration = (
       return false;
     }
     dispatch(nowLoadingAction(true));
+    const apiURL = process.env.REACT_APP_USERS_API_URL + "signup";
 
     axios
       .post(
-        "http://localhost:3001/api/v1/user/signup",
+        apiURL,
         {
           user: {
             name: userName,
@@ -72,9 +73,10 @@ export const registration = (
 export const logIn = (email, password, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL = process.env.REACT_APP_USERS_API_URL + "login";
     await axios
       .post(
-        "http://localhost:3001/api/v1/user/login",
+        apiURL,
         {
           user: {
             email: email,
@@ -113,8 +115,9 @@ export const logIn = (email, password, showMessage) => {
 
 export const logOut = (showMessage) => {
   return async (dispatch, getState) => {
+    const apiURL = process.env.REACT_APP_USERS_API_URL + "logout";
     await axios
-      .delete("http://localhost:3001/api/v1/user/logout", {
+      .delete(apiURL, {
         withCredentials: true,
       })
       .then((response) => {
@@ -138,8 +141,9 @@ export const logOut = (showMessage) => {
 // ログインをしている場合はユーザー情報を返し、未ログインの場合はログインページに飛ばす
 export const loggedInStatus = (showMessage) => {
   return async (dispatch) => {
+    const apiURL = process.env.REACT_APP_USERS_API_URL + "logged_in";
     await axios
-      .get("http://localhost:3001/api/v1/user/logged_in", {
+      .get(apiURL, {
         withCredentials: true,
       })
       .then((response) => {
@@ -171,8 +175,9 @@ export const loggedInStatus = (showMessage) => {
 // ログイン済みユーザーを一覧ページへ遷移させる
 export const completedLoggedInStatus = () => {
   return async (dispatch) => {
+    const apiURL = process.env.REACT_APP_USERS_API_URL + "logged_in";
     await axios
-      .get("http://localhost:3001/api/v1/user/logged_in", {
+      .get(apiURL, {
         withCredentials: true,
       })
       .then((response) => {
@@ -190,8 +195,9 @@ export const completedLoggedInStatus = () => {
 export const updateCurrentUser = (formData, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL = process.env.REACT_APP_USERS_API_URL + "accounts";
     axios
-      .patch("http://localhost:3001/api/v1/user/accounts", formData, {
+      .patch(apiURL, formData, {
         withCredentials: true,
       })
       .then((response) => {
@@ -237,9 +243,10 @@ export const changePassword = (
       return false;
     }
     dispatch(nowLoadingAction(true));
+    const apiURL = process.env.REACT_APP_USERS_API_URL + "accounts/password";
     await axios
       .post(
-        "http://localhost:3001/api/v1/user/accounts/password",
+        apiURL,
         {
           user: {
             previous_password: previousPassword,
@@ -274,9 +281,10 @@ export const changePassword = (
 export const deleteAccount = (password, showMessage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL = process.env.REACT_APP_USERS_API_URL + "accounts";
     await axios
       .post(
-        "http://localhost:3001/api/v1/user/accounts",
+        apiURL,
         {
           user: {
             password: password,

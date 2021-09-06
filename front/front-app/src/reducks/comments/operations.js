@@ -4,11 +4,11 @@ import { getCommentsAction, setCommentAction } from "./actions";
 
 export const getComments = (postId, setSumPage, queryPage) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `posts/${postId.id}/comments?page=${queryPage}`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/posts/${postId.id}/comments?page=${queryPage}`,
-        { withCredentials: true }
-      )
+      .get(apiURL, { withCredentials: true })
       .then((response) => {
         if (!response.data.message) {
           const comments = response.data.comments;
@@ -27,9 +27,11 @@ export const getComments = (postId, setSumPage, queryPage) => {
 
 export const newComment = (showMessage, postId, currentUserId, comment) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL + `posts/${postId.id}/comments`;
     await axios
       .post(
-        `http://localhost:3001/api/v1/user/posts/${postId.id}/comments`,
+        apiURL,
         {
           comment: {
             post_id: postId,
@@ -64,9 +66,11 @@ export const newComment = (showMessage, postId, currentUserId, comment) => {
 
 export const updateComment = (commentData, comment, showMessage, returnTop) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL + `comments/${commentData.id}`;
     axios
       .patch(
-        `http://localhost:3001/api/v1/user/comments/${commentData.id}`,
+        apiURL,
         {
           comment: {
             post_id: commentData.post_id,
@@ -102,8 +106,10 @@ export const updateComment = (commentData, comment, showMessage, returnTop) => {
 
 export const deleteComment = (commentData, postId, showMessage) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL + `comments/${commentData.id}`;
     axios
-      .delete(`http://localhost:3001/api/v1/user/comments/${commentData.id}`, {
+      .delete(apiURL, {
         withCredentials: true,
       })
       .then((response) => {

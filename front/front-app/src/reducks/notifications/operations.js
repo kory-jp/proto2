@@ -7,14 +7,12 @@ export const getNotifications = (setSumPage, queryPage) => {
     if (queryPage) {
       dispatch(nowLoadingAction(true));
     }
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL + `notifications/?page=${queryPage}`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/notifications/?page=${queryPage}`,
-
-        {
-          withCredentials: true,
-        }
-      )
+      .get(apiURL, {
+        withCredentials: true,
+      })
       .then((response) => {
         dispatch(setNotificationsAction(response.data.notifications));
         if (queryPage) {
@@ -36,14 +34,13 @@ export const getNotifications = (setSumPage, queryPage) => {
 
 export const deleteNotification = (id, setSumPage, queryPage) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `notifications/${id}/?page=${queryPage}`;
     axios
-      .delete(
-        `http://localhost:3001/api/v1/user/notifications/${id}/?page=${queryPage}`,
-
-        {
-          withCredentials: true,
-        }
-      )
+      .delete(apiURL, {
+        withCredentials: true,
+      })
       .then((response) => {
         dispatch(setNotificationsAction(response.data.notifications));
         if (queryPage) {
@@ -59,14 +56,12 @@ export const deleteNotification = (id, setSumPage, queryPage) => {
 export const deleteAllPageNotification = (setSumPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL + "notifications/destroy_all";
     axios
-      .delete(
-        "http://localhost:3001/api/v1/user/notifications/destroy_all",
-
-        {
-          withCredentials: true,
-        }
-      )
+      .delete(apiURL, {
+        withCredentials: true,
+      })
       .then((response) => {
         dispatch(setNotificationsAction([]));
         setSumPage(1);

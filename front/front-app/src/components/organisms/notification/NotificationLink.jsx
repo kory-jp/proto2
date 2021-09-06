@@ -15,10 +15,12 @@ export const NotificationLink = () => {
 
   // 未確認の通知があるか確認
   const uncheckedNotifications = useCallback((queryPage, setSumPage)=> {
+    const apiURL =
+    process.env.REACT_APP_USERS_API_URL +
+    "notifications/unchecked_notifications";
     axios
       .get(
-        "http://localhost:3001/api/v1/user/notifications/unchecked_notifications",
-        
+        apiURL,
         {
           withCredentials: true,
         }

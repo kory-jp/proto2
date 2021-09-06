@@ -4,13 +4,13 @@ import { setFavoriteAction } from "./actions";
 
 export const confirmFavorited = (postId) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `posts/${postId.id}/favorites/favorited_by`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/posts/${postId.id}/favorites/favorited_by`,
-        {
-          withCredentials: true,
-        }
-      )
+      .get(apiURL, {
+        withCredentials: true,
+      })
       .then((response) => {
         if (!response.data.message) {
           const status = response.data;
@@ -31,10 +31,11 @@ export const confirmFavorited = (postId) => {
 
 export const createFavorite = (postId, currentUserId) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL + `posts/${postId.id}/favorites`;
     axios
       .post(
-        `http://localhost:3001/api/v1/user/posts/${postId.id}/favorites`,
-
+        apiURL,
         {
           favorites: {
             user_id: currentUserId,
@@ -61,13 +62,12 @@ export const createFavorite = (postId, currentUserId) => {
 
 export const destroyFavorite = (postId) => {
   return async (dispatch) => {
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL + `posts/${postId.id}/favorites`;
     axios
-      .delete(
-        `http://localhost:3001/api/v1/user/posts/${postId.id}/favorites`,
-        {
-          withCredentials: true,
-        }
-      )
+      .delete(apiURL, {
+        withCredentials: true,
+      })
       .then((response) => {
         const status = response.data;
         dispatch(

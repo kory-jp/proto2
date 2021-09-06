@@ -23,9 +23,12 @@ export const Rooms = () => {
 
   const getRoomList = useCallback((queryPage, setSumPage)=> {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+    process.env.REACT_APP_USERS_API_URL +
+    `rooms?page=${queryPage}`;
     axios
       .get(
-        `http://localhost:3001/api/v1/user/rooms?page=${queryPage}`,
+        apiURL,
         {
           withCredentials: true,
         }
@@ -56,7 +59,10 @@ export const Rooms = () => {
   },[queryPage, getRoomList, setSumPage, dispatch, showMessage])
 
   const changeCurrentPage = useCallback((e, page) =>{
-    dispatch(push( `http://localhost:3001/api/v1/user/rooms?page=${queryPage}`))
+    const apiURL =
+    process.env.REACT_APP_USERS_API_URL +
+    `rooms?page=${queryPage}`;
+    dispatch(push(apiURL))
     returnTop()
   },[dispatch, queryPage, returnTop])
   

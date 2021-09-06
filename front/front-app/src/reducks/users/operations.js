@@ -4,8 +4,9 @@ import { getUsersAction, showUsersAction } from "./actions";
 
 export const showUsers = (userId) => {
   return async (dispatch) => {
+    const apiURL = process.env.REACT_APP_USERS_API_URL + `users/${userId.id}`;
     axios
-      .get(`http://localhost:3001/api/v1/user/users/${userId.id}`, {
+      .get(apiURL, {
         withCredentials: true,
       })
       .then((response) => {
@@ -29,13 +30,13 @@ export const showUsers = (userId) => {
 export const getMyFollows = (queryPage, setSumPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `accounts/follows/?page=${queryPage}`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/accounts/follows/?page=${queryPage}`,
-        {
-          withCredentials: true,
-        }
-      )
+      .get(apiURL, {
+        withCredentials: true,
+      })
       .then((response) => {
         const follows = response.data.follows;
         dispatch(getUsersAction(follows));
@@ -55,13 +56,13 @@ export const getMyFollows = (queryPage, setSumPage) => {
 export const getMyFollowers = (queryPage, setSumPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `accounts/followers/?page=${queryPage}`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/accounts/followers/?page=${queryPage}`,
-        {
-          withCredentials: true,
-        }
-      )
+      .get(apiURL, {
+        withCredentials: true,
+      })
       .then((response) => {
         const followers = response.data.followers;
         dispatch(getUsersAction(followers));
@@ -81,13 +82,13 @@ export const getMyFollowers = (queryPage, setSumPage) => {
 export const getUsersFollows = (userId, queryPage, setSumPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `users/${userId.id}/follows/?page=${queryPage}`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/users/${userId.id}/follows/?page=${queryPage}`,
-        {
-          withCredentials: true,
-        }
-      )
+      .get(apiURL, {
+        withCredentials: true,
+      })
       .then((response) => {
         const follows = response.data.follows;
         dispatch(getUsersAction(follows));
@@ -107,13 +108,13 @@ export const getUsersFollows = (userId, queryPage, setSumPage) => {
 export const getUsersFollowers = (userId, queryPage, setSumPage) => {
   return async (dispatch) => {
     dispatch(nowLoadingAction(true));
+    const apiURL =
+      process.env.REACT_APP_USERS_API_URL +
+      `users/${userId.id}/followers/?page=${queryPage}`;
     axios
-      .get(
-        `http://localhost:3001/api/v1/user/users/${userId.id}/followers/?page=${queryPage}`,
-        {
-          withCredentials: true,
-        }
-      )
+      .get(apiURL, {
+        withCredentials: true,
+      })
       .then((response) => {
         const followers = response.data.followers;
         dispatch(getUsersAction(followers));
