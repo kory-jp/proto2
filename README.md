@@ -32,10 +32,10 @@ npm install
 環境変数設定
 
 ```
-`front-app`フォルダ下に新規ファイル作成
+[front-app]フォルダ下に新規ファイル作成
 touch .env.development
 
-以下を`.env.development`に貼り付け
+以下を[.env.development]に貼り付け
 REACT_APP_USERS_API_URL= http://localhost:3001/api/v1/user/
 ```
 
