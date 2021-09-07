@@ -15,8 +15,10 @@ front/front-app//build
 # misc
 front/front-app/.DS_Store
 front/front-app/.env.local
+front/front-app/.env.development
 front/front-app/.env.development.local
 front/front-app/.env.test.local
+front/front-app/.env.production
 front/front-app/.env.production.local
 
 front/front-app/npm-debug.log*
