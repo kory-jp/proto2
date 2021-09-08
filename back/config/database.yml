@@ -50,7 +50,5 @@ test:
 production:
   <<: *default
   database: proto2_production
-  username: <%= Rails.application.credentials.rds[:DATABASE_USERNAME] %>
-  password: <%= Rails.application.credentials.rds[:DATABASE_PASSWORD] %>
-  host: <%= Rails.application.credentials.rds[:DATABASE_HOST] %>
-  socket: /var/lib/mysql/mysql.sock
+  username: proto2
+  password: <%= ENV['PROTO2_DATABASE_PASSWORD'] %>
