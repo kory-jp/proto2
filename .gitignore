@@ -14,7 +14,6 @@ front/front-app//build
 
 # misc
 front/front-app/.DS_Store
-front/front-app/.env
 front/front-app/.env.local
 front/front-app/.env.development
 front/front-app/.env.development.local
@@ -56,3 +55,6 @@ back/public/uploads/message
 
 # Ignore master key for decrypting credentials and more.
 back/config/master.key
+
+.env
+.env.*
