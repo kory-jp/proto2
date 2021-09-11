@@ -14,6 +14,7 @@ front/front-app//build
 
 # misc
 front/front-app/.DS_Store
+front/front-app/.env
 front/front-app/.env.local
 front/front-app/.env.development
 front/front-app/.env.development.local
