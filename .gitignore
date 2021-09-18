@@ -14,12 +14,12 @@ front/front-app//build
 
 # misc
 front/front-app/.DS_Store
-front/front-app/.env.local
-front/front-app/.env.development
-front/front-app/.env.development.local
-front/front-app/.env.test.local
-front/front-app/.env.production
-front/front-app/.env.production.local
+!front/front-app/.env.local
+!front/front-app/.env.development
+!front/front-app/.env.development.local
+!front/front-app/.env.test.local
+!front/front-app/.env.production
+!front/front-app/.env.production.local
 
 front/front-app/npm-debug.log*
 front/front-app/yarn-debug.log*
@@ -55,3 +55,11 @@ back/public/uploads/message
 
 # Ignore master key for decrypting credentials and more.
 back/config/master.key
+back/.env
+error_page/
+front/front-app/build/
+nginx_log/
+
+.env
+.env.*
+
