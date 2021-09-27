@@ -88,7 +88,7 @@ export const Header = ()=> {
             cursor="pointer"
             ml="7"
           >
-            トップページへ
+            With-Accountant
           </Text>
           <Flex display={{base: "none", md: "flex"}} w="50%" >
             <SearchInputForm 
