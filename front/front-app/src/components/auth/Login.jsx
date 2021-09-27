@@ -36,7 +36,7 @@ export const ReduxLogin = () => {
 
   return(
     <DefaultBox>
-      <DefaultText as="h3" textAlign="center" fontWeight="bold">COVID-TAX</DefaultText>
+      <DefaultText as="h3" textAlign="center" fontWeight="bold">With-Accountnat</DefaultText>
       <Stack spacing="5">
         <FormControl
           as="form"

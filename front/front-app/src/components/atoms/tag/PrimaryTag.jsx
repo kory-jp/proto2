@@ -8,7 +8,7 @@ export const PrimaryTag = (props) => {
   const  {children, onClick } = props;
   return(
     <Tag
-      fontSize={{base: "3px", md: "15px"}}
+      fontSize={{base: "3px", md: "10px"}}
       maxW={{base: "50px", md: "60px"}}
       bg="gray.400"
       color="white"
