@@ -59,7 +59,7 @@ Post.create!([
               \n\n ①創立総会決定の1億円を基準として判定する。
               \n ②役員会決定の1,200万円（月額100万円）を基準として、個別で判定する。
             ",
-    image: File.open("db/fixures/seed/production/posts/consumption-tax.jpeg"),           
+    image: File.open("db/fixures/seed/production/posts/salary.jpeg"),           
   },
   # 7
   {
