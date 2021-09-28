@@ -35,7 +35,6 @@ Comment.create!([
     comment: "ありがとうございます。"
   },
   {
-    Comment.create!(
       user_id: 3,
       post_id: 3,
       comment: "見落としていたので助かります。"

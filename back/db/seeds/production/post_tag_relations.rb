@@ -10,7 +10,7 @@ PostTagRelation.create!([
   {
     post_id: 1,
     tag_id: 13,
-  }
+  },
   {
     post_id: 2,
     tag_id: 9,
