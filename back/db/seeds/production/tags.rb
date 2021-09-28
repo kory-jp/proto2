@@ -14,7 +14,7 @@ Tag.create([
   # 7
   {value: "住民税", label: "住民税"},
   # 8
-  {value: "関税", label: "関税"},
+  {value: "源泉所得税", label: "源泉所得税"},
   # 9
   {value: "仕分", label: "仕分"},
   # 10
