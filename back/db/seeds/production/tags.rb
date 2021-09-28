@@ -9,6 +9,6 @@ Tag.create([
   {value: "関税", label: "関税"},
   {value: "仕分", label: "仕分"},
   {value: "決算", label: "決算"},
-  {value: "計算書類", label: "決算書類"},
+  {value: "計算書類", label: "計算書類"},
   {value: "補助金", label: "補助金"},
 ])

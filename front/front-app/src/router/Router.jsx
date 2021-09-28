@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import Auth from '../components/auth/Auth'
+// import Auth from '../components/auth/Auth'
 import LoginPage from '../components/pages/LoginPage'
 import MyPosts from '../components/pages/mypage/MyPosts'
 import ProfileEdit from '../components/pages/mypage/ProfileEdit'
@@ -27,7 +27,7 @@ export const Router = () => {
       <Route  exact path={"/"} component={LoginPage} />
       <Route path={"/registration"} component={RegistrationPage} />
       <DefaultLayout>
-        <Auth>
+        {/* <Auth> */}
           <Route exact path={"/posts"} component={PostIndex} /> 
           <Route exact path={"/posts/tag"} component={PostTagSearchIndex} /> 
           <Route path={"/posts/new"} component={PostNew} />
@@ -44,7 +44,7 @@ export const Router = () => {
           <Route path={"/searchResult"} component={SearchResult} />
           <Route path={"/room/:id"} component={Room} />
           <Route path={"/users/:id"} component={UsersInfo} />
-        </Auth>
+        {/* </Auth> */}
       </DefaultLayout>
     </Switch>
   )
