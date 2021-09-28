@@ -34,6 +34,6 @@ Post.create!(
 Post.create!(
   user_id: 3,
   title: 'テナントから領収するビルの共益費',
-  content: 'ビル管理会社等がテナントから受け入れる水道光熱費等の共益費等は、いわゆる「通過勘定」という実費精算的な性格を有することから、課税の対象外としてよいでしょうか。'
+  content: 'ビル管理会社等がテナントから受け入れる水道光熱費等の共益費等は、いわゆる「通過勘定」という実費精算的な性格を有することから、課税の対象外としてよいでしょうか。',
   image: File.open("db/fixures/seed/production/posts/building.jpeg"),
 )
