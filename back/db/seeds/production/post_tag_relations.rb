@@ -5,15 +5,27 @@ PostTagRelation.create!([
   },
   {
     post_id: 1,
-    tag_id: 2,
+    tag_id: 9,
   },
   {
     post_id: 2,
+    tag_id: 9,
+  },
+  {
+    post_id: 2,
+    tag_id: 10,
+  },
+  {
+    post_id: 3,
     tag_id: 2,
   },
   {
     post_id: 3,
-    tag_id: 3,
+    tag_id: 11,
+  },
+  {
+    post_id: 3,
+    tag_id: 12,
   },
   {
     post_id: 4,
