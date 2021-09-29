@@ -78,6 +78,14 @@ PostTagRelation.create!([
   {
     post_id: 8,
     tag_id: 14,
-  }
+  },
+  {
+    post_id: 9,
+    tag_id: 1,
+  },
+  {
+    post_id: 9,
+    tag_id: 13,
+  },
 ])
 
