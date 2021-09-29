@@ -82,11 +82,13 @@ export const Header = ()=> {
         >
           <Text
             as="h1"
-            fontSize={{base: "sm", md: "xl"}}
-            fontWeight="bold"
+            color="white"
+            fontSize={{base: "sm", md: "xl", lg: "3xl"}}
+            fontWeight="extrabold"
             onClick={toTop}
             cursor="pointer"
             ml="7"
+            fontFamily='Gugi'
           >
             With-Accountant
           </Text>

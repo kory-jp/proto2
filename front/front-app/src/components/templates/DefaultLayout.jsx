@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Flex } from '@chakra-ui/layout';
 import Header from '../organisms/layout/Header';
 import SideBar from '../organisms/layout/SideBar';
+import Footer from '../organisms/layout/Footer';
 
 export const DefaultLayout = (props)=> {
   const {children} = props;
@@ -37,6 +38,7 @@ export const DefaultLayout = (props)=> {
         {children}
         </Box>
       </Flex>
+      <Footer />
     </>
   )
 }
