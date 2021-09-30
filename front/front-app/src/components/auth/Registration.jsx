@@ -10,9 +10,11 @@ import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import useMessage from "../../hooks/useMessage";
 import useLoadingState from "../../hooks/useLoadingState";
 import { DefaultBox, DefaultText } from "../../assets/style/chakraStyles";
+import useReturnTop from "../../hooks/useReturnTop";
 
 export const ReduxRegistration = () => {
   const dispatch = useDispatch();
+  const returnTop  = useReturnTop()
   useEffect(()=> {
     dispatch(completedLoggedInStatus())
   },[dispatch])
@@ -48,6 +50,11 @@ export const ReduxRegistration = () => {
 
   const loadingState = useLoadingState()
   const showMessage = useMessage();
+
+  const onClickRegistration = useCallback(()=> {
+    dispatch(registration(userName, userNickname, email, password, passwordConfirmation, showMessage))
+    returnTop()
+  },[dispatch, returnTop, showMessage, userName, userNickname, email, password, passwordConfirmation])
 
   return(
     <DefaultBox>
@@ -137,7 +144,7 @@ export const ReduxRegistration = () => {
         </FormControl>
         <PrimaryButton
           type="submit"
-          onClick={()=> dispatch(registration(userName, userNickname, email, password, passwordConfirmation, showMessage))}
+          onClick={onClickRegistration}
           isLoading={loadingState}
           disabled={userName === "" || userNickname === "" || email === ""|| password === "" || passwordConfirmation === ""}
         >

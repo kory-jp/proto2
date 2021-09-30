@@ -11,9 +11,11 @@ import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import useMessage from "../../hooks/useMessage";
 import useLoadingState from "../../hooks/useLoadingState";
 import { DefaultBox, DefaultText } from "../../assets/style/chakraStyles";
+import useReturnTop from "../../hooks/useReturnTop";
 
 export const ReduxLogin = () => {
   const dispatch = useDispatch();
+  const returnTop  = useReturnTop()
   useEffect(()=> {
     dispatch(completedLoggedInStatus())
   },[dispatch])
@@ -34,6 +36,16 @@ export const ReduxLogin = () => {
 
   const loadingState = useLoadingState()
   const showMessage = useMessage();
+
+  const onClickLogin = useCallback(() => {
+    dispatch(logIn(email, password, showMessage))
+    returnTop()
+  },[dispatch, returnTop, showMessage, email, password])
+
+  const onClickLoginGuestUser = useCallback(() => {
+    dispatch(loginGuestUser(showMessage))
+    returnTop()
+  },[dispatch, returnTop, showMessage])
 
   return(
     <DefaultBox>
@@ -80,7 +92,7 @@ export const ReduxLogin = () => {
         <PrimaryButton
           type="submit"
           name="submit"
-          onClick={()=> dispatch(logIn(email, password, showMessage))}
+          onClick={onClickLogin}
           isLoading={loadingState}
           disabled={email === "" || password ===""}
           >
@@ -92,7 +104,7 @@ export const ReduxLogin = () => {
           name="submit"
           color="white"
           backgroundColor="blue.500"
-          onClick={()=> dispatch(loginGuestUser(showMessage))}
+          onClick={onClickLoginGuestUser}
           isLoading={loadingState}
         >
           ユーザー登録無しで利用
