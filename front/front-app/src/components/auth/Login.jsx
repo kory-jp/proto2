@@ -107,7 +107,7 @@ export const ReduxLogin = () => {
           onClick={onClickLoginGuestUser}
           isLoading={loadingState}
         >
-          ユーザー登録無しで利用
+          ゲストユーザーでログイン
         </Button>
         <Divider />
         <Link 
