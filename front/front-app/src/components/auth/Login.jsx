@@ -10,6 +10,7 @@ import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import useMessage from "../../hooks/useMessage";
 import useLoadingState from "../../hooks/useLoadingState";
 import { DefaultBox, DefaultText } from "../../assets/style/chakraStyles";
+import SubLayout from "../templates/SubLayout";
 
 export const ReduxLogin = () => {
   const dispatch = useDispatch();
@@ -41,14 +42,14 @@ export const ReduxLogin = () => {
         textAlign="center" 
         fontWeight="bold"
         fontFamily='Gugi'
-      >
-        With-Accountnat
+        >
+        With-Accountant
       </DefaultText>
       <Stack spacing="5">
         <FormControl
           as="form"
           id="email"
-        >
+          >
           <Input
             id="f4"
             type="email"
@@ -58,12 +59,12 @@ export const ReduxLogin = () => {
             required={true}
             value={email}
             onChange={inputEmail}
-          />
+            />
         </FormControl>
         <FormControl
           as="form"
           id="password"
-        >
+          >
           <Input
             id="f5"
             type="password"
@@ -74,7 +75,7 @@ export const ReduxLogin = () => {
             value={password}
             onChange={inputPassword}
             autoComplete="off"
-          />
+            />
         </FormControl>
         <PrimaryButton
           type="submit"
@@ -82,14 +83,14 @@ export const ReduxLogin = () => {
           onClick={()=> dispatch(logIn(email, password, showMessage))}
           isLoading={loadingState}
           disabled={email === "" || password ===""}
-        >
+          >
           ログイン
         </PrimaryButton>
         <Link 
           onClick={onClickRegistration} 
           textAlign="center"
           fontSize={{base: "sm", md: "lg"}}
-        >
+          >
           新規登録
         </Link>
       </Stack>

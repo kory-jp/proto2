@@ -1,6 +1,5 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-// import Auth from '../components/auth/Auth'
 import LoginPage from '../components/pages/LoginPage'
 import MyPosts from '../components/pages/mypage/MyPosts'
 import ProfileEdit from '../components/pages/mypage/ProfileEdit'
@@ -20,6 +19,7 @@ import Room from '../components/pages/Room'
 import Rooms from '../components/pages/mypage/Rooms'
 import Notifications from '../components/pages/mypage/Notifications'
 import PasswordEdit from '../components/pages/mypage/PasswordEdit'
+import SubLayout from '../components/templates/SubLayout'
 
 export const Router = () => {
   return(
@@ -27,24 +27,22 @@ export const Router = () => {
       <Route  exact path={"/"} component={LoginPage} />
       <Route path={"/registration"} component={RegistrationPage} />
       <DefaultLayout>
-        {/* <Auth> */}
-          <Route exact path={"/posts"} component={PostIndex} /> 
-          <Route exact path={"/posts/tag"} component={PostTagSearchIndex} /> 
-          <Route path={"/posts/new"} component={PostNew} />
-          <Route path={"/posts/show/:id"} component={PostShow} />
-          <Route path={"/posts/edit/:id"} component={PostEdit} />
-          <Route path={"/mypage/:id/edit"} component={ProfileEdit} />
-          <Route path={"/mypage/:id/password"} component={PasswordEdit} />
-          <Route path={"/mypage/:id/posts"} component={MyPosts} />
-          <Route path={"/mypage/:id/follows"} component={Follows} />
-          <Route path={"/mypage/:id/followers"} component={Followers} />
-          <Route path={"/mypage/:id/favoritePosts"} component={FavoritePosts} />
-          <Route path={"/mypage/:id/rooms"} component={Rooms} />
-          <Route path={"/notifications"} component={Notifications} />
-          <Route path={"/searchResult"} component={SearchResult} />
-          <Route path={"/room/:id"} component={Room} />
-          <Route path={"/users/:id"} component={UsersInfo} />
-        {/* </Auth> */}
+        <Route exact path={"/posts"} component={PostIndex} /> 
+        <Route exact path={"/posts/tag"} component={PostTagSearchIndex} /> 
+        <Route path={"/posts/new"} component={PostNew} />
+        <Route path={"/posts/show/:id"} component={PostShow} />
+        <Route path={"/posts/edit/:id"} component={PostEdit} />
+        <Route path={"/mypage/:id/edit"} component={ProfileEdit} />
+        <Route path={"/mypage/:id/password"} component={PasswordEdit} />
+        <Route path={"/mypage/:id/posts"} component={MyPosts} />
+        <Route path={"/mypage/:id/follows"} component={Follows} />
+        <Route path={"/mypage/:id/followers"} component={Followers} />
+        <Route path={"/mypage/:id/favoritePosts"} component={FavoritePosts} />
+        <Route path={"/mypage/:id/rooms"} component={Rooms} />
+        <Route path={"/notifications"} component={Notifications} />
+        <Route path={"/searchResult"} component={SearchResult} />
+        <Route path={"/room/:id"} component={Room} />
+        <Route path={"/users/:id"} component={UsersInfo} />
       </DefaultLayout>
     </Switch>
   )
