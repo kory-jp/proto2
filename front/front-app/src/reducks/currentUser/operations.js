@@ -113,6 +113,49 @@ export const logIn = (email, password, showMessage) => {
   };
 };
 
+export const loginGuestUser = (showMessage) => {
+  return async (dispatch) => {
+    dispatch(nowLoadingAction(true));
+    const apiURL = process.env.REACT_APP_USERS_API_URL + "login";
+    await axios
+      .post(
+        apiURL,
+        {
+          user: {
+            email: "guest-user@example.com",
+            password: "guestpassword",
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        if (response.data.message) {
+          showMessage({ title: response.data.message, status: "error" });
+        } else {
+          const userData = response.data;
+          dispatch(
+            setCurrentUserAction({
+              id: userData.id,
+              name: userData.name,
+              nickname: userData.nickname,
+              email: userData.email,
+              introduction: userData.introduction,
+              image: userData.image,
+            })
+          );
+          showMessage({ title: "ログインしました", status: "success" });
+          dispatch(push("/posts"));
+        }
+      })
+      .catch((response) => {
+        console.log("ERROR");
+      })
+      .finally(() => {
+        dispatch(nowLoadingAction(false));
+      });
+  };
+};
+
 export const logOut = (showMessage) => {
   return async (dispatch, getState) => {
     const apiURL = process.env.REACT_APP_USERS_API_URL + "logout";

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex, Text, Wrap, WrapItem } from "@chakra-ui/layout";
+import { Box, Wrap, WrapItem } from "@chakra-ui/layout";
 import  backgroundImage  from "../../assets/img/backgroundImage2.jpeg"
 import  explanationImage1  from "../../assets/img/explanation1.jpeg"
 import  explanationImage2  from "../../assets/img/explanation2.jpeg"
@@ -7,7 +7,7 @@ import  explanationImage3  from "../../assets/img/explanation3.jpeg"
 import  explanationImage4  from "../../assets/img/explanation4.jpeg"
 import  explanationImage5  from "../../assets/img/explanation5.jpeg"
 import { Image } from '@chakra-ui/image';
-import { DefaultBox, DefaultFlex, DefaultText, DefaultTitleText } from '../../assets/style/chakraStyles';
+import { DefaultBox, DefaultText } from '../../assets/style/chakraStyles';
 import Footer from '../organisms/layout/Footer';
 
 export const SubLayout = (props) => {

@@ -1,16 +1,16 @@
 import { Input } from "@chakra-ui/input";
-import {Link, Stack } from "@chakra-ui/layout";
+import {Divider, Link, Stack } from "@chakra-ui/layout";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {push} from 'connected-react-router';
 import {FormControl} from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react"
 
-import {completedLoggedInStatus, logIn} from "../../reducks/currentUser/operations"
+import {completedLoggedInStatus, logIn, loginGuestUser} from "../../reducks/currentUser/operations"
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import useMessage from "../../hooks/useMessage";
 import useLoadingState from "../../hooks/useLoadingState";
 import { DefaultBox, DefaultText } from "../../assets/style/chakraStyles";
-import SubLayout from "../templates/SubLayout";
 
 export const ReduxLogin = () => {
   const dispatch = useDispatch();
@@ -86,12 +86,24 @@ export const ReduxLogin = () => {
           >
           ログイン
         </PrimaryButton>
+        <Divider />
+        <Button
+          type="submit"
+          name="submit"
+          color="white"
+          backgroundColor="blue.500"
+          onClick={()=> dispatch(loginGuestUser(showMessage))}
+          isLoading={loadingState}
+        >
+          ユーザー登録無しで利用
+        </Button>
+        <Divider />
         <Link 
           onClick={onClickRegistration} 
           textAlign="center"
           fontSize={{base: "sm", md: "lg"}}
           >
-          新規登録
+          新規登録はコチラ
         </Link>
       </Stack>
     </DefaultBox>

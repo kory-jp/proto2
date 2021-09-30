@@ -19,7 +19,6 @@ import Room from '../components/pages/Room'
 import Rooms from '../components/pages/mypage/Rooms'
 import Notifications from '../components/pages/mypage/Notifications'
 import PasswordEdit from '../components/pages/mypage/PasswordEdit'
-import SubLayout from '../components/templates/SubLayout'
 
 export const Router = () => {
   return(

@@ -1,5 +1,13 @@
 User.create!([
     {
+      email: "guest-user@example.com",
+      name: "ゲストユーザー",
+      nickname: "guest-user",
+      password: "guestpassword",
+      password_confirmation: "guestpassword",
+      introduction: "ゲストユーザーです。"
+    },
+    {
       email: "sample@example.com",
       name: "佐藤二郎",
       nickname: "sato",
