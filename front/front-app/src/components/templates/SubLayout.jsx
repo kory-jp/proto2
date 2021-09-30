@@ -54,7 +54,7 @@ export const SubLayout = (props) => {
             当サイトを利用すると
           </DefaultText>
         </Box>
-        <Wrap>
+        <Wrap justify="center">
           <WrapItem w="400px">  
             <DefaultBox shadow="none">
               <Image
