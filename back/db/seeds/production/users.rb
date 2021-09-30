@@ -1,13 +1,5 @@
 User.create!([
   {
-    email: "guest-user@example.com",
-    name: "ゲストユーザー",
-    nickname: "guest-user",
-    password: "guestpassword",
-    password_confirmation: "guestpassword",
-    introduction: "ゲストユーザーです。"
-  },
-  {
     email: "sample@example.com",
     name: "佐藤二郎",
     nickname: "佐藤二郎",
@@ -51,6 +43,14 @@ User.create!([
     password_confirmation: "password",
     introduction: "今年から経理課に配属されて、現在、簿記を猛勉強中の鈴木です。\n業務で抱えた不明点を質問させてください！",
     image: File.open("db/fixures/seed/production/users/user_women_2.jpg"),
-  }
+  },
+  {
+    email: "guest-user@example.com",
+    name: "ゲストユーザー",
+    nickname: "guest-user",
+    password: "guestpassword",
+    password_confirmation: "guestpassword",
+    introduction: "ゲストユーザーです。"
+  },
 ]
 )
