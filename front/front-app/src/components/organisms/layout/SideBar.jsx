@@ -63,6 +63,11 @@ export const SideBar = ()=> {
     returnTop()
   },[dispatch, returnTop, currentUserId])
 
+  const toLoginPage = useCallback(()=> {
+    dispatch(logOut(showMessage))
+    returnTop()
+  },[dispatch, returnTop, showMessage])
+
   return(
     <Flex flexDirection="column" bg="white" shadow="md" borderRadius="md" p="2">
       <Stack mt="5" mb="3" spacing="5">
@@ -116,7 +121,7 @@ export const SideBar = ()=> {
           個人情報修正
         </SideBarButton>
         <SideBarButton
-          onClick={()=> dispatch(logOut(showMessage))}
+          onClick={toLoginPage}
           leftIcon={<ExitToAppIcon />}
           >
           ログアウト
