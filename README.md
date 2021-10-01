@@ -87,6 +87,10 @@ URL: https://with-accountant.com/
 
 ![AWS](https://user-images.githubusercontent.com/66899822/135562197-767f7ef4-b49c-42e8-b4f3-0eae5683b450.jpg)
 
+## ER 図
+
+![er](https://user-images.githubusercontent.com/66899822/135587724-5cd874c5-4b31-4777-916d-6c10edfbcaea.jpg)
+
 ## 技術選定理由
 
 > バックエンド: Rails
