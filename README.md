@@ -1,6 +1,12 @@
-# React_Rails_Login
+# With Accountant
 
-React と Rails を用いたログイン機能
+経理業界の初心者を応援する情報共有サイトです。
+日々の業務のキャッチアップと合わせて、毎年の法令改正や新規の補助金制度の新設なども把握しておかなければなりません。
+そんな状況から当サイトは情報収集の面からサポート致します！
+
+URL: https://with-accountant.com/
+
+<img width="750" alt="8AFF07CD-EE41-4F6E-85CC-E958C8E97D1D" src="https://user-images.githubusercontent.com/66899822/135550922-bfc0b77a-47dc-415b-9e9c-2d3b147a88af.png">
 
 ## 起動方法
 
