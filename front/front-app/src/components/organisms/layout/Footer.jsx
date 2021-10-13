@@ -17,7 +17,7 @@ export const Footer = () => {
             target="blank"
           >
             <Text fontSize={{base: 'sm', md: "lg"}} color="black">
-              このサイトについて
+              このサイトについて(GitHubソースコード)
             </Text>
           </Link>
         </Box>
