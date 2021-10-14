@@ -75,15 +75,40 @@ URL: https://with-accountant.com/
 - HTML/CSS
 - React(create-react-app/Redux/Chakra-ui)
 
+#### 主要ライブラリ
+
+- Redux: State の一元管理するフレームワーク
+- connected-react-router: react-router のルーティング状態を Redux で管理できるようにする
+- redux-Thunk: Redux の Action Creator に非同期処理を実装するためのミドルウェア
+- redux-logger: redux 内のログを表示
+- axios: HTTP リクエストにてサーバからデータの取得、更新
+
 ### バックエンド
 
 - Ruby on Rails(API mode/ Rspec)
 - Nginx
+- Unicorn
+
+#### 主要 Gem
+
+- BCrypt: パスワード管理
+- jbuilder: API 通信における json データの作成
+- rack-cors: フロントエンドとの API 通信において指定したドメインのアクセス許可
+- kaminari: 一覧画面のページネーション機能実装
+- carrierWave: 画像ファイルのアップロード機能
+- dotenv-rails: 環境変数管理
+- fog-aws: AWS の S3 への画像配信、保存
+- pry-byebug: デバックツール
+- annotate: モデルのスキーマ情報表示
+- bullet: n+1 問題の発見ツール
+- faker: 初期、テストデータの作成
+- rspec-rails: テストの作成、実行
+- factory_bot_rails: テストにおける仮データの作成
 
 ### インフラ
 
-- AWS(EC2/RDS/ALB/Route53/S3)
-- Docker
+- AWS(EC2/RDS/ALB/Route53/S3/CloudFlont)
+- Docker/docker-compose
 
 ![AWS (1)](https://user-images.githubusercontent.com/66899822/137050224-8f30f8d6-87a2-49c5-b479-37a00335abf8.jpg)
 
