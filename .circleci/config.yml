@@ -1,12 +1,23 @@
 version: 2.1
 
-jobs:
-  build:
+# 複数のジョブをまたがってマシン環境を設定、使いまわせる
+executors:
+  my-executor:
     docker:
       - image: cimg/ruby:3.0.1
+
+jobs:
+  build:
+    executor:
+      name: my-executor
     steps:
       - checkout
       - run: ruby --version
+      - run: pwd
+      # /home/circleci/project
+      - run: ls -a
+      # .   back       docker-compose.yml  front  .gitignore
+      # ..  .circleci  .DS_Store           .git   README.md
 
 workflows:
   version: 2.1
