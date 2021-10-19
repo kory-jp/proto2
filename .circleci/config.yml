@@ -6,6 +6,14 @@ executors:
     docker:
       - image: cimg/ruby:3.0.1
 
+# jobs内で以下のコマンドを使用、再利用できる
+commands:
+  sayhello:
+    steps:
+      - run: ls -a back/spec
+      # .  ..  factories  models  rails_helper.rb  requests  spec_helper.rb  support
+      - run: ruby back/spec/test.rb
+
 jobs:
   build:
     executor:
@@ -18,9 +26,9 @@ jobs:
       - run: ls -a
       # .   back       docker-compose.yml  front  .gitignore
       # ..  .circleci  .DS_Store           .git   README.md
-      - run: ls -a back/spec
-      # .  ..  factories  models  rails_helper.rb  requests  spec_helper.rb  support
-      - run: ruby back/spec/test.rb
+
+      # commandsを実行
+      - sayhello
 
 workflows:
   version: 2.1
