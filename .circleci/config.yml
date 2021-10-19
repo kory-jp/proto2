@@ -18,6 +18,9 @@ jobs:
       - run: ls -a
       # .   back       docker-compose.yml  front  .gitignore
       # ..  .circleci  .DS_Store           .git   README.md
+      - run: ls -a back/spec
+      # .  ..  factories  models  rails_helper.rb  requests  spec_helper.rb  support
+      - run: ruby back/spec/test.rb
 
 workflows:
   version: 2.1
