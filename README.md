@@ -111,7 +111,7 @@ URL: https://with-accountant.com/
 - Docker/docker-compose
 - CircleCI
 
-![AWS (1)](https://user-images.githubusercontent.com/66899822/137050224-8f30f8d6-87a2-49c5-b479-37a00335abf8.jpg)
+![AWS](https://user-images.githubusercontent.com/66899822/138204940-5e200de6-7e78-4554-aa90-5d094b7da68e.jpg)
 
 ## ER 図
 
