@@ -109,6 +109,7 @@ URL: https://with-accountant.com/
 
 - AWS(EC2/RDS/ALB/Route53/S3/CloudFlont)
 - Docker/docker-compose
+- CircleCI
 
 ![AWS (1)](https://user-images.githubusercontent.com/66899822/137050224-8f30f8d6-87a2-49c5-b479-37a00335abf8.jpg)
 
@@ -174,6 +175,18 @@ URL: https://with-accountant.com/
 
 - クラウドサービスの中でシェア率 No.1。記事が豊富
 - Heroku と比べてカスタマイズ性が高く、インフラのイメージを掴みつつ学習ができる
+
+> CI ツール: CircleCI
+
+役割
+
+- GitHub へプッシュした際の Rspec によるテストの自動化
+
+採用理由
+
+- SaaS 型の CI/CD なので道入コストが低い
+- 企業においても採用実績が増えてきている
+- cofig.yml のみでの管理、設定なので基本的な動作であれば学習コストも高くない
 
 ## こだわった点
 
