@@ -184,7 +184,7 @@ URL: https://with-accountant.com/
 
 採用理由
 
-- SaaS 型の CI/CD なので道入コストが低い
+- SaaS 型の CI/CD なので導入コストが低い
 - 企業においても採用実績が増えてきている
 - cofig.yml のみでの管理、設定なので基本的な動作であれば学習コストも高くない
 
