@@ -1,3 +1,5 @@
+# circleci build -c .circleci/config.yml --job setup_test_rspec
+
 version: 2.1
 
 # 複数のジョブをまたがってマシン環境を設定、使いまわせる
@@ -8,6 +10,7 @@ executors:
         environment:
           DB_HOST: 127.0.0.1
           RAILS_ENV: test
+          BUNDLE_PATH: vendor/bundle
       - image: circleci/mysql:8.0.18-ram
         environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
