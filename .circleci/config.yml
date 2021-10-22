@@ -1,7 +1,6 @@
 # circleci build -c .circleci/config.yml --job setup_test_rspec
 
 version: 2.1
-
 # 複数のジョブをまたがってマシン環境を設定、使いまわせる
 executors:
   rspec-executor:
@@ -38,7 +37,7 @@ jobs:
           name: gemキャッシュの保存
           key: v1-bundle-{{checksum "back/Gemfile.lock"}}
           paths:
-            - vendor/bundle
+            - back/vendor/bundle
       - run:
           name: データベースの起動を待機
           command: |
