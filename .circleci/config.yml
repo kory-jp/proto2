@@ -10,7 +10,7 @@ executors:
         environment:
           DB_HOST: 127.0.0.1
           RAILS_ENV: test
-          BUNDLE_PATH: vendor/bundle
+          BUNDLE_PATH: back/vendor/bundle
       - image: circleci/mysql:8.0.18-ram
         environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
@@ -25,10 +25,20 @@ jobs:
       name: rspec-executor
     steps:
       - checkout
+      - restore_cache:
+          name: gemキャッシュの復元
+          keys:
+            # path注意
+            - v1-bundle-{{checksum "back/Gemfile.lock"}}
       - run:
           name: gemのインストール
           # gemfileが存在するディレクトリ内で実行する必要があるので初めにディレクトリ移動
-          command: cd back && bundle install
+          command: cd back && bundle check || bundle install
+      - save_cache:
+          name: gemキャッシュの保存
+          key: v1-bundle-{{checksum "back/Gemfile.lock"}}
+          paths:
+            - vendor/bundle
       - run:
           name: データベースの起動を待機
           command: |
