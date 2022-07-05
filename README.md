@@ -4,7 +4,8 @@
 日々の業務のキャッチアップと合わせて、毎年の法令改正や新規の補助金制度の新設なども把握しておかなければなりません。  
 そんな状況から当サイトは情報収集の面からサポート致します！
 
-URL: https://with-accountant.com/
+~~URL: https://with-accountant.com/~~
+*現在はサービスを終了しております
 
 <img width="750" alt="8AFF07CD-EE41-4F6E-85CC-E958C8E97D1D" src="https://user-images.githubusercontent.com/66899822/135550922-bfc0b77a-47dc-415b-9e9c-2d3b147a88af.png">
 
